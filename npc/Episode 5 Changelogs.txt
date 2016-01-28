@@ -1,0 +1,80 @@
+//===== Special Modification =================================
+//===== By: ==================================================
+//= Ragnarok World
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena, rAthena, Hercules
+//===== Description ==========================================
+//= Episode 5: Juno Changelogs
+//============================================================
+
+
+
+//= Doomed Swords Part 1: quests_comodo.txt
+//= - Creation of doomed swords.
+//= - Part 2: Found in Quests_Yuno.txt
+//= - Part 3: Found in Doomed_Swords.txt
+//= - Variable in use: dmdswrd_Q (Max 45)
+
+
+** Map Changes
+* A part of Juno, the forgotten era (Ragnarok Episode 5) has been implemented.
+* Juno Town, dungeons, fields have been added.
+Firecracker effects have been implemented in Comodo.
+
+
+** Class  & Skills Changes
+* 2nd alternative (or 2-2) jobs have been implemented.
+* Freezing Trap property has been updated from Earth to Water.
+* Blast Mine property has been updated from Fire to Wind.
+* Claymore Trap property has been updated from Earth to Fire.
+* Many cards adjusted: http://irowiki.org/wiki/Updates_Changelog#Juno_Changes
+* * List of Weapon Status-Inflicting cards changed: Familiar (Blind), Magnolia (Curse), Marina (Freeze), 
+  Metaller (Silence), Plankton (Sleep), Requiem (Chaos), Savage Bebe (Stun), Snake (Poison).
+* * List of Headgear Status-Resisting cards changed: Coco (Sleep), Martin (Blind), Stainer (Silence)
+  Exception: Zenorc became weapon card with +4% chance to inflict Poison and +10 ATK.
+* * List of Garment "Element-Resisting" cards: Dustiness (Wind), Hode (Earth), Isis (Shadow), Jakk (Fire), Marionette (Ghost), Marse (Water), Mist (Poison), Orc Zombie (Undead)
+* * List of Armor "Change Element" cards changed:
+Affected: Argiope (Poison), Bathory (Shadow), Dokebi (Wind), Pasana (Fire), Sandman (Earth), Swordfish (Water), Evil Druid (Undead)
+Not affected: Angeling (Holy), Ghostring (Ghost - is given a -25% HP Regen penalty)
+* +15% to Size cards now give +5 ATK
+* Turtle dungeon 4, Butterfly Wing, Fly Wing and Teleport of Acolyte does not work anymore. Warp Portal is still enabled in that area.
+
+** WoE-Specific Changes
+* Guilds cannot attack the emperium in an allied guild castle, and allied guilds cannot attack each other during siege time.
+* During a castle siege, if guild A is in guild B’s castle and both A and B guilds allie together, guild A will immediately be removed out of * the guild castle and return to their save points.
+* During siege time, magic attacks will cause less damage to players.
+* During siege time, ranged attacks will cause less damage to players.
+* During siege time, Guardians and the Emperiums will not be affected by skills that push them back.
+* During siege time, players who have been killed will not receive damage for 10 seconds.
+* During siege time, Traps will last 4 times longer then normal.
+* Treasure Boxes in guild castles will not be affected by the Steal skill.
+* Guild dungeons, non-allied guilds can Player Kill each other.
+
+** Monster Changes
+* Boss monsters have become more powerful.
+* Mummy HP/exp adjusted.
+* Monster type; Thief Bug has been changed from Neutral to Insect.
+* Hode has changed to a non-aggressive monster and does not recognize magic casting any longer.
+* Monster placement in fields, and dungeons have been changed.
+* Elder Willow and Scorpion have been changed to aggressive monsters.
+
+** Item Changes
+* New accessory items such as Megingjard / Brisingamen will have character level requirements.
+* The defense rate of Sleipnir has been updated from 0 to 1.
+* The description of Heart Hairpin’s equipment location has been corrected from lower to upper.
+* Certain Book weapon strengths have reduced but have increased in slots.
+* * Book : Weapon damage reduced to 85 : The numbers of slot increased from 1 to 3 
+* * Bible : Weapon damage reduced to 115 : The numbers of slot increased from 1 to 2 
+* * Tablet : Weapon damage reduced to 125 : No change on the slot number
+* The level requirement for Novice Breastplate has been changed from lvl 50 to lvl 10.
+* Weight of Iron Ore has been reduced from 20 to 15.
+* Players can purchase Glistening Coat Creation Guide and Condensed Potion Creation Guide from the Alchemist Guild.
+* The weapon level of Fortune Sword has been updated from level 3 to level 4.
+* The weapon level of Wizardry Staff has been updated from level 3 to level 4.
+
+
+
+
+

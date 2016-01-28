@@ -1,0 +1,134 @@
+-	script	BetaTimer	FAKE_NPC,{
+
+OnClock0000:
+	if(gettime(6) == .startmonth && gettime(5) == .startday){
+		announce "Kindly relogin in able to start your Beta Account Timer.",0;
+	}
+end;
+
+OnInit:
+set .startmonth,1;
+set .startday,23;
+set .gomonth,2;
+set .goday,1;
+set .endday,24;
+set .boundtype, 1; 
+
+// == Beta Account Rewards (10 Hours)
+setarray .BAItems[0],		504,	505,	504,	505,	504,	505,	504,	645,	656,	5003;			
+setarray .BAAmount[0],		50,	25,	50,	25,	50,	25,	50,	20,	20,	1;			
+setarray .BARefine[0],		0,	0,	0,	0,	0,	0,	0,	0,	0,	0;				
+setarray .BARentTime[0],	0,	0,	0,	0,	0,	0,	0,	0,	0,	86400;	
+
+// == Beta Account Rewards (5 ~ 9 Hours)
+setarray .BBItems[0],		504,	505,	504,	505;			
+setarray .BBAmount[0],		50,	25,	50,	25;			
+setarray .BBRefine[0],		0,	0,	0,	0;				
+setarray .BBRentTime[0],	0,	0,	0,	0;	
+
+end;
+
+OnPCLoginEvent:
+
+	set .@user, getcharid(3);
+	query_sql("SELECT `Beta_Account` FROM `login` WHERE account_id = '"+.@user+"'",.@beta);
+
+	/* Changing the looks of players on the Grand Opening. */
+	if(gettime(6) == .gomonth && gettime(5) == .goday){
+		changelook 4,900;
+	}
+
+	/* Disabling BETA Account to login on the Grand Opening */
+	if(gettime(6) == .gomonth && gettime(5) == .goday && getcharid(0) >= 150001 && getcharid(0) <= 150171 && getcharid(0) != 150152){
+		atcommand "@option 2 2 6";
+		mes "[ System ]";
+		mes "You are not allowed to use this character for 1 day.";
+		close2;
+		atcommand "@kick "+strcharinfo(0);
+		end;
+	}
+
+	/* BETA Account Event Day. */
+	if(gettime(5) == .startday || gettime(5) == .endday){
+		if(.@beta){
+			dispbottom "Congratulations! This account is now a candidate on receiving Leveling Kit's on February 1, 2015.";
+			end;
+		}
+
+	if(!#BetaTick){end;}
+
+	set #AccTick,gettimetick(2);
+
+		set .@h,#BetaTick % 86400 / 3600;
+		set .@m,#BetaTick % 3600 / 60;
+		set .@s,#BetaTick % 60;
+
+	set .@h$, .@h+" hour"+((.@h <= 1)?"":"s");
+	set .@m$, .@m+" minute"+((.@m <= 1)?"":"s");
+	set .@s$, .@s+" second"+((.@s <= 1)?"":"s");
+	set .@time$,""+.@h$+" "+.@m$+" "+.@s$+"";
+
+		dispbottom "You spend a total of [ "+.@time$+" ] playing.";
+		dispbottom "You need atleast 10 hours for BETA ACCOUNT requirement.";
+
+	}
+
+	/* Rewards for BETA Accounts.(5 ~ 9 Hours) */
+	set .@h,#BetaTick % 86400 / 3600;
+		if(.@h >= 5 && .@h <= 9 && #claimed == 0 ){
+			// Add Reward		
+			query_sql ("SELECT `userid` FROM `login` WHERE `account_id` = '"+.@user+"'",.@id$);
+
+				for( set .@i, 0; .@i < getarraysize(.BAItems); set .@i, .@i + 1 ){
+
+						query_sql "INSERT INTO `reward_db` (`account_user`, `reward_id`, `reward_amount`, `refine`, `bounded`, `rental`) VALUES ('"+.@id$+"',"+.BAItems[.@i]+","+(.BBAmount[.@i])+","+.BBRefine[.@i]+","+.boundtype+","+.BBRentTime[.@i]+")";
+
+				}
+			dispbottom "Congratulations you receive a COMPENSATION REWARDS!";
+			dispbottom "Please claim your COMPENSATION REWARDS to the Delivery Man at Albertan, Prontera, Geffen or Payon.";
+			set #claimed,1;
+			end;
+		}
+
+	/* Rewards for BETA Accounts.(10 Hours) */
+	query_sql("SELECT `Beta_Account` FROM `login` WHERE account_id = '"+.@user+"'",.@beta);
+		if(.@beta && #beta == 0){
+			// Add Reward		
+			query_sql ("SELECT `userid` FROM `login` WHERE `account_id` = '"+.@user+"'",.@id$);
+
+				for( set .@i, 0; .@i < getarraysize(.BAItems); set .@i, .@i + 1 ){
+
+						query_sql "INSERT INTO `reward_db` (`account_user`, `reward_id`, `reward_amount`, `refine`, `bounded`, `rental`) VALUES ('"+.@id$+"',"+.BAItems[.@i]+","+(.BAAmount[.@i])+","+.BARefine[.@i]+","+.boundtype+","+.BARentTime[.@i]+")";
+
+				}
+			dispbottom "Congratulations BETA USER!";
+			dispbottom "Please claim your BETA REWARDS to the Delivery Man at Albertan, Prontera, Geffen or Payon.";
+			set #beta,1;
+		}
+
+end;
+
+
+OnPCLogoutEvent:
+	/* BETA Account Event Day. */
+	if(gettime(5) == .startday || gettime(5) == .endday){
+	set .@user, getcharid(3);
+	query_sql("SELECT `char_id` FROM `char` WHERE account_id = '"+.@user+"' AND base_level >= '40'",.@char);
+	set .@checktick, gettimetick(2) - #AccTick;
+	set #BetaTick,#BetaTick + .@checktick;
+
+		set .@h,#BetaTick % 86400 / 3600;
+		set .@m,#BetaTick % 3600 / 60;
+		set .@s,#BetaTick % 60;
+	set .@h$, .@h+" hour"+((.@h <= 1)?"":"s");
+	set .@m$, .@m+" minute"+((.@m <= 1)?"":"s");
+	set .@s$, .@s+" second"+((.@s <= 1)?"":"s");
+	set .@time$,""+.@h$+" "+.@m$+" "+.@s$+"";
+
+		if(.@h >= 10 && .@char){
+			query_sql("UPDATE `login` SET `Beta_Account` = '1' WHERE account_id = '"+.@user+"'");
+		}
+	}
+end;
+
+}

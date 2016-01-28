@@ -1,0 +1,119 @@
+//=================================================================================================
+//== Guild Package System + Freebies System + Reward System 
+//== By: ==========================================================================================
+//== Noriel Calingasan ==
+//== Email: =======================================================================================
+//== noriel.calingasan@yahoo.com ==
+//== Current Version ==============================================================================
+//== 1.4 ==
+//== Working on eAthena,rAthena and Hercules.
+//-------------------------------------------------------------------------------------------------	
+//== Change-log: 1.4 Version ==
+//== A new package of Guild Package System, Freebies System and Reward System.
+//== Change and clean some of the variables in the script.
+//== Added freebies script to the package.
+//== Added bound and rental item settings to the Reward NPC.
+//== Added item refinement settings for equipments only.
+//-------------------------------------------------------------------------------------------------	
+//== Change-log: 1.3 Version ==
+//== Fixed the @gpcheck command.
+//== Clean the script and SQL database.
+//== Script is now working on Hercules SVN.
+//== Added list of items that you can claim after checking the qualified members you have.
+//-------------------------------------------------------------------------------------------------	
+//== Change-log: 1.2 Version ==
+//== All bugs are fixed and 100% safe.
+//== Added notification for players if the guild master is applying for the guild package.
+//== Added guild members divisor.
+//-------------------------------------------------------------------------------------------------	
+//== Change-log: 1.1 Version ==
+//== Added required level to avoid character abuse.
+//===== Description: ==============================================================================
+//== All registered account will be stored automatically to the database depending to your settings.
+//== All items can be claimed in the reward npc.
+//== Suggestion: Use Harmony to avoid IP Address changing.
+//=================================================================================================
+
+
+
+-	script	RewardNPC	FAKE_NPC,{
+
+
+	set .@user, getcharid(3);
+	query_sql("SELECT `userid` FROM `login` WHERE account_id = '"+.@user+"'",.@accid$);
+	query_sql("SELECT `account_user`, `reward_id`, `reward_amount`, `refine`, `bounded`, `rental`  FROM `reward_db` WHERE account_user = '"+.@accid$+"'",.@item$,.@reward_id,.@reward_amount,.@refine,.@bounded,.@rental);
+	mes .n$;
+	mes "I always provide item deliveries.";
+	next;
+		.@size = getarraysize( .@item$ );
+			for( .@i = 0; .@i < .@size; .@i++ )
+				set .@menu$,.@menu$ +" "+((.@refine[.@i] >= 1)?""+"+"+.@refine[.@i]+"":"")+" "+getitemname( .@reward_id[.@i] ) + " ["+getitemslots(.@reward_id[.@i])+"] x " + .@reward_amount[.@i] + ":";
+		.@i = select( .@menu$ ) - 1;
+		if( checkweight(.@reward_id[.@i],.@reward_amount[.@i]) == 0 )
+		{
+			mes .n$;
+			mes "It's seen you can't carry the stuff you want to claim.";
+			mes "Go and store some items on your Kafra Storage.";
+			close;
+		}
+		if(.@rental[.@i] < 1 && .@bounded[.@i] >= 1 && getiteminfo(.@reward_id[.@i],5) >= 1){
+		
+			getitembound2 .@reward_id[.@i],.@reward_amount[.@i],1,.@refine[.@i],0,0,0,0,0,.@bounded[.@i];
+		
+		}else if(.@rental[.@i] < 1 && .@bounded[.@i] >= 1 && getiteminfo(.@reward_id[.@i],2) == 0){
+		
+			getitembound2 .@reward_id[.@i],.@reward_amount[.@i],1,0,0,0,0,0,0,.@bounded[.@i];
+		
+		}else if(.@rental[.@i] < 1 && .@bounded[.@i] >= 1 && getiteminfo(.@reward_id[.@i],2) == 2){
+		
+			getitembound2 .@reward_id[.@i],.@reward_amount[.@i],1,0,0,0,0,0,0,.@bounded[.@i];
+		
+		}else if(.@rental[.@i] < 1 && .@bounded[.@i] >= 1 && getiteminfo(.@reward_id[.@i],2) == 3){
+		
+			getitembound2 .@reward_id[.@i],.@reward_amount[.@i],1,0,0,0,0,0,0,.@bounded[.@i];
+		
+		}else if(.@rental[.@i] < 1 && .@bounded[.@i] >= 1 && getiteminfo(.@reward_id[.@i],2) == 6){
+		
+			getitembound2 .@reward_id[.@i],.@reward_amount[.@i],1,0,0,0,0,0,0,.@bounded[.@i];
+		
+		}else if(.@rental[.@i] >= 1 && getiteminfo(.@reward_id[.@i],2) >= 1){
+		
+			rentitem2 .@reward_id[.@i],.@rental[.@i],1,.@refine[.@i],0,0,0,0,0; 
+	
+		}else{
+		
+			getitem2 .@reward_id[.@i],.@reward_amount[.@i],1,.@refine[.@i],0,0,0,0,0;
+		
+		}
+		
+		query_sql "DELETE FROM `reward_db` WHERE (`account_user` = '"+ .@accid$ +"' AND `reward_id` = '"+.@reward_id[.@i]+ "' AND `reward_amount` = '"+.@reward_amount[.@i]+"') limit 1";
+		next;
+		mes .n$;
+		mes "Here's your "+((.@refine[.@i] >= 1)?""+"+"+.@refine[.@i]+"":"")+" "+getitemname(.@reward_id[.@i])+" x "+.@reward_amount[.@i]+".";
+		close;
+	
+	OnInit:
+	set .n$, "^FF0000[Delivery Man]^000000";
+	end;
+
+}
+
+alberta,148,56,3	duplicate(RewardNPC)	Delivery Man#alb	4_M_ZONDAOYAJI
+payon,80,116,5	duplicate(RewardNPC)	Delivery Man#pay	4_M_ZONDAOYAJI
+prontera,105,84,5	duplicate(RewardNPC)	Delivery Man#prt	4_M_ZONDAOYAJI
+geffen,111,63,5	duplicate(RewardNPC)	Delivery Man#gef	4_M_ZONDAOYAJI
+
+/*
+CREATE TABLE IF NOT EXISTS `reward_db` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account_user` varchar(23) NOT NULL DEFAULT '',
+  `reward_id` int(10) NOT NULL,
+  `reward_amount` int(5) NOT NULL,
+  `refine` int(2) NOT NULL DEFAULT '0',
+  `bounded` int(1) NOT NULL DEFAULT '0',
+  `rental` int(23) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=MyISAM;
+*/
+

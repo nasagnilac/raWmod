@@ -1,0 +1,37 @@
+
+
+// Guard
+new_1-1,68,113,2	script	Guard#nva	8W_SOLDIER,{
+end;
+
+OnClock0000:
+if(gettime(6) == 2 && gettime(5) == 1){goto OnRemove;}
+end;
+
+OnInit:
+setwall "new_1-1",68,110,4,0,0,"nvwall";
+bindatcmd "walloff","Guard#nva::OnDoRemove",99,99;
+end;
+
+OnRemove:
+	delwall "nvwall";
+	disablenpc "Guard#nvb";
+	disablenpc "Guard#nvc";
+	disablenpc "Guard#nvd";
+	disablenpc "Guard#nva";
+end;
+
+OnDoRemove:
+	delwall "nvwall";
+	disablenpc "Guard#nvb";
+	disablenpc "Guard#nvc";
+	disablenpc "Guard#nvd";
+	disablenpc "Guard#nva";
+end;
+
+
+}
+
+new_1-1,68,112,2	duplicate(Guard#nva)	Guard#nvb	8W_SOLDIER
+new_1-1,68,111,2	duplicate(Guard#nva)	Guard#nvc	8W_SOLDIER
+new_1-1,68,110,2	duplicate(Guard#nva)	Guard#nvd	8W_SOLDIER

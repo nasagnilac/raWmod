@@ -1,0 +1,30 @@
+//===== Special Modification =================================
+//===== By: ==================================================
+//= Ragnarok World
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena, rAthena, Hercules
+//===== Description ==========================================
+//= Episode 3: Comodo Changelogs
+//============================================================
+
+
+* Adding Comodo town.
+* Adding Comodo fields.
+* Adding dungeons.
+- Prontera Culvert
+- Beach Dungeon
+* Safe cap on upgrading Armor lowered from 5 to 4
+* See Balance patch for player skills changed, and all quest skills now introduced (i.e. Holy Light)
+* New MvP Monsters: 
+- Golden Thiefg Bug = Prontera Culvert F4(prt_sewb4)
+* Many cards altered:
+- All racial cards previously -50%, now -30%
+- Raydric card previously -15% from Neutral, now -20%
+- Status-inflicting cards previously 1% chance, now 5% chance
+- Element-reduction garments previously -50% from Element, now -30%
+- Damage inducing cards that were previously +25% to monster now only +20% or +15% if size card (i.e. Skel Worker card was +25% to medium, now changed to +15% to medium)
+- Some MVP cards not implemented adjusted: Pharaoh, Maya
+- Kobold card becomes CRIT +4%, STR +1 from CRIT +5%
+

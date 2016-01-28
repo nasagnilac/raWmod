@@ -1,0 +1,16 @@
+-	script	DonateRedeem	FAKE_NPC,{
+
+OnPCLoginEvent:
+	set .@user, getcharid(3);
+	set .@charid, getcharid(0);
+	query_sql("SELECT `nameid`,`quantity` FROM `cp_redeemlog` WHERE account_id = '"+.@user+"' AND redeemed !='1'",.@DItems,.@DAmount);
+	if(!.@DItems){end;}
+	query_sql("SELECT `userid` FROM `login` WHERE account_id = '"+.@user+"'",.@userid$);
+	
+		for( set .@i, 0; .@i < getarraysize(.@DItems); set .@i, .@i + 1 ){
+			query_sql "INSERT INTO `reward_db` (`account_user`, `reward_id`, `reward_amount`) VALUES ('"+.@userid$+"',"+.@DItems[.@i]+","+.@DAmount[.@i]+")";
+		}	
+	query_sql("UPDATE `cp_redeemlog` SET `redeemed` = '1',`redemption_date`='"+gettimestr("%Y-%m/%d %H:%M:%S",21)+"',`char_id`='"+.@charid+"' WHERE account_id = '"+.@user+"' AND `redeemed` = 'null' AND `char_id` = 'null'");
+	dispbottom "You can now redeem your donated items to Delivery Man at Alberta, Prontera, Geffen or Payon.";
+end;
+}

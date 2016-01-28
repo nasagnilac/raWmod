@@ -1,0 +1,19 @@
+//===== Special Modification =================================
+//===== By: ==================================================
+//= Ragnarok World
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena, rAthena, Hercules
+//===== Description ==========================================
+//= Episode 4: Turtle Island Changelogs
+//============================================================
+
+
+
+
+
+* Adding 2-1 Job Quest.
+- Knight
+- Hunter
+- Assassin

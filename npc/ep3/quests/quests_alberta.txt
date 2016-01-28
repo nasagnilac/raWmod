@@ -1,0 +1,914 @@
+//===== Special Modification =================================
+//===== By: ==================================================
+//= Ragnarok World
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena, rAthena, Hercules
+//===== Description ==========================================
+//=
+//============================================================
+
+//== Doll Quest ============================================
+alberta,117,134,0	script	Elin	4W_KID,{
+	if (checkweight(Knife,1) == 0) {
+		mes "[Elin]";
+		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
+		close;
+	}
+	mes "[Elin]";
+	if (Sex == 1) {
+		mes "Hello~!";
+		mes "Heh heh, you're a boy, so you probably don't like dolls, right? Well, I like dolls very very much!";
+	} else {
+		mes "Hi hi~! Oh, oh, do you like dolls? I really really like dolls... Hee Hee~!";
+	}
+	next;
+	mes "[Elin]";
+	mes "You know, I really really want a new doll! I hope my daddy will give me one on my birthday...!";
+	next;
+	switch(select("Um, I hope your daddy gives you one too.:How about I give you one now?")) {
+	case 1:
+		mes "[Elin]";
+		mes "Yeah, I'm hoping";
+		mes "he gives me a Yoyo";
+		mes "doll. They're so cute!";
+		close;
+	case 2:
+		if (MaxWeight - Weight < 1000) {
+			mes "[Elin]";
+			if (Sex == 1) {
+				mes "Maybe you should put some of your stuff away first, you look like you're carrying too much, hee hee~";
+			} else {
+				mes "Do you always carry so much with you? Put some of your things away first, okay?";
+			}
+			close;
+		}
+		mes "[Elin]";
+		if (Sex == 1) {
+			mes "Oh my goodness!";
+			mes "Really? You're";
+			mes "such a sweetie~!";
+		} else {
+			mes "Will you really?";
+			mes "You're gonna give";
+			mes "me a doll? Yaaaay~";
+		}
+		next;
+		mes "[Elin]";
+		mes "What kind of doll are you going to give me? Are you really gonna give me one?";
+		next;
+		switch(select("Poring Doll:Chonchon Doll:Puppet:Rocker Doll:Spore Doll:Osiris Doll:Baphomet Doll:Raccoon Doll:Yoyo Doll:I'm as adorable as a doll.")) {
+		case 1:
+			if (countitem(Poring_Doll) >= 1) {
+				delitem Poring_Doll,1;
+				mes "[Elin]";
+				mes "Aww...";
+				mes "I have a lot";
+				mes "of Poring dolls...";
+				next;
+				mes "[Elin]";
+				if (Sex == 1) {
+					mes "But since a cute boy is giving it to me, I'll happily take it! Hee hee, soft and fluffy Poring doll~";
+				} else {
+					mes "But since a nice girl is giving it to me, I'll take it! Hee he, soft and fluffy Poring doll~";
+				}
+				next;
+				mes "[Elin]";
+				mes "Ooh, let me give you something as a little thank you. You see, I hid some candy so I can eat it without telling mommy.";
+				next;
+				getitem Candy,1;
+				mes "[Elin]";
+				if (Sex == 1) {
+					mes "I don't know if you're too old to like candy, but I guess it's okay.";
+				} else {
+					mes "So, try not to eat too much, okay? Otherwise, you might get in trouble!";
+				}
+				next;
+				mes "[Elin]";
+				mes "Thank you";
+				mes "so much for";
+				mes "the Poring doll!";
+				close;
+			} else {
+				mes "[Elin]";
+				if (Sex == 1) {
+					mes "Aww...?";
+					mes "Were you only teasing me?";
+				} else {
+					mes "Aww...";
+					mes "You're not making fun of me are you?";
+				}
+				next;
+				mes "[Elin]";
+				mes "I guess you forgot it somewhere...";
+				close;
+			}
+		case 2:
+			if (countitem(Chonchon_Doll) >= 1) {
+				delitem Chonchon_Doll,1;
+				mes "[Elin]";
+				mes "Agh--!";
+				mes "A Ch-Ch, Chonchon doll?!";
+				next;
+				mes "[Elin]";
+				if (Sex == 1) {
+					mes "But since... You're... Such a nice guy... I better take it...!";
+				} else {
+					mes "But since... Since it's a gift... I guess I'll take it...";
+				}
+				next;
+				mes "[Elin]";
+				mes "Mmm~";
+				mes "Let me give you";
+				mes "something in return...";
+				next;
+				getitem Candy_Striper,1;
+				mes "[Elin]";
+				mes "If you eat too much, your teeth will start to rot... at least, that's what Mommy says.";
+				next;
+				mes "[Elin]";
+				mes "And..";
+				mes "Uh...";
+				mes "Thank you";
+				mes "for the doll?";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Chonchon dolls are ugly anyways, but you still lied to me! How can you be so mean?!";
+				next;
+				mes "[Elin]";
+				mes "Waaaaaaaaah~~";
+				close;
+			}
+		case 3:
+			if (countitem(Stuffed_Doll) >= 1) {
+				delitem Stuffed_Doll,1;
+				mes "[Elin]";
+				mes "Wow...!";
+				mes "It looks like a bunny!";
+				next;
+				mes "[Elin]";
+				mes "I really like this Puppet~ Heh hehe! Thank you so much~";
+				next;
+				mes "[Elin]";
+				mes "Ooh ooh!";
+				mes "I have something";
+				mes "for you too!";
+				mes "Um, where";
+				mes "did it... Ah!";
+				next;
+				getitem Candy_Striper,1;
+				mes "[Elin]";
+				mes "Here it is! It's some of the candy Santa gave me. Go ahead and try some! Oh, and thank you so much for the doll!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Awww, you were only kidding? W-W-Why are you teasing me like that?";
+				next;
+				mes "[Elin]";
+				mes "^666666*Sniff...*^000000";
+				next;
+				mes "[Elin]";
+				mes "Waaaaaaaaah~~";
+				close;
+			}
+		case 4:
+			if (countitem(Grasshopper_Doll) >= 1) {
+				delitem Grasshopper_Doll,1;
+				mes "[Elin]";
+				mes "Ooh! Rocker Doll!";
+				mes "It's the Rocker that likes singing and dancing! I don't like grasshoppers, but I like this because it's cute~";
+				next;
+				mes "[Elin]";
+				mes "Hmmm, I should give you something too, huh? Let's see, I have what my grandpa gave me...";
+				next;
+				getitem Banana_Juice,7;
+				mes "[Elin]";
+				mes "Here you go! We have a lot of this at home, so I'll give it to you, okay? Oh, and thank you so much for the doll~ I love cute dolls!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Awww...";
+				next;
+				mes "[Elin]";
+				mes "You don't";
+				mes "really have a doll...?";
+				mes "I was so excited about it, too...";
+				close;
+			}
+		case 5:
+			if (countitem(Spore_Doll) >= 1) {
+				delitem Spore_Doll,1;
+				mes "[Elin]";
+				mes "It's a mushroom?";
+				mes "Ewwwwwwwww, yucky!";
+				mes "Mommy made me eat";
+				mes "mushrooms today, too...";
+				next;
+				mes "[Elin]";
+				mes "But this doll is cute, so I'll take it. But I'm still not gonna eat mushrooms! Heh heh~";
+				next;
+				getitem Well_Baked_Cookie,5;
+				mes "[Elin]";
+				mes "Hehe~ My mommy made this! It's really yummy. I love cookies, too. So try it, you'll like it! Hee hee!";
+				next;
+				mes "[Elin]";
+				mes "Thanks for";
+				mes "the doll! I'll";
+				mes "take good care of it!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Eh...?";
+				mes "You don't";
+				mes "have a doll?";
+				next;
+				mes "[Elin]";
+				mes "Awww...";
+				mes "It's not nice";
+				mes "to tease people";
+				mes "like that. ^666666*Sniff, sniff*^000000";
+				close;
+			}
+		case 6:
+			if (countitem(Osiris_Doll) >= 1) {
+				delitem Osiris_Doll,1;
+				mes "[Elin]";
+				mes "Ahhhhh!";
+				mes "What is this";
+				mes "thing?! It's so scary!";
+				next;
+				mes "[Elin]";
+				mes "I've never seen a doll like this before. Where it's from? Hmm? Since I've never seen this kind of doll before, I'm gonna show it to my daddy, too. Hehe~! He'll be surprised!";
+				next;
+				mes "[Elin]";
+				mes "Here, since you gave me such a nicely made doll, I better give you something good too.";
+				next;
+				getitem Fruit_Of_Mastela,2;
+				mes "[Elin]";
+				mes "I found it when I secretly went to the forest. I took it because it has pretty colors!";
+				if (Sex == 1) {
+					mes "Since there's two, you can share it with your girlfriend. Hee hee~!";
+				} else {
+					mes "Since there's two, you can share it with your boyfriend. Hee hee~!";
+				}
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Awww...";
+				mes "Why do you have";
+				mes "to make fun of me?";
+				close;
+			}
+		case 7:
+			if (countitem(Baphomet_Doll) >= 1) {
+				delitem Baphomet_Doll,1;
+				mes "[Elin]";
+				mes "Huh?";
+				mes "It's a little goat...";
+				next;
+				mes "[Elin]";
+				mes "It's so weird. It's cute but it's also scary at the same time. Well, since you gave me a pretty doll, I wanna give you something, too.";
+				next;
+				getitem Panacea,5;
+				mes "[Elin]";
+				mes "My daddy gave me this when I was really sick. I'm not sick anymore so you can use it when you need to. Hehehe~";
+				next;
+				mes "[Elin]";
+				mes "Hee hee~";
+				mes "Thank you for";
+				mes "the doll. I won't lose it!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "You big liar! Why are you pretending to be nice?!";
+				close;
+			}
+		case 8:
+			if (countitem(Raccoondog_Doll) >= 1) {
+				delitem Raccoondog_Doll,1;
+				mes "[Elin]";
+				mes "Hehe, it's a";
+				mes "raccoon doll.";
+				mes "It's very very cute~";
+				next;
+				mes "[Elin]";
+				mes "I don't like";
+				mes "Smokies in real life,";
+				mes "but this doll is nice!";
+				next;
+				getitem Piece_Of_Cake,3;
+				mes "[Elin]";
+				mes "Here, let me give you some cake my grandma made. It's really yummy. I don't know if you like sweets or not, but it's really good! Please try some!";
+				next;
+				mes "[Elin]";
+				mes "Hee hee~";
+				mes "Thanks for the doll.";
+				mes "I'm gonna keep it";
+				mes "in my room!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Hey! How come you have to say things like that? Are you making fun of me?!";
+				close;
+			}
+		case 9:
+			if (countitem(Monkey_Doll) >= 1) {
+				delitem Monkey_Doll,1;
+				mes "[Elin]";
+				mes "Woooooooow~!";
+				next;
+				mes "[Elin]";
+				mes "A Yoyo doll! It's so pretty! You're really gonna give it to me?! Yay! Thank you so much! I really like it! Hee hee!";
+				next;
+				mes "[Elin]";
+				mes "Since you gave";
+				mes "me such a pretty doll,";
+				mes "I wanna give you";
+				mes "something, too!";
+				next;
+				getitem Seed_Of_Yggdrasil,1;
+				mes "[Elin]";
+				mes "My daddy picked it up on his way to another town. It looks like some kind of seed. I tried planting it in front of our house but it won't grow. Do you want to try?";
+				next;
+				mes "[Elin]";
+				mes "Hehe~";
+				mes "Thanks for";
+				mes "the doll. I'll hug";
+				mes "it before I go";
+				mes "to sleep!";
+				close;
+			} else {
+				mes "[Elin]";
+				mes "Hey...";
+				mes "How come you're making fun of me?!";
+				close;
+			}
+		case 10:
+			mes "["+strcharinfo(0)+"]";
+			mes "I'm as adorable as a doll...";
+			next;
+			mes "[Elin]";
+			mes "Whaaaaaaaaaaat...?";
+			next;
+			mes "[Elin]";
+			mes "^3355FFWhat did^000000";
+			mes "^3355FFyou just say?!^000000";
+			close;
+		}
+	}
+}
+
+//== 'Boy's Cap' Quest =====================================
+alberta_in,28,145,4	script	Grampa	2_M_PHARMACIST,{
+	mes "[Grampa]";
+	mes "*Gasp*...";
+	mes "....*Gasp!*";
+	mes "Oh...";
+	mes "Some may say I've lived a full life on wine, women and song...";
+	next;
+	mes "[Grampa]";
+	mes "But my soul still burns with youthful vigor! It's just... This old body can't keep up anymore... *Hack! Wheeeeze~*";
+	next;
+	if (countitem(Tiger_Footskin) > 9) {
+		switch(select("Show him Tiger's Footskin.:Exchange it with Boys Cap.:Cancel")) {
+		case 1:
+			mes "[Grampa]";
+			mes "Ohhh~ !!";
+			mes "Is that...?";
+			mes "It is! ";
+			mes "That's Tiger's Footskin!! Even from here I can feel its powers!";
+			next;
+			mes "[Grampa]";
+			mes "One glance at it can restore your strength, one sniff and your blood boils with vigorous pleasure...";
+			next;
+			mes "[Grampa]";
+			mes "Just one bite...";
+			mes "Will revive my virility!!!! The Tiger's Footskin~!! Ohhhh! Ohh My God !! Please!!! Please give me that... Please...";
+			close;
+		case 2:
+			delitem Tiger_Footskin,10;
+			getitem Boy's_Cap,1;
+			mes "[Grampa]";
+			mes "T... Thank you !!";
+			mes "With this I can revive my youthful splendor!! I must eat this thing right away !";
+			next;
+			mes "[Grampa]";
+			mes "...";
+			mes "Nope. Still feel OLD.";
+			mes "If anything, I feel even worse. Th-there's this buzzing in my head...";
+			close;
+		case 3:
+			mes "[Grampa]";
+			mes "He...Hey, kid !! W-Wait !";
+			close;
+		}
+	} else {
+		switch(select("Talk:Cancel")) {
+		case 1:
+			mes "[Grampa]";
+			mes "Listen well...";
+			mes "You've got to take care of yourself as well as your can. Without your health, one cannot enjoy the pleasures of this mortal realm.";
+			next;
+			mes "[Grampa]";
+			mes "In order to restore my youth, I tried all sorts of things, mostly by hearsay, but nothing worked. In the end, I spent so much zeny on miracle cures, I ended up broke.";
+			next;
+			mes "[Grampa]";
+			mes "I've mostly given up on restoring my youth. But there is one hope left... Eating ^3355FFTiger's Footskin^000000, The King of Invigorators!!";
+			next;
+			mes "[Grampa]";
+			mes "Haven't you heard?! One glance would restore the color in my white hair, one sniff, even just one touch, and an 80 year-old would have another chance at youth... It's The King of Invigorators !";
+			next;
+			mes "[Grampa]";
+			mes "Before I die...";
+			mes "I wish I could eat 10 Tiger's Footskin. Then, I wouldn't have to die!";
+			next;
+			mes "[Grampa]";
+			mes "If someone helped me get them, I would give that person my precious item, ^3355FFBoys Cap^000000 without regret...";
+			close;
+		case 2:
+			mes "[Grampa]";
+			mes "Cough Cough !!";
+			mes "Tiger ....Tiger's ..... Foot ..... skin .....Cough Cough !!";
+			close;
+		}
+	}
+}
+
+//== 'Antlers' Quest =======================================
+alberta_in,122,53,4	script	Cherokee	1_M_01,{
+	mes "[Cherokee]";
+	mes "Hey there~!";
+	next;
+	mes "[Cherokee]";
+	mes "What do you think about animal horns? Oh man, I think they're great! Don't you? I love animal horns so much I became a ^3355FFHorn Collector^000000.";
+	next;
+	mes "[Cherokee]";
+	mes "I mean, there's so many things you can do with horns. You can wear them on your head, you can wear them on, um... your house? All sorts of things!";
+	next;
+	mes "[Cherokee]";
+	mes "I've collected almost every sort of horn except for one kind, and that's ^FF3355Evil Horn^000000. Some people say Evil Horn doesn't even come from an animal, but from a demon. But even so, I still want it.";
+	next;
+	mes "[Cherokee]";
+	mes "Do you...";
+	mes "Do you have ^FF3355Evil Horn^000000?";
+	mes "If you offer me 20 Evil Horns, I will give you an ^3355FFAntler^000000 from my precious collection. So, deal?";
+	next;
+	switch(select("Okay, let's deal.:Shut up, Dumbo.")) {
+	case 1:
+		if (countitem(Evil_Horn) > 19) {
+			delitem Evil_Horn,20;
+			mes "[Cherokee]";
+			mes "Whoah~! This is the first time I've ever seen a real ^FF3355Evil Horn^000000!!";
+			mes "Thank you! Here, this is my Antler for you!";
+			getitem Antler,1; // Antler
+			next;
+			mes "[Cherokee]";
+			mes "With your great help, I can make my wish come true this time. Finally, I'll be recognized as a serious horn collector. I appreciate this~!";
+			close;
+		}
+		else {
+			mes "[Cherokee]";
+			mes "Hmm...";
+			mes "You don't seem to have enough. I need ^FF335520 Evil Horns^000000 for my collection.";
+			close;
+		}
+	case 2:
+		mes "[Cherokee]";
+		mes "Well that's fine. Although you're a rude prick, I will forgive you. We'll probably speak again...";
+		close;
+	}
+}
+
+//== 'Bao Bao', 'Crescent Hairpin', 'Fashionable Glasses', 'Heart Hairpin' Quest =
+alberta,120,53,3	script	Stylish Merchant#new30	1_M_BARD,{
+	if ((countitem(Silk_Ribbon) > 0) && (countitem(Voucher_Of_Orcish_Hero) > 49)) {
+		mes "[Zic]";
+		mes "I know I know, you just want to get a Bao Bao of your own. But I can't concentrate on my work if you keep rushing me like this.";
+		next;
+		mes "^3355FF*Thud! Thud!*";
+		mes "*Ah! Kek! Smash!*";
+		mes "*Boom Boom!*^000000";
+		next;
+		delitem Silk_Ribbon,1;
+		delitem Voucher_Of_Orcish_Hero,50;
+		mes "[Zic]";
+		mes "Phew!";
+		mes "There you go~!";
+		mes "Now make good use of it!!";
+		getitem Hair_Protector,1; // Hair_Protector
+		close;
+	}
+	else if((countitem(Heart_Hair_Pin) > 0) && (countitem(Steel) > 9)) {
+		mes "[Zic]";
+		mes "Alright alright! Gosh, your Crescent Hairpin will be ready in a bit, but I can't concentrate my work if you keep rushing me like this!";
+		next;
+		mes "^3355FF*Thud! Thud!*";
+		mes "*Ah! Kek! Smash!*";
+		mes "*Boom Boom!*^000000";
+		next;
+		delitem Heart_Hair_Pin,1;
+		delitem Steel,10;
+		mes "[Zic]";
+		mes "Phew!";
+		mes "It's done~!";
+		mes "Now wear it and";
+		mes "look pretty or";
+		mes "something, yeah?";
+		getitem First_Moon_Hair_Pin,1; // First_Moon_Hair_Pin
+		close;
+	}
+	else if((countitem(Jack_A_Dandy) > 0) && (countitem(Scarlet_Dyestuffs) > 0)) {
+		mes "[Zic]";
+		mes "Yeah yeah, you came for your Fashionable Glasses. Just don't rush me, or I won't be able to concentrate on my work, alright?";
+		next;
+		mes "^3355FF*Thud! Thud!*";
+		mes "*Ah! Kek! Smash!*";
+		mes "*Boom Boom!*^000000";
+		next;
+		delitem Jack_A_Dandy,1;
+		delitem Scarlet_Dyestuffs,1;
+		mes "[Zic]";
+		mes "Phew, it's done!";
+		mes "Now go wear these and look, well, as fashionable as these glasses, I guess.";
+		getitem Fashion_Sunglass,1; // Fashion_Sunglass
+		close;
+	}
+	else if(countitem(Coral_Reef) > 1199){
+		mes "[Zic]";
+		mes "Okay okay, you want your Heart hairpin, I'm working on it. Yeesh, I can't concentrate at all if you try to rush me, you know?";
+		next;
+		mes "^3355FF*Thud! Thud!*";
+		mes "*Ah! Kek! Smash!*";
+		mes "*Boom Boom!*^000000";
+		next;
+		delitem Coral_Reef,1200;
+		mes "[Zic]";
+		mes "Phew~!";
+		mes "Finally, it's done!";
+		mes "Make me happy and";
+		mes "wear it with pride~";
+		getitem Heart_Hair_Pin,1; // Heart_Hair_Pin
+		close;
+	}
+	else {
+		mes "[Zic]";
+		mes "Yay, this cool";
+		mes "breeze is great!";
+		mes "I love the sea!";
+		next;
+		mes "[Zic]";
+		mes "...Hm?";
+		mes "Awww man. Can't you tell I'm on vacation? All I wanted was some peaceful rest.";
+		next;
+		mes "[Zic]";
+		mes "Okay okay, you win. Once again, my reputation as a master craftsman precedes me.";
+		next;
+		mes "[Zic]";
+		mes "Let me know what item you're interested in, and maybe I'll make it for you...";
+		next;
+		switch(select("Bao Bao:Cresent Hairpin:Fashionable Glasses:Heart Hairpin")) {
+		case 1:
+			mes "[Zic]";
+			mes "Sooo...";
+			mes "You want me to make you a Bao Bao, huh? Alright, alright...";
+			next;
+			mes "[Zic]";
+			mes "Let's see, I'll need...";
+			mes "1 ^0000FFSilk Ribbon^000000";
+			mes "50 ^0000FFHeroic Emlbem^000000";
+			mes "...Did you know this already?";
+			close;
+		case 2:
+			mes "[Zic]";
+			mes "So you want a Crescent Hairpin, huh? Man, I guess these things are pretty high in demand.";
+			next;
+			mes "[Zic]";
+			mes "Okay, I'll need...";
+			mes "1 ^0000FFHeart hair pin^000000";
+			mes "10 ^0000FFSteel^000000";
+			mes "...Did you know this already?";
+			close;
+		case 3:
+			mes "[Zic]";
+			mes "Weird. How'd you know I make Fashionable Glasses? I guess I must be more famous that I thought.";
+			next;
+			mes "[Zic]";
+			mes "I need to have...";
+			mes "1 ^0000FFJack a Dandy^000000";
+			mes "1 ^0000FFScarlet Dyestuffs^000000";
+			mes "...Did you know this already?";
+			close;
+		case 4:
+			mes "[Zic]";
+			mes "You want a heart hairpin, eh? Okay, I think I can work something out for you...";
+			next;
+			mes "[Zic]";
+			mes "Just gimmie...";
+			mes "1200 ^0000FFCoral Reef^000000.";
+			mes "...Did you know this already?";
+			close;
+		}
+	}
+}
+
+//== 'Hat of the Sun God', 'Sunday Hat', 'Mage Hat', 'Magician Hat' Quest =
+alberta,136,79,3	script	Hat store girl#new30	1_F_LIBRARYGIRL,{
+	mes "[Tempestra]";
+	mes "Ah, such a cool breeze. It's good to visit the seashore. I think it was the right choice to come here to take a break from my business.";
+	next;
+	mes "[Tempestra]";
+	mes "Ooh, the sun is too strong today. I'm glad that I brought my hat. I'm going to get a sunburn if my skin is exposed to the sun like this everyday.";
+	next;
+	mes "[Tempestra]";
+	mes "Oh, I'm sooo thirsty! A nice, chilled Yellow Potion would be perfect right about now~";
+	next;
+	switch(select("Let me treat you to a Yellow Potion.:What, you expect me to give you one?!")) {
+	case 1:
+		if (countitem(Yellow_Potion) > 0){
+			mes "[Tempestra]";
+			mes "Ah, thank you so much. I'm so glad to have met a friendly person like yourself.";
+			next;
+			mes "^3355FF*Gulp, gulp*^000000";
+			delitem Yellow_Potion,1;
+			next;
+			mes "[Tempestra]";
+			mes "Hyaaaaaa~~!!!";
+			mes "It's so cold!! Thank you~~~";
+			next;
+			switch(select("It's really hot, isn't it~?:You should wear your hat...")) {
+			case 1:
+				mes "[Tempestra]";
+				mes "Yeah~ it's really hot....";
+				next;
+				mes "[Tempestra]";
+				mes "I have";
+				mes "^0000FFSunday Hat^000000,";
+				mes "^0000FFMage Hat^000000 and...";
+				mes "^0000FFMagician Hat^000000 and more in my room.";
+				next;
+				mes "[Tempestra]";
+				mes "I brought these hats so I can sell them and use the money for my vacation here, but now it looks like I have to wear one~";
+				next;
+				switch(select("Sunday Hat!!?:Mage Hat?!?:Magician Hat??!??")) {
+				case 1:
+					mes "[Tempestra]";
+					mes "Oh? Didn't you know? I'm a hat merchant. Didn't I tell you that before?";
+					next;
+					mes "[Tempestra]";
+					mes "Hmm, I guess I didn't. I apologize. Ooh! You know what, I could make you a Sunday Hat~!";
+					next;
+					mes "[Tempestra]";
+					mes "I'd need...";
+					mes "^0000FF250 Fabric^000000";
+					mes "^0000FF1 Slotted Hat^000000";
+					mes "^0000FF1 Slotted Cap^000000";
+					mes "^0000FF600 Soft feather^000000";
+					next;
+					if ((countitem(Transparent_Cloth) > 249) && (countitem(Hat_) > 0) && (countitem(Cap_) > 0) && (countitem(Soft_Feather) > 599)) {
+						mes "[Tempestra]";
+						mes "What?!? ";
+						mes "You have all the items already? If there are forged items or slotted items with monster cards, then put them into your storage.";
+						next;
+						mes "[Tempestra]";
+						mes "I just want to make something for the Yellow Potion, so I won't charge you any zeny for my hat making service.";
+						switch(select("Oh, please do.:No thanks.")) {
+						case 1:
+							next;
+							mes "[Tempestra]";
+							mes "Alrighty. Just give me a moment...";
+							next;
+							mes "^3355FF*Thud! Boot!*";
+							mes "*Thic-Tac!*^000000";
+							next;
+							mes "^3355FF*Beeeeeeeh~~~*^000000";
+							next;
+							delitem Transparent_Cloth,250;
+							delitem Hat_,1;
+							delitem Cap_,1;
+							delitem Soft_Feather,600;
+							mes "[Tempestra]";
+							mes "Here it is, tee hee~";
+							mes "How about that? Do you like it?";
+							getitem Picnic_Hat,1;
+							next;
+							mes "[Tempestra]";
+							mes "Once again, thank you for your favour. I'll see you later~";
+							close;
+						case 2:
+							next;
+							mes "[Tempestra]";
+							mes "Oh alright~";
+							next;
+							mes "[Tempestra]";
+							mes "If by any chance you visit me later, I'd be more than happy to make a hat for you~";
+							next;
+							mes "[Tempestra]";
+							mes "Well then, see you later~";
+							close;
+						}
+					}
+					else {
+						mes "[Tempestra]";
+						mes "I will tell you a secret, beause you gave me the Yellow Potion~";
+						next;
+						mes "[Tempestra]";
+						mes "I'm looking forward seeing you again~~";
+						close;
+					}
+				case 2:
+					mes "[Tempestra]";
+					mes "Oh? Didn't you know? I'm a hat merchant. Didn't I tell you that before?";
+					next;
+					mes "[Tempestra]";
+					mes "Hmm, I guess I didn't. I apologize. Ooh! You know what, I could make you a Mage Hat!";
+					next;
+					mes "[Tempestra]";
+					mes "^0000FF1 Wizard Hat^000000";
+					mes "^0000FF400 Dragon Scale^000000";
+					mes "^0000FF50 Mould Powder^000000";
+					mes "^0000FF1 Elder Wilow Card^000000";
+					next;
+					if ((countitem(Star_Sparkling) > 0) && (countitem(Dragon_Scale) > 399) && (countitem(Elder_Wilow_Card) > 0) && (countitem(Mould_Powder) > 49)) {
+						mes "[Tempestra]";
+						mes "What?!? ";
+						mes "You have all the items already? If there are forged items or slotted items with monster cards, then put them into your storage.";
+						next;
+						mes "[Tempestra]";
+						mes "I just want to make something nice for you, so I won't charge you any zeny for my hat making service.";
+						switch(select("Oh, please do.:No thanks.")) {
+						case 1:
+							next;
+							mes "[Tempestra]";
+							mes "Alrighty. Just give me a moment...";
+							next;
+							mes "^3355FF*Thud! Boot!*";
+							mes "*Thic-Tac!*^000000";
+							next;
+							mes "^3355FF*Beeeeeeeh~~~*^000000";
+							next;
+							delitem Star_Sparkling,1;
+							delitem Dragon_Scale,400;
+							delitem Elder_Wilow_Card,1;
+							delitem Mould_Powder,50;
+							mes "[Tempestra]";
+							mes "Here it is, tee hee~";
+							mes "How about that?";
+							mes "Do you like it?";
+							getitem Wizardry_Hat,1;
+							next;
+							mes "[Tempestra]";
+							mes "Once again, thank you for your favour. I'll see you later~";
+							close;
+						case 2:
+							next;
+							mes "[Tempestra]";
+							mes "Oh alright~";
+							next;
+							mes "[Tempestra]";
+							mes "If by any chance you visit me later, I'd be more than happy to make a hat for you~";
+							next;
+							mes "[Tempestra]";
+							mes "Well then, see you later~";
+							close;
+						}
+					}
+					else {
+						mes "[Tempestra]";
+						mes "I will tell you a secret, beause you gave me the Yellow Potion~";
+						next;
+						mes "[Tempestra]";
+						mes "I'm looking forward seeing you again~~";
+						close;
+					}
+				case 3:
+					mes "[Tempestra]";
+					mes "Oh? Didn't you know? I'm a hat merchant. Didn't I tell you that before?";
+					next;
+					mes "[Tempestra]";
+					mes "Hmm, I guess I didn't. I apologize. Ooh! You know what, I could make you a Magician Hat!";
+					next;
+					mes "[Tempestra]";
+					mes "^0000FF1 Wizard Hat^000000";
+					mes "^0000FF450 Ancient Lips^000000";
+					mes "^0000FF1200 Solid Shell^000000";
+					next;
+					if ((countitem(Star_Sparkling) > 0) && (countitem(Lip_Of_Ancient_Fish) > 449) && (countitem(Solid_Shell) > 1199)) {
+						mes "[Tempestra]";
+						mes "What?!? ";
+						mes "You have all the items already?";
+						mes "If there are forged items or slotted items with monster cards, then put them into your storage.";
+						next;
+						mes "[Tempestra]";
+						mes "I just want to make something nice for you, so I won't charge you any zeny for my hat making service.";
+						switch(select("Please do:No thanks")) {
+						case 1:
+							next;
+							mes "[Tempestra]";
+							mes "Alrighty. Just give me a moment...";
+							next;
+							mes "^3355FF*Thud! Boot!*";
+							mes "*Thic-Tac!*^000000";
+							next;
+							mes "^3355FF*Beeeeeeeh~~~*^000000";
+							next;
+							delitem Star_Sparkling,1;
+							delitem Lip_Of_Ancient_Fish,450;
+							delitem Solid_Shell,1200;
+							mes "[Tempestra]";
+							mes "Here it is, tee hee~";
+							mes "How about that?";
+							mes "Do you like it?";
+							getitem Magician_Hat,1;
+							next;
+							mes "[Tempestra]";
+							mes "Once again, thank you for your favour. I'll see you later~";
+							close;
+						case 2:
+							next;
+							mes "[Tempestra]";
+							mes "Oh alright~";
+							next;
+							mes "[Tempestra]";
+							mes "If by any chance you visit me later, I'd be more than happy to make a hat for you~";
+							next;
+							mes "[Tempestra]";
+							mes "Well then, see you later~";
+							close;
+						}
+					}
+					else {
+						mes "[Tempestra]";
+						mes "I will tell you a secret, beause you gave me the Yellow Potion~";
+						next;
+						mes "[Tempestra]";
+						mes "I'm looking forward seeing you again~~";
+						close;
+					}
+				}
+			case 2:
+				mes "[Tempestra]";
+				mes "Well, the hats I have with me are for my customers. If I use them for myself, I'll have nothing to sell...";
+				next;
+				mes "[Tempestra]";
+				mes "I want to make something special for you because you showed me such kindness, but I don't have anything like that right now.";
+				next;
+				if ((countitem(Symbol_Of_Sun) > 0) && (countitem(Gold) > 9) && (countitem(Steel) > 39) && (countitem(Coal) > 49) && (countitem(Oridecon) > 1)) {
+					mes "[Tempestra]";
+					mes "Hmm...";
+					mes "I think I can make a special item from the items you already have.";
+					next;
+					mes "[Tempestra]";
+					mes "If there are any forged items or slotted items with monster cards, then put them into your Kafra storage.";
+					next;
+					mes "[Tempestra]";
+					mes "Heh heh...";
+					mes "I think I'll make you a Hat of the Sun God~";
+					next;
+					delitem Symbol_Of_Sun,1;
+					delitem Gold,10;
+					delitem Steel,40;
+					delitem Coal,50;
+					delitem Oridecon,2;
+					mes "[Tempestra]";
+					mes "See! Here it is!!";
+					mes "Haha, I made this quicker than the speed of light!";
+					next;
+					mes "[Tempestra]";
+					mes "...Or maybe I just gave you the one I already had, and took your items. Hee hee!";
+					getitem Helm_Of_Sun,1; // Helm_Of_Sun
+					next;
+					mes "[Tempestra]";
+					mes "Anyway, I justed want to give something really nice to you...";
+					close;
+				}
+				else {
+					mes "[Tempestra]";
+					mes "Hmm...";
+					mes "^0000FF1 Emblem of the Sun God^000000";
+					mes "^0000FF10 Gold^000000";
+					mes "^0000FF40 Steel^000000";
+					mes "^0000FF50 Coal^000000";
+					mes "^0000FF2 Oridecon^000000";
+					next;
+					mes "[Tempestra]";
+					mes "If you have these, I can make you my fantastic 'Hat of the Sun God!'";
+					next;
+					mes "[Tempestra]";
+					mes "I just want to make something really special for you, so I won't charge you any zeny to make this hat.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Tempestra]";
+			mes "Umm, I appreciate it but, I guess you just ran out of Yellow Potions?";
+			close;
+		}
+	case 2:
+		mes "[Tempestra]";
+		mes "....How rude!";
+		close;
+	}
+}

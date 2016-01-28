@@ -1,0 +1,74 @@
+//-------------------------------------------------------------------------------------------------	
+prontera,159,187,4	script	Free Rewards	4_F_KAFRA5,{
+	mes .n$;
+	if(!.available){
+		mes "Good day..";
+		mes "There is no reward(s) today.";
+		close;
+	}
+	mes "Good day..";
+	mes "Are you here to claim your reward(s)?";
+	next;
+	menu "Yes",On_Reward;
+
+
+On_Reward:
+	mes .n$;
+	if(#accountreward){
+		mes "You already claimed your rewards.";
+		mes "Please check the Delivery Man.";
+		close;
+	}
+		set .@accid, getcharid(3);		
+		query_sql ("SELECT `userid` FROM `login` WHERE `account_id` = '"+.@accid+"'",.@userid1$);
+			
+			for( set .@i, 0; .@i < getarraysize(.RItems); set .@i, .@i + 1 ){
+				query_sql "INSERT INTO `reward_db` (`account_user`, `reward_id`, `reward_amount`, `refine`, `bounded`, `rental`) VALUES ('"+.@userid1$+"',"+.RItems[.@i]+","+.RAmount[.@i]+","+.RRefine[.@i]+","+.boundtype[.@i]+","+.RRentTime[.@i]+")";
+			}
+				
+		mes "Please claim it to the Delivery Man at Albertan, Prontera, Geffen or Payon.";
+		set #accountreward,1;		
+		close;	
+
+
+
+OnInit:
+	//-------------------------------------------------------------------------------------------------	
+		set .svn,1;			// 0 - rAthena/eAthena, 1 - Hercules
+		set .available,0;
+		set .n$, "^FF0000[Free Rewards]^000000";
+		bindatcmd "freerewards","Free Rewards::OnDoEvent",80,100;		// Admin reset command
+		waitingroom "   Free Rewards",0;
+	//-------------------------------------------------------------------------------------------------	
+		setarray .RItems[0],						      		501,505,501,505;			
+		setarray .RAmount[0],			                        200, 25,200, 25;			
+		setarray .RRefine[0],		                              0,  0,  0,  0;				
+		setarray .RRentTime[0],	                                  0,  0,  0,  0;	
+
+		// 1 - Account Bound, 2 - Guild Bound, 3 - Party Bound, 4 - Character Bound (Note 3)
+		setarray .boundtype[0], 	                                         1,1,1,1; 
+	
+	//-------------------------------------------------------------------------------------------------		
+end;
+
+
+OnDoEvent:
+	mes .n$;
+	if ( compare( .@atcmd_parameters$, "reset" ) ) {
+
+				if(.svn){
+					query_sql "DELETE FROM `acc_reg_num_db` WHERE `key`='#accountreward'";
+				}else{
+					query_sql "DELETE FROM `global_reg_value` WHERE `str`='#accountreward'";
+				}
+			mes"Free Rewards has been reset.";
+		}else if ( compare( .@atcmd_parameters$, "on" ) ) {
+			set .available,1;
+			mes "Free Rewards is now enabled."; 
+		}else if ( compare( .@atcmd_parameters$, "off" ) ) {
+			set .available,0;
+			mes "Free Rewards is now disabled."; 
+		} 
+close;
+
+}
