@@ -66,6 +66,15 @@
 	#define PACKETVER 20120410
 #endif // PACKETVER
 
+// Episodes Update
+#ifndef EPISODE
+	#define EPISODE 1
+#endif
+// Episodes Files Path
+#ifndef DBPATH
+	#define DBPATH "ep1/"
+#endif
+
 //Uncomment the following line if your client is ragexeRE instead of ragexe (required because of conflicting packets in ragexe vs ragexeRE).
 //#define ENABLE_PACKETVER_RE
 #ifdef ENABLE_PACKETVER_RE

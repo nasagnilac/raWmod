@@ -442,9 +442,11 @@ packet(0x01f3,10);
 packet(0x01f4,32);
 packet(0x01f5,9);
 packet(0x01f6,34);
+#if EPISODE >= 9
 packet(0x01f7,14,clif->pAdopt_reply,0);
 packet(0x01f8,2);
 packet(0x01f9,6,clif->pAdopt_request,0);
+#endif
 packet(0x01fa,48);
 packet(0x01fb,56);
 packet(0x01fc,-1);

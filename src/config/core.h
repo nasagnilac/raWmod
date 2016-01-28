@@ -22,33 +22,6 @@
 #define CONFIG_CORE_H
 
 
-
-
-//
-/**
- * EPISODE 1 : Start of the Adventure
- **/
-//#define EPISODE1
-//#define DBPATH "ep1/"
-
-/**
- * EPISODE 2 : Lutie
- **/	
-//#define EPISODE2
-//#define DBPATH "ep2/"
-	
-/**
- * EPISODE 3 : Comodo
- **/	
-//#define EPISODE3
-//#define DBPATH "ep3/"
-
-/**
- * EPISODE 12 : Lighthalzen
- **/
-#define EPISODE12
-#define DBPATH "ep12/"
-
 /// Max number of items on @autolootid list
 #define AUTOLOOTITEM_SIZE 10
 

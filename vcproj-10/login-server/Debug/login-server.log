@@ -1,6 +1,8 @@
-﻿Build started 1/27/2016 8:54:25 PM.
+﻿Build started 1/28/2016 8:46:41 PM.
      1>Project "D:\Prestige Reborn Files\Server Files\raWmod\vcproj-10\login-server.vcxproj" on node 2 (rebuild target(s)).
-     1>InitializeBuildStatus:
+     1>_PrepareForClean:
+         Deleting file "login-server\Debug\login-server.lastbuildstate".
+       InitializeBuildStatus:
          Creating "login-server\Debug\login-server.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\src /I..\3rdparty /I..\3rdparty\mysql\include /I..\3rdparty\msinttypes\include /ZI /nologo /W3 /WX- /MP /Od /Oy- /D WIN32 /D _WIN32 /D __WIN32 /D _DEBUG /D PCRE_SUPPORT /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D FD_SETSIZE=4096 /D WITH_SQL /D LIBCONFIG_STATIC /D YY_USE_CONST /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm- /RTC1 /MTd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"login-server\Debug\\" /Fd"login-server\Debug\vc100.pdb" /Gd /TC /wd4100 /wd4800 /analyze- /errorReport:prompt ..\3rdparty\libconfig\grammar.c ..\3rdparty\libconfig\libconfig.c ..\3rdparty\libconfig\scanctx.c ..\3rdparty\libconfig\scanner.c ..\3rdparty\libconfig\strbuf.c ..\src\common\des.c ..\src\common\mutex.c ..\src\common\thread.c ..\src\login\account_sql.c ..\src\login\HPMlogin.c ..\src\login\ipban_sql.c ..\src\login\login.c ..\src\login\loginlog_sql.c ..\src\common\conf.c ..\src\common\core.c ..\src\common\console.c ..\src\common\db.c ..\src\common\ers.c ..\src\common\HPM.c ..\src\common\memmgr.c ..\src\common\md5calc.c ..\src\common\nullpo.c ..\src\common\random.c ..\src\common\showmsg.c ..\src\common\socket.c ..\src\common\sql.c ..\src\common\strlib.c ..\src\common\sysinfo.c ..\src\common\timer.c ..\src\common\utils.c ..\3rdparty\mt19937ar\mt19937ar.c
@@ -117,4 +119,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.93
+Time Elapsed 00:00:03.33

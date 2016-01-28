@@ -3727,26 +3727,7 @@ void map_reloadnpc(bool clear) {
 	if (clear)
 		npc->addsrcfile("clear"); // this will clear the current script list
 
-#ifdef EPISODE1
-	map->reloadnpc_sub("npc/ep1/scripts_main.conf");
-#endif
-
-#ifdef EPISODE2
-	map->reloadnpc_sub("npc/ep2/scripts_main.conf");
-#endif
-
-#ifdef EPISODE3
-	map->reloadnpc_sub("npc/ep3/scripts_main.conf");
-#endif
-
-#ifdef EPISODE4
-	map->reloadnpc_sub("npc/ep4/scripts_main.conf");
-#endif
-
-#ifdef EPISODE12
-	map->reloadnpc_sub("npc/ep12/scripts_main.conf");
-#endif
-
+	map->reloadnpc_sub("npc/"DBPATH"scripts_main.conf");
 	map->reloadnpc_sub("npc/update/scripts_main.conf");
 
 	// Append extra scripts

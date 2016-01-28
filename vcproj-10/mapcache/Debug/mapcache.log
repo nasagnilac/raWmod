@@ -1,6 +1,8 @@
-﻿Build started 1/27/2016 8:54:25 PM.
+﻿Build started 1/28/2016 8:46:41 PM.
      1>Project "D:\Prestige Reborn Files\Server Files\raWmod\vcproj-10\mapcache.vcxproj" on node 4 (rebuild target(s)).
-     1>InitializeBuildStatus:
+     1>_PrepareForClean:
+         Deleting file "mapcache\Debug\mapcache.lastbuildstate".
+       InitializeBuildStatus:
          Creating "mapcache\Debug\mapcache.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\src /I..\3rdparty /I..\3rdparty\zlib\include /I..\3rdparty\msinttypes\include /ZI /nologo /W3 /WX- /MP /Od /Oy- /D WIN32 /D _WIN32 /D __WIN32 /D _DEBUG /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D MINICORE /D LIBCONFIG_STATIC /D YY_USE_CONST /D _MBCS /Gm- /RTC1 /MTd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"mapcache\Debug\\" /Fd"mapcache\Debug\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\src\common\core.c ..\src\common\console.c ..\src\common\des.c ..\src\common\grfio.c ..\src\common\memmgr.c ..\src\common\showmsg.c ..\src\common\strlib.c ..\src\common\sysinfo.c ..\src\common\utils.c ..\src\common\nullpo.c ..\src\tool\mapcache.c
@@ -55,4 +57,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.81
+Time Elapsed 00:00:02.91
