@@ -1,4 +1,4 @@
-﻿Build started 1/28/2016 8:46:41 PM.
+﻿Build started 1/28/2016 10:19:16 PM.
      1>Project "D:\Prestige Reborn Files\Server Files\raWmod\vcproj-10\map-server.vcxproj" on node 3 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "map-server\Debug\map-server.lastbuildstate".
@@ -230,4 +230,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.97
+Time Elapsed 00:00:05.11

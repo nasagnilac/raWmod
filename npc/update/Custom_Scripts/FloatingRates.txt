@@ -1,0 +1,117 @@
+//===== rAthena Script =======================================
+//= Floating Server Rates
+//===== By: ==================================================
+//= Lupus
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= It's a simply example of setbattleflag
+//= This script will change your server rates from 1x to 1.5x every 6 hours
+//= Note: It doesn't affect Card granted drops, MVP & Treasure Chests drops ^_-
+//=       It also doesn't affect CARD drops, because they are just 0.01%
+//===== Additional Comments: =================================
+//= You can make incredible scripts with 'setbattleflag'!
+//============================================================
+
+-	script	FloatingRates	-1,{
+
+
+	OnClock0000:
+	if(gettime(4) == 4){
+	//Base exp
+	setbattleflag("base_exp_rate",100*.emode);
+	//Job exp
+	setbattleflag("job_exp_rate",100*.emode);
+	//Drops
+	setbattleflag("item_rate_common",100*.dmode);
+	setbattleflag("item_rate_heal",100*.dmode);
+	setbattleflag("item_rate_use",100*.dmode);
+	setbattleflag("item_rate_equip",100*.dmode);
+	//we don't change card drops rate, because these values won't change them anyway
+	atcommand "@reloadmobdb";
+	
+	announce "Citizens of Midgard, Weekends X"+.emode+" EXP and X"+.dmode+" DROP has started.",bc_all;
+	}
+
+	else if(gettime(4) == 5 ){
+	//Base exp
+	setbattleflag("base_exp_rate",100*.edefault);
+	//Job exp
+	setbattleflag("job_exp_rate",100*.edefault);
+	//Drops
+	setbattleflag("item_rate_common",100*.ddefault);
+	setbattleflag("item_rate_heal",100*.ddefault);
+	setbattleflag("item_rate_use",100*.ddefault);
+	setbattleflag("item_rate_equip",100*.ddefault);
+	//we don't change card drops rate, because these values won't change them anyway
+	atcommand "@reloadmobdb";
+	
+	announce "Citizens of Midgard, Weekends X"+.emode+" EXP and X"+.dmode+" DROP has ended.",bc_all;
+	}
+	end;
+
+/////////////////////////////////////////////////
+////////////                  /////////////////////////
+///////////////////////////        /////////////////
+
+	OnDay1216:
+		goto started;
+		end;
+
+	OnDay1225:
+		goto ended;
+		end;
+
+started:
+OnStart:
+	//Base exp
+	setbattleflag("base_exp_rate",100*.emode);
+	//Job exp
+	setbattleflag("job_exp_rate",100*.emode);
+	//Drops
+	setbattleflag("item_rate_common",100*.dmode);
+	setbattleflag("item_rate_heal",100*.dmode); 
+	setbattleflag("item_rate_use",100*.dmode);
+	setbattleflag("item_rate_equip",100*.dmode);
+	//we don't change card drops rate, because these values won't change them anyway
+	atcommand "@reloadmobdb";
+	
+	announce "Citizens of Midgard, Weekends X"+.emode+" EXP and X"+.dmode+" DROP has started.",bc_all;
+end;
+
+ended:
+	//Base exp
+	setbattleflag("base_exp_rate",100*.edefault);
+	//Job exp
+	setbattleflag("job_exp_rate",100*.edefault);
+	//Drops
+	setbattleflag("item_rate_common",100*.ddefault);
+	setbattleflag("item_rate_heal",100*.ddefault);
+	setbattleflag("item_rate_use",100*.ddefault);
+	setbattleflag("item_rate_equip",100*.ddefault);
+	//we don't change card drops rate, because these values won't change them anyway
+	atcommand "@reloadmobdb";
+	
+	announce "Citizens of Midgard, Weekends X"+.emode+" EXP and X"+.dmode+" DROP has ended.",bc_all;
+end;
+
+/////////////////////////////////////////////////
+////////////                  /////////////////////////
+///////////////////////////        /////////////////
+
+
+
+OnInit:
+	// Default Settings
+	.edefault = 50;
+	.ddefault = 10;
+	// Mode to be changed
+	.emode = 100;
+	.dmode = 20;
+	bindatcmd "expstart", strnpcinfo(0)+"::OnStart", 99,100;
+end;
+
+	
+}

@@ -1,0 +1,164 @@
+//-------------------------------------------------------------------------------------------------	
+-	script	LoginEvent	HIDDEN_NPC,{
+
+OnInit:
+//-------------------------------------------------------------------------------------------------	
+	set .svn,1;			// 0 - rAthena/eAthena, 1 - Hercules
+	set .login,0;
+	bindatcmd "loginevent","LoginEvent::OnDoEvent",80,100;		// Admin reset command
+//-------------------------------------------------------------------------------------------------	
+end;
+
+OnDoEvent:
+		if ( compare( .@atcmd_parameters$, "reset" ) ) {
+
+				if(.svn){
+					query_sql "DELETE FROM `acc_reg_num_db` WHERE `key`='#loginevent'";
+				}else{
+					query_sql "DELETE FROM `global_reg_value` WHERE `str`='#loginevent'";
+				}
+			dispbottom "Login Event has been reset.";
+			end;
+		}else if ( compare( .@atcmd_parameters$, "on" ) ) {
+			set .login,1;
+			dispbottom "Login Event is now enabled."; 
+			end;
+		}else if ( compare( .@atcmd_parameters$, "off" ) ) {
+			set .login,0;
+			dispbottom "Login Event is now disabled."; 
+			end;
+		} 
+end;
+
+OnPCLoginEvent:
+if(.login){
+if(#loginevent){end;}
+//-------------------------------------------------------------------------------------------------	
+	setarray .@LEItems[0],						      14545,31257,14003;			
+	setarray .@LEAmount[0],			                                  5,1,30;			
+	setarray .@LERefine[0],		                                          0,0,0;				
+	setarray .@LERentTime[0],	                                          0,0,0;	
+
+	// 1 - Account Bound, 2 - Guild Bound, 3 - Party Bound, 4 - Character Bound (Note 3)
+	setarray .@boundtype[0], 	                                         1; 
+	
+//-------------------------------------------------------------------------------------------------		
+	set .@faccid, getcharid(3);		
+			query_sql ("SELECT `userid` FROM `login` WHERE `account_id` = '"+.@faccid+"'",.@userid1$);
+			
+				for( set .@i, 0; .@i < getarraysize(.@LEItems); set .@i, .@i + 1 ){
+
+						query_sql "INSERT INTO `reward_db` (`account_user`, `reward_id`, `reward_amount`, `refine`, `bounded`, `rental`) VALUES ('"+.@userid1$+"',"+.@LEItems[.@i]+","+.@LEAmount[.@i]+","+.@LERefine[.@i]+","+.@boundtype[.@i]+","+.@LERentTime[.@i]+")";
+
+				}
+				
+				dispbottom "Login event reward has been sent. Please claim it to the Reward NPC at Alberta.";
+				set #loginevent,1;
+				end;
+}
+end;	
+
+}
+
+
+//-------------------------------------------------------------------------------------------------	
+-	script	LoginEvent#2	HIDDEN_NPC,{
+
+OnInit:
+//-------------------------------------------------------------------------------------------------	
+	set .svn,1;			// 0 - rAthena/eAthena, 1 - Hercules
+//-------------------------------------------------------------------------------------------------	
+end;
+
+OnClock0300:
+OnClock0900:
+OnClock1500:
+OnClock2100:
+goto start;
+start:
+	if(.svn){
+		query_sql "DELETE FROM `acc_reg_num_db` WHERE `key`='#loginevent'";
+	}else{
+		query_sql "DELETE FROM `global_reg_value` WHERE `str`='#loginevent'";
+	}
+	announce "[Login Event] It's time to get your free potions at Alberta(148,56) Reward NPC. Just re-login and potions will appear in the Reward NPC.",0;
+	
+end;
+
+OnClock0400:
+OnClock1000:
+OnClock1600:
+OnClock2200:
+goto ending;
+ending:
+	announce "[Login Event] It's already the cutoff for free potions. See you again in the next (03:00 ~ 04:00) (09:00 ~ 10:00) (15:00 ~ 16:00) (21:00 ~ 22:00) server time.",0;
+end;
+ 
+
+
+
+
+OnPCLoginEvent:
+if(gettime(3)==3 || gettime(3)==9 || gettime(3)==15 || gettime(3)==21){
+if(#loginevent){end;}
+//-------------------------------------------------------------------------------------------------	
+	setarray .@LEItems[0],						     11501,     11502,11501,     11502;			
+	setarray .@LEAmount[0],			                                25,        15,   25,      15;			
+	setarray .@LERefine[0],		                                         0,         0,    0,       0;				
+	setarray .@LERentTime[0],	                                         0,         0,    0,       0;	
+
+	// 1 - Account Bound, 2 - Guild Bound, 3 - Party Bound, 4 - Character Bound (Note 3)
+	setarray .@boundtype[0], 	                                       1,      1,      1,      1; 
+
+	
+//-------------------------------------------------------------------------------------------------		
+	set .@faccid, getcharid(3);		
+			query_sql ("SELECT `userid` FROM `login` WHERE `account_id` = '"+.@faccid+"'",.@userid1$);
+			query_sql ("SELECT `guild_id` FROM `guild_registration` ",.@guild);
+				for(set .@i,0; .@i < .@guild; set .@i,.@i+1){
+					if(getcharid(2) == .@guild[.@i]){
+							set	.@rate,1;
+						}
+					}
+				for( set .@i, 0; .@i < getarraysize(.@LEItems); set .@i, .@i + 1 ){
+
+						query_sql "INSERT INTO `reward_db` (`account_user`, `reward_id`, `reward_amount`, `refine`, `bounded`, `rental`) VALUES ('"+.@userid1$+"',"+.@LEItems[.@i]+","+(.@LEAmount[.@i]*(1+.@rate))+","+.@LERefine[.@i]+","+.@boundtype[.@i]+","+.@LERentTime[.@i]+")";
+
+				}
+				
+				dispbottom "Login event reward has been sent. Please claim it to the Reward NPC at Alberta.";
+				set #loginevent,1;
+				end;
+} 
+end;	
+
+}
+
+
+-	script	Free Usable	HIDDEN_NPC,{
+
+
+OnInit:
+        setarray .Items[0],12264,1,12263,1; // <item id>,<item amount>
+        end;
+
+
+OnPCLoginEvent: 
+	query_sql ("SELECT `guild_id` FROM `guild_registration` ",.@guild);
+	if(!.@guild){
+		.@time_interval = 3; // n day(s)
+	}
+	for(set .@i,0; .@i < .@guild; set .@i,.@i+1){
+		if(getcharid(2) == .@guild[.@i]){ 
+			.@time_interval = 1; // n day(s)
+		}
+	}
+
+	
+        if ( gettimetick(2) < #timer ) { end; }
+        for ( set .@i, 0; .@i < getarraysize(.Items);set .@i, .@i + 2 ) {
+            getitem .Items[.@i], .Items[.@i+1];
+            #timer = gettimetick(2) + ( .@time_interval * 86400 );
+        }
+
+}

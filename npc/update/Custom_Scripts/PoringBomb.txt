@@ -1,0 +1,165 @@
+//===== eAthena Script =====================================
+//= Run or Die ( aka. Poring Bomb Event )
+//===== By: ================================================
+//= AnnieRuru
+//===== Current Version: ===================================
+//= 2.3
+//===== Compatible With: ===================================
+//= Hercules 2015-11-15
+//= DO NOT USE THIS SCRIPT IF YOUR HERCULES COMPILE BEFORE THIS DATE
+//===== Description: =======================================
+//= Avoid the poring bomb at all cost !
+//===== Topic ==============================================
+//= http://herc.ws/board/topic/11010-
+//===== Additional Comments: ===============================
+//= Its time to use queue iterator script commands !
+//==========================================================
+
+prontera,147,168,5	script	Run Or Die	1_F_MARIA,{
+	if ( getgmlevel() >= 1 ) { // gm level to bypass the registration
+		warp .wmap$, 106,129;
+		end;
+	}
+	if ( getmapusers(.wmap$)  >= .max ) { // 100 participant max
+		mes "[Run Or Die]";
+		mes "I'm sorry, the room is full";
+		close;
+	}
+	warp .wmap$, 106,129;
+	end;
+OnInit:
+	.max = 100;
+	.wmap$ = "poring_w01";
+end;
+}
+
+-	script	runordie	FAKE_NPC,{
+OnInit:
+	.min = 2;
+	.dmap$ = "prontera";
+	.wmap$ = "poring_w01";
+	disablenpc "Run Or Die";
+	disablenpc "Poring Bomb Manager";
+	bindatcmd "runordie", strnpcinfo(0)+"::OnStart", 99,100;
+	.onesec = 1000; // use for script debugging... set to 100 to make the announcement run faster
+	end;
+OnStart:
+OnClock0000: // set your time here
+OnClock0600:
+OnClock1200:
+OnClock1800:
+
+	enablenpc "Run Or Die";
+	mapwarp .wmap$,"SavePoint", 0, 0;
+	killmonsterall .wmap$;
+	.start = true;
+	announce "Run Or Die!!!: Are you ready to join Run Or Die event???", bc_all;
+	sleep 10 * .onesec;
+	announce "Run Or Die: For Those who dare to join please proceed at 'prontera 147 168' to participate", bc_all;
+	sleep 10 * .onesec;
+	announce "Run Or Die: Register time will be closed after 1 minute", bc_all;
+	sleep 20 * .onesec;
+	announce "Run Or Die: Last 30 second", bc_all;
+	sleep 10 * .onesec;
+	announce "Run Or Die: Rush in 'prontera 147 168' to join", bc_all;
+	sleep 10 * .onesec;
+	announce "Run Or Die: Last 10 second to register", bc_all;
+	sleep 5 * .onesec;
+	announce "Run Or Die: 5", bc_all;
+	sleep 1000;
+	announce "Run Or Die: 4", bc_all;
+	sleep 1000;
+	announce "Run Or Die: 3", bc_all;
+	sleep 1000;
+	announce "Run Or Die: 2", bc_all;
+	sleep 1000;
+	announce "Run Or Die: 1", bc_all;
+	sleep 1000;
+	announce "Run Or Die: Time is up...I will come again 6 hours later..", bc_all;
+	disablenpc "Run Or Die";
+	if ( getmapusers(.wmap$)  < .min ) { // cannot start event if nobody joins(0) or just having (1) player
+		announce "Run Or Die: Not enough players to start the event...", bc_all;
+		mapwarp .wmap$,"SavePoint", 0, 0;
+		.start = false;
+		end;
+	}
+	mapannounce .wmap$, "Welcome to Run Or Die event", bc_map;
+	sleep 3 * .onesec;
+	mapannounce .wmap$, "This is an easy event", bc_map;
+	sleep 3 * .onesec;
+	mapannounce .wmap$, "Just stay AWAY from anything that you think its DANGEROUS!!", bc_map;
+	sleep 3 * .onesec;
+	mapannounce .wmap$, "Stay alive as long as YOU CAN!!!!", bc_map;
+	sleep 3 * .onesec;
+	mapannounce .wmap$, "The LAST SURVIVOR will be the WINNER", bc_map;
+	sleep 3 * .onesec;
+	mapannounce .wmap$, "event will start in 3", bc_map;
+	sleep 1 * .onesec;
+	mapannounce .wmap$, "2...", bc_map;
+	sleep 1 * .onesec;
+	mapannounce .wmap$, "1...", bc_map;
+	sleep 1 * .onesec;
+	mapannounce .wmap$, "Its time to run !!", bc_map;
+	while ( .start ) {
+	
+		.@more += rand(1,2);
+		monster .wmap$, 0,0, "Come On Baby!!!", BOMBPORING, 2 + .@more, "", 0;
+		monster .wmap$, 0,0, "Come On Baby!!!", BOMBPORING, 2 + .@more, "", 1;
+		monster .wmap$, 0,0, "Come On Baby!!!", BOMBPORING, 2 + .@more, "", 2;
+		sleep 3000;
+
+	if ( getmapusers(.wmap$)  == 1 ){
+		enablenpc "Poring Bomb Manager";
+		mapannounce .wmap$,"Poring Bomb Manager: We have a winner! talk to me and get your reward.",0;
+		killmonsterall .wmap$;
+		.start = false;
+	}
+
+	}
+	end;
+
+
+
+OnPCDieEvent:
+	getmapxy(.@map$,.@x,.@y,0);
+	if(.@map$==.wmap$)
+	{
+		
+		mapannounce .wmap$,""+strcharinfo(0)+" died, and out of the game!.",0;
+		sleep2 1000;
+		warp "SavePoint", 0, 0;
+	}
+
+
+end;
+
+}
+
+poring_w01,98,125,4	script	Poring Bomb Manager	1_M_01,{
+  			
+            mes "Please tell me your name";
+            next;
+            input .@name$;
+            if(.@name$ != strcharinfo(0)) {
+                    mes "[Poring Catcher]";
+                    mes "Are you sure thats your character name?";
+                    close;
+            }
+		mes "[Poring Catcher]";
+		mes "Congrats. You've won.";
+		atcommand "@cash 50"; // winner prize
+		announce "Run Or Die: Congratulations ~ the winner is "+ strcharinfo(0), bc_all;
+		close2;
+		warp "SavePoint", 0, 0;
+		disablenpc "Poring Bomb Manager";
+		end;
+}
+           
+poring_w01	mapflag	nowarp
+poring_w01	mapflag	nowarpto
+poring_w01	mapflag	noteleport
+poring_w01	mapflag	nosave	SavePoint
+poring_w01	mapflag	noskill
+poring_w01	mapflag	nomemo
+poring_w01	mapflag	nopenalty
+poring_w01	mapflag	noicewall

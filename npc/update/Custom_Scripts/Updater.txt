@@ -1,0 +1,26 @@
+-	script	updated	HIDDEN_NPC,{
+
+OnInit:
+	bindatcmd "itemupdate", strnpcinfo(0)+"::OnStart", 99,100;
+end;
+
+
+OnStart:
+	mes "[Item Updated]";
+	mes "Input the itemid you needed to update.";
+	next;
+	input .@old;
+	mes "[Item Updated]";
+	mes "Input the new itemdid you want to change.";
+	next;
+	input .@new;
+	mes "[Item Updated]";
+	mes "Well done.. itemid ^ff0000"+.@old+"^000000 is now updated to ^ff0000"+.@new+"^000000";
+	close2;
+	query_sql "update inventory set `nameid` = '"+.@new+"' where `nameid` = '"+.@old+"'";
+	query_sql "update cart_inventory set `nameid` = '"+.@new+"' where `nameid` = '"+.@old+"'";
+	query_sql "update storage set `nameid` = '"+.@new+"' where `nameid` = '"+.@old+"'";
+	atcommand "@kickall";
+end;
+
+}

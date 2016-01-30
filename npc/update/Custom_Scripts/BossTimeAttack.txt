@@ -1,0 +1,612 @@
+prontera,164,171,3	script	Paradox	4_M_BOSSCAT,{
+	// Validate the party leader first
+	if (getpartyleader( getcharid(1), 2 ) != getcharid(0)) {
+		mes "[Paradox]";
+		mes "Sorry, but this NPC can only be used by the Party Leader";
+		goto AbortScript;
+	} 
+	else 
+	{
+		// Check Leader's class...Then do deeper scan later against members
+	    // Creator | Soul Linker | Star Gladiator | Gunslinger | Ninja
+		if (Class == 4019 || Class == 4049 || Class == 4047 || Class == 24 || Class == 25) {
+			mes "[Paradox]";
+			mes "Sorry, but your class is not allowed here...";
+			goto AbortScript;
+		} else {
+			// Limit 1 Party Leader talking at a time
+			// We're checking if the attached RID is > 0...If it is, the NPC is in use
+			if ( getd( ".jnpc_"+getnpcid(0) ) != 0 ) {
+				getmapxy(@mapname$,@mapx,@mapy,0,rid2name(getd( ".jnpc_"+getnpcid(0) )));
+				if (@mapname$ != .mapNPC$) {
+					stopnpctimer;
+					setd( ".jnpc_"+getnpcid(0) ),0;
+				}
+			}
+			// If we get through this check then we're fine. We can use the NPC
+			if ( getd( ".jnpc_"+getnpcid(0) ) || $@locked == 1 ) {
+				mes "[Paradox]";
+				mes "I am currently being used. Try again some time later...";
+			} else {
+				setd( ".jnpc_"+getnpcid(0) ),getcharid(3);
+				attachnpctimer;
+				initnpctimer;
+				mes "[Paradox]";
+				mes "Boss Time Attack is a event that you must eliminate "+getarraysize(.MvPList)+" MvPs with a party member of "+.register_min+".";
+				mes "  ";
+				mes "Disabled Class: "+jobname(4019)+", "+jobname(4049)+", "+jobname(4047)+", "+jobname(24)+", "+jobname(25)+".";
+				mes "  ";
+				mes "^0000ffRequirements^000000";
+				if(.register_cost){
+				mes "Zeny: "+.register_cost;
+				}
+				if(.register_item){
+				mes "Item: "+getitemname(.register_item)+" x 1";
+				}	
+				mes "  ";	
+				mes "Do you want to play a cool time attack game?";
+				next;
+				switch(select("~ No:~ Yes")) {
+					case 1:
+						mes "[Paradox]";
+						mes "See you later...";
+						stopnpctimer;
+						setd( ".jnpc_"+getnpcid(0) ),0;
+						break;
+					case 2:
+
+						mes "[Paradox]";
+						// Logic to check if there are any duplicate classes
+						
+						// Check min party requirements
+						// get the charID and accountID of character's party members
+						getpartymember getcharid(1), 1;
+						getpartymember getcharid(1), 2;
+						
+						if ( $@partymembercount != .register_min ) {
+							mes "Please form a party of "+ .register_min +" to continue";
+							stopnpctimer;
+							setd( ".jnpc_"+getnpcid(0) ),0;
+							goto AbortScript;
+						}
+						
+						// loop through both and use 'isloggedin' to count online party members
+						for ( set .@i, 0; .@i < $@partymembercount; set .@i, .@i +1 ) {
+							if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) ) {
+								set .@count_online, .@count_online +1 ;
+
+							}
+						}
+
+
+
+						
+						// We search accountID & charID because a single party can have multiple 
+						// characters from the same account. Without searching through the charID, 
+						// if a player has 2 characters from the same account inside the party but 
+						// only 1 char online, it would count their online char twice.
+
+						if ( .@count_online != .register_min ) {
+							mes "All your party members must be online to continue";
+							stopnpctimer;
+							setd( ".jnpc_"+getnpcid(0) ),0;
+							goto AbortScript;
+						}
+						
+						if ( callfunc("party_has_duplicate_job") ) {
+							mes "It seems that someone in the party has the same class than another member. Please check the requirements...";
+							stopnpctimer;
+							setd( ".jnpc_"+getnpcid(0) ),0;
+						} else {
+							// Check Dupe Classes
+							// i.e below
+							// Disable Class
+							// Priest - High Priest
+							// Monk - Champion
+							// 
+							// Enable Class
+							// Priest - Monk
+							// High Priest - Champion
+							
+							//	get party info
+							getpartymember getcharid(1), 1;
+							getpartymember getcharid(1), 2;
+							
+							// save the attachrd RID. going to use attachrid this time
+							.@origin = getcharid(3);
+							
+							// loop through these members and check for duplicate class
+							for ( .@i = 0; .@i < $@partymembercount; ++.@i ) {
+								if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) ) {
+									attachrid $@partymemberaid[.@i];
+									if(strcharinfo(3) == "pvp_2vs2"){ set .@check,.@check+1;}
+									for ( .@j = 0; .@j < .@checkjobarraysize; ++.@j ) { // loop with saved job ID
+										if ( .@checkjobarray[.@j] == BaseJob ) { // if found
+											.@duplicatejob[.@duplicatejobsize++] = BaseJob;
+											break; // break if found duplicates
+										}
+									}
+									.@checkjobarray[.@checkjobarraysize++] = BaseJob;
+								}
+							}
+							
+							// attachrid back ... surely you don't want the message display on other party members
+							attachrid .@origin;
+								if(.@check){
+									mes "[Paradox]";
+									mes "Some of your party members are still watching.";
+									break;
+								}
+							if ( .@duplicatejobsize ) { // if there are duplicate jobs, the array size is more than 0
+								mes "Duplicate jobs found...Please come back later.";
+								for ( .@i = 0; .@i < .@duplicatejobsize; ++.@i )
+								{
+									mes "BaseJob = "+ jobname( .@duplicatejob[.@i] );
+								}
+								stopnpctimer;
+								setd( ".jnpc_"+getnpcid(0) ),0;
+							} else {
+								// Check Zeny Amount
+								if(.register_cost){
+
+									if(Zeny < .register_cost) {
+										mes "Sorry you need " + .register_cost + " zeny";
+										stopnpctimer;
+										setd( ".jnpc_"+getnpcid(0) ),0;
+									}
+
+								} else if(.register_item){
+
+									if(countitem(.register_item) < 1) {
+										mes "Sorry you need " + getitemname(.register_cost) + " x 1";
+										stopnpctimer;
+										setd( ".jnpc_"+getnpcid(0) ),0;
+									}
+
+								} 
+									if(.register_cost){
+										// Remove Zeny
+										set Zeny, Zeny - .register_cost;
+									}
+
+									if(.register_item){
+										// Remove Zeny
+										delitem .register_item,1;
+									}
+									
+									// Remove the attached RID
+									// Warp the party and start the event
+									// Map Party Name
+									mes "OK, no problem with your party, let's go !";
+									stopnpctimer;
+									set $@locked,1;
+									setd( ".jnpc_"+getnpcid(0) ),0;
+									set $NPCParty$,strcharinfo(1);
+									set $PartyChecker,getcharid(1);
+									warpparty .mapName$,48,30,getcharid(1);
+									announce "[Paradox] Party [ "+getpartyname(getcharid(1))+" ] is now ready for Boss Time Attack. For those who wanted to watch, talk to the MvP kafra at the middle of prontera.",16;
+									donpcevent "Paradox::OnEnable";
+								
+							}
+						}
+						break;
+				}
+			}
+			close;
+			// Timers utilized to clear the attached RID
+			if ($@locked != 1) {
+				OnTimer1000:
+					.@is_occupied = getd( ".jnpc_"+getnpcid(0) );
+					if ( .@is_occupied && .@is_occupied == playerattached() ) {
+						attachnpctimer;
+						initnpctimer;
+					} else {
+					OnTimerQuit:
+						stopnpctimer;
+						setd( ".jnpc_"+getnpcid(0) ),0;
+					}
+					end;
+				}
+			}
+		}
+		end;
+	// =====================================================================================
+	// - End Monster Labels -
+	// =====================================================================================
+	OnEnable:
+		if (.globalAnnounce == 1) {
+			sleep2 5000;
+			announce "Boss Time Attack: We will start in 5",0;
+			sleep2 1500;
+			announce "Boss Time Attack: 4",0;
+			sleep2 1500;
+			announce "Boss Time Attack: 3",0;
+			sleep2 1500;
+			announce "Boss Time Attack: 2",0;
+			sleep2 1500;
+			announce "Boss Time Attack: 1",0;
+			sleep2 1500;
+			announce "Boss Time Attack: GO!",0;
+			sleep2 1500;
+
+		} else {
+			sleep2 5000;
+			mapannounce .mapName$,"Boss Time Attack: We will start in 5",0;
+			sleep2 1500;
+			mapannounce .mapName$,"Boss Time Attack: 4",0;
+			sleep2 1500;
+			mapannounce .mapName$,"Boss Time Attack: 3",0;
+			sleep2 1500;
+			mapannounce .mapName$,"Boss Time Attack: 2",0;
+			sleep2 1500;
+			mapannounce .mapName$,"Boss Time Attack: 1",0;
+			sleep2 1500;
+			mapannounce .mapName$,"Boss Time Attack: GO!",0;
+			sleep2 1500;
+
+		}
+		killmonster .mapName$,"All";
+		sleep2 1000;
+		set .MOBStartTick, gettimetick(2);
+		set .MOBKillTime, 0;
+		set .MOBKillCount, 0;
+		set .i,0;
+		goto OnSpawn;
+		end;
+		
+	OnSpawn:
+		if (.globalAnnounce == 1) {
+		announce "Boss Time Attack: "+getmonsterinfo(.MvPList[.i],0)+" has been summoned.",0;
+	    } else {
+			mapannounce .mapName$,"Boss Time Attack: "+getmonsterinfo(.MvPList[.i],0)+" has been summoned.",0;
+		}
+		monster .mapName$,.spawnCordX,.spawnCordY,getmonsterinfo(.MvPList[.i],0),.MvPList[.i],1,"Paradox::OnBTAKilled";
+		end;
+
+	OnBTAKilled:
+		set .MOBKillCount, .MOBKillCount + 1;
+		set .i,.i + 1;
+		if(.MOBKillCount < getarraysize(.MvPList)){
+			goto OnSpawn;
+		}else{
+			goto OnBTAKilledall;
+		}
+		end;
+
+	OnBTAKilledall:
+		set .@k,gettimetick(2) - .MOBStartTick;
+				set .@h,.@k % 86400 / 3600;
+				set .@m,.@k % 3600 / 60;
+				set .@s,.@k % 60;
+		set .@h$, .@h+" hour"+((.@h <= 1)?"":"s");
+		set .@m$, .@m+" minute"+((.@m <= 1)?"":"s");
+		set .@s$, .@s+" second"+((.@s <= 1)?"":"s");
+		set .@time$,""+.@h$+" "+.@m$+" "+.@s$+"";
+		
+		if (.globalAnnounce == 1) {
+			announce "Boss Time Attack: Time ~ "+.@time$+".",0;
+		}else{
+			mapannounce .mapName$,"Boss Time Attack: Time ~ "+.@time$+".",0;
+		}
+		
+		// ToDo - Insert data into table
+		// First check if there are any party name that are the same
+		callfunc("BTA_Points", .@k);
+
+		// Warp party to their save point
+		warpparty "SavePointAll",0,0,getcharid(1);
+		mapwarp "pvp_2vs2","prontera",150,171,0;
+		// Kill any NPCs inside
+		killmonster .mapName$,"All";
+		
+		// No longer make NPC busy
+		set $@locked, 0;
+		end;
+
+	/////////////////
+	// Configuration
+	/////////////////
+	OnInit:
+		// Zeny Fee
+		set .register_cost, 0;
+		// Item Fee
+		set .register_item, 32002;
+		// Party Members Needed
+		set .register_min, 4;
+		
+		// Get Party Name
+		set $NPCParty$,"";
+		
+		// NPC Setup 
+		set .mapNPC$,"prontera";		// NPC Location
+		set $mapSave$,"prontera";		// Save Location
+		set $@mapSaveCordX,159;			// X-Coordinate where player save point is set
+		set $@mapSaveCordY,178;			// Y-Coordinate where player save point is set
+		
+		set .mapName$,"pvp_2vs2";		// Event Location
+		set .spawnCordX,40;				// X-Coordinate where the monster spawns
+		set .spawnCordY,33;				// Y-Coordinate where the monster spawns
+		set .globalAnnounce,0;			// 0 - Map Announcement, 1 - Global Announcement
+
+		setarray .MvPList[0],1150,1087,1511,1418,1373,1039;
+	
+
+	end;
+	
+	AbortScript:
+		close;
+	end;
+}
+/////////////////////////////////////////
+// Mapflags
+/////////////////////////////////////////
+pvp_2vs2	mapflag	monster_noteleport
+pvp_2vs2	mapflag	nobranch
+pvp_2vs2	mapflag	noteleport
+pvp_2vs2	mapflag	nomemo
+pvp_2vs2	mapflag	nowarpto
+pvp_2vs2	mapflag	nowarp
+pvp_2vs2	mapflag	noloot
+pvp_2vs2	mapflag	noicewall
+pvp_2vs2	mapflag	noexp
+pvp_2vs2	mapflag	novending
+pvp_2vs2	mapflag	partylock
+pvp_2vs2	mapflag	nopenalty
+pvp_2vs2	mapflag	zone	pvp_2vs2
+prontera	mapflag	loadevent
+payon	mapflag	loadevent
+geffen	mapflag	loadevent
+aldebaran	mapflag	loadevent
+izlude	mapflag	loadevent
+
+
+///////////////////////////////
+// Party Duplicate Job Checker
+///////////////////////////////
+function	script	party_has_duplicate_job	{
+    set .@party_id, getarg( 0, getcharid(1) );
+
+    // Need to have a party.
+    if ( !.@party_id )
+    {
+            return -1;
+    }
+
+    // Loading party members variables
+    getpartymember .@party_id, 1;
+    getpartymember .@party_id, 2;
+
+    // Keep rid attached.
+    set .@rid, playerattached();
+
+
+    // Check all members
+    for ( set .@i,0; .@i<$@partymembercount; set .@i, .@i+1 )
+    {
+
+        // Online user
+        if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i]) )
+        {
+            // Attach the member to access "Class"
+            attachrid( $@partymemberaid[.@i] );
+			savepoint $mapSave$, $@mapSaveCordX, $@mapSaveCordY;
+            if ( compare( .@tmp_class$ + "|", "|" + Class + "|" ) )
+            {
+                if ( .@rid )
+                    attachrid(.@rid);
+                else
+                    detachrid;
+                return 1;
+            }
+            set .@tmp_class$, .@tmp_class$ + "|" + Class;
+        }
+
+        // Offline user (use sql)
+        else
+        {
+            set .@sql$, .@sql$ + ( .@sql_i ? "OR " : "" ) + "`char_id`='" + $@partymembercid[.@i] + "' ";
+            set .@sql_i, .@sql_i + 1;
+        }
+    }
+
+    // SQL for offline users
+    if ( getstrlen(.@sql$) )
+    {
+        // get class from offline members
+        set .@count, query_sql("SELECT `class` FROM `char` WHERE " + .@sql$, .@class );
+
+        // Check the class.
+        for ( set .@i, 0; .@i<.@count; set .@i, .@i+1 )
+        {
+            if ( compare( .@tmp_class$ + "|", "|" + .@class[.@i] + "|" ) )
+            {
+                if ( .@rid )
+                    attachrid(.@rid);
+                else
+                    detachrid;
+                return 1;
+            }
+            set .@tmp_class$, .@tmp_class$ + "|" + .@class[.@i];
+        }
+    }
+
+    // Restore RID.
+    if ( .@rid )
+        attachrid(.@rid);
+    else
+        detachrid;
+
+    return 0;
+}
+/////////////////////////////////
+// Detect Player leaves the Map
+// Enable the NPC again  
+/////////////////////////////////
+-	script	JMVPLoop	-1,{ 
+
+	OnInit:
+		set .mapevent$,"pvp_2vs2";
+	end;
+
+	OnPCLoadMapEvent:
+		if(getcharid(1) == $PartyChecker){
+
+		while($PartyChecker && $@locked){
+
+			getpartymember $PartyChecker, 1;
+			getpartymember $PartyChecker, 2;
+			for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+				if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) ) {
+					if(attachrid($@partymemberaid[.@i])){
+						if(strcharinfo(3) == .mapevent$){set .@count,.@count + 1;}
+					}
+					
+				}
+			}	
+				if(.@count == 0 ){
+					announce "[Paradox] Party [ "+getpartyname($PartyChecker)+" ] can't continue the Boss Time Attack.",16;
+					// Kill any NPCs inside
+					killmonster .mapevent$,"All";
+		
+					// No longer make NPC busy
+					set $@locked, 0;
+					set $PartyChecker,0;
+
+				}
+			
+			
+		
+		
+		}
+		}
+end;
+
+	
+}
+// Function to insert points into the table
+// callfunc "BTA_Points";
+function	script	BTA_Points	{
+	set .@num_rows, query_sql("SELECT `id`,`player_ids` FROM `bta_db` WHERE `party_name` = '"+getpartyname(getcharid(1))+"'", .@id, .@charIds$);
+	if (.@num_rows > 0) {
+		set .@continue,0;
+		for( set .@i,0; .@i < .@num_rows; set .@i,.@i + 1 ) {
+			getpartymember getcharid(1),1;
+			
+			// Explode the character Ids
+			explode(.@my_array$ ,.@charIds$, ",");
+			set .@arraysize, getarraysize(.@my_array$);
+			
+			for ( set .@k, 0; .@k < $@partymembercount; set .@k , .@k + 1 ) {
+				// Loop to list out the party names
+				for( set .@j,0; .@j < .@arraysize; set .@j,.@j + 1 ) {
+					// Convert to number to compare character IDs
+					set $@playerNumber, .@my_array$[.@j];
+					if ($@partymembercid[.@k] == $@playerNumber) {
+						set .@continue,1;
+						break;
+					} else {
+						set .@continue,0;
+					}
+				}
+				if (.@continue == 0) {
+					break;
+				}
+			}
+		}
+		if (.@continue == 0) {
+			for ( set .@m, 0; .@m < $@partymembercount; set .@m , .@m + 1 ) {
+				if (.@m == $@partymembercount - 1) {
+					set .@name1$,.@name1$ + $@partymembercid[.@m];
+				} else {
+					set .@name1$,.@name1$ + $@partymembercid[.@m] + ",";
+				}
+			}
+			query_sql "INSERT INTO `bta_db` (`party_name`,`player_ids`,`time`) VALUES ('"+getpartyname(getcharid(1))+"','"+.@name1$+"','"+getarg(0)+"')";
+		} else {
+			query_sql("UPDATE `bta_db` SET `time`='"+getarg(0)+"' WHERE `id`='"+.@id+"'");
+		}
+	} else {
+		getpartymember getcharid(1),1;
+		for ( set .@i, 0; .@i < $@partymembercount; set .@i , .@i + 1 ) {
+			if (.@i == $@partymembercount - 1) {
+				set .@name1$,.@name1$ + $@partymembercid[.@i];
+			} else {
+				set .@name1$,.@name1$ + $@partymembercid[.@i] + ",";
+			}
+		}
+		query_sql "INSERT INTO `bta_db` (`party_name`,`player_ids`,`time`) VALUES ('"+getpartyname(getcharid(1))+"','"+.@name1$+"','"+getarg(0)+"')";
+	}
+	return;
+}
+
+prontera,147,171,5	script	MvP Kafra	4W_F_KAFRA2,{
+	mes "[MvP Kafra]";
+	mes "Good Day, How can I help you?";
+	next;
+	switch(select("~ View Ladder."+(($@locked == 1)?":~ Watch Boss Time Attack.":"")+"")) {
+
+	case 1:				
+	mes "[MvP Kafra]";
+	set .@num_rows, query_sql( "SELECT `party_name`,`player_ids`,`time` FROM `bta_db` ORDER BY `time` ASC LIMIT 5",.@party$,.@charIds$,.@time );
+	if (.@num_rows > 0) {
+		for( set .@i,0; .@i < .@num_rows; set .@i,.@i + 1 ) {
+			set .@h,.@time[.@i] % 86400 / 3600;
+			set .@m,.@time[.@i] % 3600 / 60; 
+			set .@s,.@time[.@i] % 60;
+			set .@h$, .@h+" hr"+((.@h <= 1)?"":"s"); 
+			set .@m$, .@m+" min"+((.@m <= 1)?"":"s");
+			set .@s$, .@s+" second"+((.@s <= 1)?"":"s");
+			set .@time$,""+.@h$+" "+.@m$+" "+.@s$+"";
+			mes "[ ^0000ff Rank "+( .@i + 1 )+"^000000 ]";
+			mes "Party: ^ff0000"+.@party$[.@i]+"^000000";
+			mes "Time: "+.@time$;
+			// Explode the character Ids
+			explode(.@my_array$ ,.@charIds$[.@i], ",");
+			set .@arraysize, getarraysize(.@my_array$);
+			
+			// Loop to list out the party names
+			for( set .@k,0; .@k < .@arraysize; set .@k,.@k + 1 ) {
+				query_sql("SELECT `name` from `char` WHERE `char_id` = "+.@my_array$[.@k]+"",@names$);
+				mes "Player " + (.@k+1) + ": " + @names$;
+			}
+			mes "  ";
+		}
+	}else{
+		mes "No Record Found.";
+	}
+	close;
+
+	case 2:
+			mes "[MvP Kafra]";
+				if(getcharid(1) == $PartyChecker){
+					mes "Sorry, we can't allow you to return.";
+					close;
+				}
+			mes "See you later...";
+			warp "pvp_2vs2",40,40;
+			break;
+
+	}
+
+}
+
+
+-	script	BTAUPDATE	HIDDEN_NPC,{
+	OnInit:	
+
+	while( 1 ){
+			set .Time,30;		// Announce every x Minute.
+			query_sql( "SELECT `party_name`,`player_ids`,`time` FROM `bta_db` ORDER BY `time` ASC LIMIT 1",.@party$,.@charIds$,.@time );
+			if(!.@time)end;
+			set .@h,.@time[.@i] % 86400 / 3600;
+			set .@m,.@time[.@i] % 3600 / 60;
+			set .@s,.@time[.@i] % 60;
+			set .@h$, .@h+" hr"+((.@h <= 1)?"":"s"); 
+			set .@m$, .@m+" min"+((.@m <= 1)?"":"s");
+			set .@s$, .@s+" second"+((.@s <= 1)?"":"s");
+			set .@time$,""+.@h$+" "+.@m$+" "+.@s$+"";
+			announce "[Update] Boss Time Attack Rank 1 party is [ "+.@party$+" ] with a time of "+.@time$+".",0;
+			sleep ( .Time * 60000 );
+	}
+	end;
+}

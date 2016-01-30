@@ -1,0 +1,85 @@
+prontera,156,283,4	script	The Great Alchemist	4_M_ALCHE_B,{
+mes .npcname$;
+mes "So are you satisfied with your";
+mes "current stat allocation?";
+mes "Of course not, if you want to make";
+mes "a change then listen on.";
+next;
+mes .npcname$;
+mes "I use the power of the"; 
+mes "^009900"+getitemname(.stoneid)+"^000000 to help adventurers";
+mes "reset their stat choices.";
+mes "Of course the more powerful the";
+mes "adventurer, the more ^009900"+getitemname(.stoneid)+"s^000000";
+mes "I need the perform the reset.";
+next;
+for(set .@i,0; .@i<getarraysize(.minrange); set .@i,.@i+1) {
+if(BaseLevel >= .minrange[.@i] && BaseLevel <= .maxrange[.@i]) {
+set .@stonesreq,.stones[.@i]; 
+}
+}
+mes .npcname$;
+mes "For instance you would require.";
+mes "^009900"+getitemname(.stoneid)+" x "+.@stonesreq+"^000000 to reset all your stats to 1 and get all your status points back.";
+next;
+switch(select("Tell me More!","Lets reset now.",""+((.event == 0)?"[FREE RESET] ONCE PER DAY.":"[^FF0000EVENT^000000] STATUS RESET.")+"","Later.")) {
+case 1:
+mes .npcname$;
+for(set .@i,0; .@i<getarraysize(.minrange); set .@i,.@i+1) {
+mes "Base Lvl ^000099"+.minrange[.@i]+" - "+.maxrange[.@i]+"^000000 ^009900["+.stones[.@i]+" "+getitemname(.stoneid)+"]^000000";
+}
+close;
+case 2:
+mes .npcname$;
+mes "Ok let's start checking.";
+next;
+if(countitem(.stoneid) >= .@stonesreq) {
+delitem .stoneid,.@stonesreq;
+resetstatus;
+mes .npcname$;
+mes "Well Done..";
+close;
+}
+else {
+mes .npcname$;
+mes "You do not have enough ^009900"+getitemname(.stoneid)+"s^000000";
+close;
+}
+case 3:
+mes .npcname$;	
+		if(#FreeReset > gettimetick(2)) {
+				set .@k,#FreeReset - (gettimetick(2)-(60*60*24*90));
+							set .@d,.@k % 7776000 / 3600 /24;
+							set .@h,.@k % 86400 / 3600;
+							set .@m,.@k % 3600 / 60;
+							set .@s,.@k % 60;
+				set .@d$, .@d+" day"+((.@d <= 1)?"":"s");
+				set .@h$, .@h+" hour"+((.@h <= 1)?"":"s");
+				set .@m$, .@m+" minute"+((.@m <= 1)?"":"s");
+				set .@s$, .@s+" second"+((.@s <= 1)?"":"s");
+				set .@time$,""+.@d$+" "+.@h$+" "+.@m$+" "+.@s$+"";
+				mes "I'm sorry but you have to wait";
+				mes ""+.@time$+" before you can reset again!";
+				close;
+		}else{
+		set #FreeReset,gettimetick(2)+(60*60*24*90);
+		mes "You can only avail the free reset once 3 months... Thank you.";
+		resetstatus;
+		}
+
+close;
+
+case 4:
+close;
+}
+
+OnInit:
+set .event,1;		// On = 1 Off = 0
+set .stoneid,6320;	// reset stone id = 6320
+set .npcname$,"["+strnpcinfo(0)+"]";
+setarray .minrange[0], 1,51,61,71,81,91;  // Min Level Required
+setarray .maxrange[0],50,60,70,80,90,99;  // Max Level Required
+setarray .stones[0],   1,2,3,4,5,6;  // Number of Stones
+end;
+}
+

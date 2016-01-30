@@ -1,0 +1,10 @@
+-	script	tierbonus	HIDDEN_NPC,{
+	OnPCLoginEvent:
+		if(#tieramount){
+			set .@bonus, (#tieramount / 100)*10;
+			atcommand "@cash "+.@bonus;
+			set #tieramount,0;
+			dispbottom "Congratulations! You just received 10% ROK Points from your overall total donations.";
+		}
+	end;
+}

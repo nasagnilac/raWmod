@@ -1,0 +1,136 @@
+prontera,98,65,4	script	Dead Man 	4_M_NFDEADSWDMAN,{
+set .@npc$,"["+strnpcinfo(1)+"]";
+
+	if(!lostspirit){
+
+
+		mes .@npc$;
+		mes "Lord Dracula sent his Jakk minions in every town and show terror to the Citizens of Midgard.";
+		next;
+		mes .@npc$;
+		mes "I can give you a special item in a ^FF0000LOW CHANCE^000000 that gives you +3 all stats until November 9,2015.";
+		next;
+		mes .@npc$;
+		mes "Give me this items.";
+		mes "^FF0000Pumpkin^000000 x 2";
+		mes "^FF0000Pumpkin Lantern^000000 x 2";
+		mes "^FF0000Jack o' Pumpkin^000000 x 2";
+		mes "^FF0000Fantastic Pumpkin-Head^000000 x 1";
+		next; 
+		mes .@npc$;
+		mes "Find the 7 Lost Spirits in every town. You can found the first Lost Spirit at ^FF0000Payon(183,104)^000000.";
+		set spirit,1;
+		close;
+	}
+		
+	else if(lostspirit >= 7){
+
+		mes .@npc$;
+		mes "Did you complete the requirements?";
+		next;
+		mes .@npc$;
+		mes "Let me check....";
+		next;
+					if( countitem(5202) <1 || countitem(7225) <2 || countitem(1062) <2 || countitem(535) <2){
+					mes .@npc$;
+					mes "Some of the requirements are insufficient.";
+					next;
+					mes .@npc$;
+					mes "Item needed are";
+					mes "^FF0000Pumpkin^000000 x 2";
+					mes "^FF0000Pumpkin Lantern^000000 x 2";
+					mes "^FF0000Jack o' Pumpkin^000000 x 2";
+					mes "^FF0000Fantastic Pumpkin-Head^000000 x 1";
+					close;
+					}
+		delitem 5202, 1;
+		delitem 7225, 2; 
+		delitem 1062, 2;
+		delitem  535, 2;
+		getitem groupranditem(Halloween_Event),1;
+		mes .@npc$;
+		mes "Here's your reward.";
+		mes "Happy Trick or Treat..";
+		set lostspirit,0;
+		set spirit,0;
+		set spirit1,0;
+		set spirit2,0;
+		set spirit3,0;
+		set spirit4,0;
+		set spirit5,0;
+		set spirit6,0;
+		set spirit7,0;
+		close;	
+		
+		
+	}else{
+
+		mes .@npc$;
+		mes "You must find the Lost Spirit "+(lostspirit+1)+".";
+		close;
+	}
+
+
+
+}
+
+payon,183,104,4	script	Lost Spirit 1#1::spirit	4_NFWISP,{
+set .@npc$,"["+strnpcinfo(1)+"]";
+
+
+	if(!spirit){
+		mes .@npc$;
+		mes "Talk to the Dead Man at ^FF0000Prontera (98,65)^000000.";
+		close;
+	}
+	
+
+
+if("1" == strnpcinfo(2) ){ if(!spirit1){ set spirit1,1; set lostspirit,lostspirit + 1;}else{goto sprt;}}
+else if("2" == strnpcinfo(2)){ if(!spirit2 && spirit1){set spirit2,1; set lostspirit,lostspirit + 1;}else{goto sprt;}}
+else if("3" == strnpcinfo(2)){ if(!spirit3 && spirit2 && spirit1){set spirit3,1; set lostspirit,lostspirit + 1;}else{goto sprt;}}
+else if("4" == strnpcinfo(2)){ if(!spirit4 && spirit3 && spirit2 && spirit1){set spirit4,1; set lostspirit,lostspirit + 1;}else{goto sprt;}}
+else if("5" == strnpcinfo(2)){ if(!spirit5 && spirit4 && spirit3 && spirit2 && spirit1){set spirit5,1; set lostspirit,lostspirit + 1;}else{goto sprt;}}
+else if("6" == strnpcinfo(2)){ if(!spirit6 && spirit5 && spirit4 && spirit3 && spirit2 && spirit1){set spirit6,1; set lostspirit,lostspirit + 1;}else{goto sprt;}}
+else if("7" == strnpcinfo(2)){ if(!spirit7 && spirit6 && spirit5 && spirit4 && spirit3 && spirit2 && spirit1){set spirit7,1; set lostspirit,lostspirit + 1;}else{goto sprt;}}
+
+sprt:
+if(lostspirit == 0){set @map$,"^FF0000Payon (183,104)^000000";}
+else if(lostspirit == 1){set @map$,"^FF0000Morroc (158,97)^000000";}
+else if(lostspirit == 2){set @map$,"^FF0000Alberta (114,63)^000000";}
+else if(lostspirit == 3){set @map$,"^FF0000Geffen (124,67)^000000";}
+else if(lostspirit == 4){set @map$,"^FF0000Comodo (182,153)^000000";}
+else if(lostspirit == 5){set @map$,"^FF0000Aldebaran (145,119)^000000";}
+else if(lostspirit == 6){set @map$,"^FF0000Yuno (150,187)^000000";}
+else if(lostspirit == 7){set @map$,"^FF0000Prontera (98,65)^000000";}
+set .@var,lostspirit;
+mes .@npc$;
+if(lostspirit >= 7){
+mes "Find the Dead Man at "+@map$+".";
+}else{
+mes "Find the Lost Spirit "+(.@var+1)+" at "+@map$+".";
+}
+close;
+
+}
+
+morocc,158,97,4	duplicate(spirit)	Lost Spirit 2#2	4_NFWISP
+alberta,114,63,4	duplicate(spirit)	Lost Spirit 3#3	4_NFWISP
+geffen,124,67,4	duplicate(spirit)	Lost Spirit 4#4	4_NFWISP
+comodo,182,153,4	duplicate(spirit)	Lost Spirit 5#5	4_NFWISP
+aldebaran,145,119,4	duplicate(spirit)	Lost Spirit 6#6	4_NFWISP
+yuno,150,187,4	duplicate(spirit)	Lost Spirit 7#7	4_NFWISP
+
+
+
+
+
+
+prontera,0,0,0,0	monster	Jakk	1722,5,1800000,0,0
+payon,0,0,0,0	monster	Jakk	1722,5,1800000,0,0
+morocc,0,0,0,0	monster	Jakk	1722,5,1800000,0,0
+alberta,0,0,0,0	monster	Jakk	1722,5,1800000,0,0
+geffen,0,0,0,0	monster	Jakk	1722,5,1800000,0,0
+comodo,0,0,0,0	monster	Jakk	1722,5,1800000,0,0
+aldebaran,0,0,0,0	monster	Jakk	1722,5,1800000,0,0
+yuno,0,0,0,0	monster	Jakk	1722,5,1800000,0,0

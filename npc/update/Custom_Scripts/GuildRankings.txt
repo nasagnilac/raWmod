@@ -1,0 +1,84 @@
+prontera,157,196,3	script	Guild Rankings	4_F_KAFRA7,{
+	mes "[Guild Rankings]";
+	mes "On this board you can check the candidate guilds for the server ^FF0000Agit Lords^000000.";
+	mes "   ";
+	mes "All conquered active castles after War of Emperium is counted as 100 points.";
+	next;
+//	switch(select("[^0000FFGuild Rankings^000000] Candidate List:[^0000FFGuild Shop^000000] Headgears:[^0000FFGuild Shop^000000] Usable"+((getgmlevel() == 100)?":[^ff0000Reset^000000] Guild Rankings":"")+"")) {
+	switch(select("[^0000FFGuild Rankings^000000] Candidate List"+((getgmlevel() == 100)?":[^ff0000Reset^000000] Guild Rankings":"")+"")) {	
+	case 1:
+	mes "[Guild Rankings]";
+    .@nb = query_sql( "select name, woe_points from guild order by woe_points desc limit 10", .@guild_name$, .@points );
+
+    for ( .@i = 0; .@i < .@nb; .@i++ ) {
+        if ( !.@points[.@i] ) break;
+        mes ( .@i +1 )+". ^0000FF"+ .@guild_name$[.@i] +"^000000 -> [^FF0000"+ .@points[.@i]+"^000000]";
+    }
+	
+	if(!.@i){ 
+		mes "Wait for the next War Of Emperium.";
+	}
+
+    close;
+/*	
+	case 2:
+		mes "[Guild Rankings]";
+		mes "Guild Shop for Headgear is now opened.";
+		close2;
+		callshop "GSHead",0;
+		end;
+		
+	case 3:
+		mes "[Guild Rankings]";
+		mes "Guild Shop for Usable is now opened.";
+		close2;
+		callshop "GSUsable",0;
+		end;	
+*/		
+	case 2:
+	mes "[Guild Rankings]";
+	mes "Guild Rankings has been reset.";
+	close2;
+	query_sql "UPDATE `guild` SET `woe_points` = '0' WHERE `woe_points` > 0";
+	end;
+
+	}
+}
+
+/*
+-	script	Top 10 Reset	-1,{
+
+OnClock0000:
+if(gettime(5) == 1){goto OnEnable;}
+end;
+
+
+OnEnable:
+    .@nb = query_sql( "select name, woe_points from guild order by woe_points desc limit 1", .@guild_name$, .@points );
+
+    for ( .@i = 0; .@i < .@nb; .@i++ ) {
+        if ( !.@points[.@i] ) break;
+		query_sql "UPDATE `guild` SET `woe_points` = '0' WHERE `woe_points` > 0";
+		query_sql ("SELECT `char_id` FROM `guild` WHERE `name` = '"+.@guild_name$[.@i]+"'",.@gmcharid);
+		set .@message$, "Congratulations!! Your guild "+.@guild_name$[.@i]+" achieved the "+.month$[gettime(6)-1]+" "+.subject$+"";
+		announce "Congratulations!! ["+.@guild_name$[.@i]+"] guild achieved as "+.month$[gettime(6)-1]+" "+.subject$+". We sent ["+getitemname(.itemid)+" x "+.itemamount+"] to your guild master through mail box.",0;
+		announce "For the guild leader of ["+.@guild_name$[.@i]+"] guild, Please relog and check your mail box.",0;
+		query_sql("INSERT INTO `mail` (send_name,dest_id,title,message,nameid,amount,zeny,identify,time) VALUES ('"+.sender$+"',"+.@gmcharid+",'"+.subject$+"','"+.@message$+"',"+.itemid+","+.itemamount+","+.Zeny+",1,UNIX_TIMESTAMP(NOW()))");
+
+    }
+end;
+
+OnInit:
+set .sender$, "GM Artamiel";						
+set .subject$, "[Guild of the Month]";										
+set .Zeny,0;
+set .itemid,30301;
+set .itemamount,10000;
+setarray .month$[1],"January","February","March","April","May","June","July","August","September","October","November","December";
+end;
+	
+}
+
+-	itemshop	GSHead	-1,30301,5474:2000,5337:2000,5338:2000,5339:2000,5383:6000,5379:6000,5225:6000,5375:6000,5388:6000,18612:6000,18613:6000,5512:6000,5513:6000,5546:6000,5581:6000,5582:6000,5745:6000,5569:6000,5570:6000,5589:6000,5588:6000,5663:6000,5662:6000,5514:6000,5515:6000,5740:6000,5739:6000,5677:6000,5676:6000,5549:6000,5550:6000,5599:6000,5598:6000,5376:12000,5311:8000,18600:14000,5313:4000,5397:4000,5592:4000,5401:4000,5288:4000,5471:4000,5315:4000,5389:6000,5800:6000,5421:6000,5325:6000,5314:8000,5377:6000,5462:4000,5361:4000,5463:4000,5362:4000,5305:4000
+-	itemshop	GSUsable	-1,30301,677:100,12265:200,30300:1000,12263:200,12264:200,14004:400,13989:200,13534:100,13810:40,12214:200,12202:400,12203:400,12204:400,12205:400,12206:400,12207:400,14291:2000,14292:2000,13710:8000,7619:400,7620:600,6320:1000,12213:4000
+*/

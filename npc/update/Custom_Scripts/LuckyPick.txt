@@ -1,0 +1,64 @@
+-	script	LuckyPick	-1,{
+OnInit:
+
+//	set .mode,0;												// 0 - Default, 1 - Item bound, 2 - Rental
+//	set .boundtype,0;											// 1 - Account Bound, 2 - Guild Bound, 3 - Party Bound, 4 - Character Bound
+	set .rentaltime,24;
+//	set .item,0;
+
+	bindatcmd "luckypick","LuckyPick::OnDoEvent",0,100;			// Admin reset command
+end;
+
+
+OnDoEvent:
+		if ( compare( .@atcmd_parameters$, "item" ) ) {	
+			mes "[System]";
+			mes "Latest Reward: "+((.item > 0)?"^0000ff"+getitemname(.item)+"^000000":"^0000ffNULL^000000")+"";
+			close;
+		}else if ( compare( .@atcmd_parameters$, "mode" ) ) {
+			set .mode,.@atcmd_parameters$[1];
+			mes "[System]";
+			if(.mode == 0){mes "Item mode: ^ff0000Default^000000";}
+			if(.mode == 1){set .boundtype,.@atcmd_parameters$[2];mes "Item mode: ^ff0000Bounded^000000";
+				if(.boundtype == 1){mes "Bound Type: ^ff0000Account Bounded^000000";}
+				if(.boundtype == 2){mes "Bound Type: ^ff0000Guild Bounded^000000";}
+				if(.boundtype == 3){mes "Bound Type: ^ff0000Party Bounded^000000";}
+				if(.boundtype == 4){mes "Bound Type: ^ff0000Character Bounded^000000";}
+				if(!.boundtype || .boundtype  > 4)    {mes "Bound Type: ^ff0000Invalid^000000";mes "Account Bounded: ^0000ff1^000000";mes "Guild Bounded: ^0000ff2^000000";mes "Party Bounded: ^0000ff3^000000";mes "Character Bounded: ^0000ff4^000000";}
+				
+			}
+			if(.mode == 2){mes "Item mode: ^ff0000Rental^000000";}
+			if(.mode >= 3){mes "Item mode: ^ff0000Invalid^000000";mes "Default: ^0000ff0^000000";mes "Bounded: ^0000ff1^000000";mes "Rental: ^0000ff2^000000";}
+			close;
+		}else if (.@atcmd_numparameters > 0) {	
+			set .item,.@atcmd_parameters$[0];
+			mes "[System]";
+			mes "New reward item is now set to:";
+			mes "^0000ff"+getitemname(.item)+"^000000";
+			close;
+		}
+		
+				query_sql "select account_id from `char` where online = 1 order by rand() limit 1", .@aid;
+				attachrid .@aid;
+				
+		if( checkvending() || getgmlevel() > 5){
+				detachrid;
+				goto OnDoEvent;
+				end;
+		}
+		
+		if(.mode == 0){getitem .item,1;}
+		if(.mode == 1){getitembound .item,1,.boundtype;}
+		if(.mode == 2){rentitem .item,.rentaltime*3600;}
+		
+		if(.mode ==1){
+		announce strcharinfo(0) +" won a bounded "+getitemname(.item)+".",0;
+		}else if(.mode ==2){
+		announce strcharinfo(0) +" won a rental "+getitemname(.item)+" for "+.rentaltime+" Hour"+((.rentaltime > 1)?"'s":"")+".",0;
+		}else{
+		announce strcharinfo(0) +" won a "+getitemname(.item)+".",0;
+		}
+end;
+
+}
+

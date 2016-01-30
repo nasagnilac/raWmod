@@ -1,0 +1,91 @@
+
+prontera,89,56,4	script	Old Man	1_M_PUBMASTER,{ 
+if(#PioneerComplete){
+	mes "[Old Man]";
+	mes "Congratulation Pioneer ^ff0000"+strcharinfo(0)+"^000000.";
+	close;
+}
+
+mes "[Old Man]";
+mes "Hello..";
+mes "What can I help you?";
+next;
+switch(select("How can I join the event?:I want this character to become a Pioneer")){
+
+case 1:
+	mes "[Old Man]";
+	mes "You should make a toal of '^ff0000"+.pioneer+"^000000' "+.class$+" until November 30,2015 11:59PM GMT+8.";
+	mes "  ";	
+	mes "If you have "+.class$+" character, Please register to me ASAP.";
+	mes "  ";	
+	mes "Reward: 10,000 Rok Points";
+	close;
+
+
+case 2:
+	mes "[Old Man]"; 
+	mes "You have a total of '^ff0000"+#Pioneer+"^000000' "+.class$+" Class registered.";
+	mes "  ";
+	mes "Do you want to proceed to the registration?";
+	next;
+	switch(select("Yes:No")){
+
+
+	case 1: 
+
+	if(Class == Job_Paladin || Class == Job_Lord_Knight || Class == Job_High_Priest || Class == Job_High_Wizard || Class == Job_Whitesmith || Class == Job_Sniper || Class == Job_Assassin_Cross || Class == Job_Paladin || Class == Job_Champion || Class == Job_Professor || Class == Job_Stalker || Class == Job_Creator || Class == Job_Clown || Class == Job_Gypsy){
+
+		
+		if(BaseLevel != 99 || JobLevel != 70 ){
+		 	mes "[Old Man]";
+			mes "Your base and job level is not enough to register.";
+			close;	
+		}else if(Pioneer){
+			mes "[Old Man]";
+			mes "Sorry, but this character is already registered.";
+			close;
+		}
+		mes "[Old Man]";
+		mes "You are now registered as pioneer";
+			set Pioneer,1;
+			set #Pioneer,#Pioneer + 1;
+		if(#Pioneer >= .pioneer){
+			atcommand "@cash "+.cash;
+			getitem 5567,1;
+			announce "Congratulation to "+strcharinfo(0)+" for being a part of server pioneers!",0;
+			if(getcharid(0) > 164188){
+				getitem 6320,6;
+				getitem 12911,1;
+			}	
+			set #PioneerComplete,1;
+		}
+		close;
+	}
+		mes "[Old Man]";
+		mes "Sorry, but you are not a "+.class$+".";
+		close;	
+	
+
+	case 2:
+	mes "[Old Man]";
+	mes "You should hurry now.";
+	close;
+
+	}
+		
+close;
+
+
+
+
+
+
+	}
+
+OnInit:
+	set .pioneer,1;
+	set .cash,10000;
+	set .class$,"99/70 Transcendent Class";
+end;
+
+}

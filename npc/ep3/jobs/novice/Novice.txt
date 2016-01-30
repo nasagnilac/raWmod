@@ -337,7 +337,7 @@ new_1-2,81,110,4	script	Newbie Instructor	4_M_02,{
 		next;
 		if (Done_milk==1) goto AfterMilk;
 		set Done_milk,1;
-		getitem 519,1;
+		getitembound Milk,50,4;
 		goto AfterMilk;
 
 		AfterMilk:
@@ -373,6 +373,7 @@ new_1-2,84,115,4	script	Leo Von Frisch	4_M_03,{
 		goto Lend;
 
 		Lend:
+			mes "[Leo Von Frisch]";
 			mes "Or... Are you willing to attend again?";
 			next;
 			menu "No, Sir! I apologise about my behaviour!",Lendno,"Yes, Sir! I am!",Lendyes;
@@ -508,6 +509,7 @@ new_1-2,84,115,4	script	Leo Von Frisch	4_M_03,{
 
 		LQ2_1:
 			set nov_1_2_cos_c,2;
+			mes "[Leo Von Frisch]";
 			mes "That's wrong!";
 			mes "'DEX -  Increase accuracy and magic defence.' is not correct, it should be:";
 			mes "^FF0000'DEX - Increase accuracy and weapon damage.'^000000.";
@@ -515,6 +517,7 @@ new_1-2,84,115,4	script	Leo Von Frisch	4_M_03,{
 			goto LQ3;
 		LQ2_2:
 			set nov_1_2_cos_c,2;
+			mes "[Leo Von Frisch]";
 			mes "That's wrong!";
 			mes "'DEX -  Increase accuracy and magic defence.' is not correct, it should be:";
 			mes "^FF0000'DEX - Increase accuracy and weapon damage.'^000000.";
@@ -533,6 +536,7 @@ new_1-2,84,115,4	script	Leo Von Frisch	4_M_03,{
 			goto LQ3;
 		LQ2_4:
 			set nov_1_2_cos_c,2;
+			mes "[Leo Von Frisch]";
 			mes "That's wrong!";
 			mes "'DEX -  Increase accuracy and magic defence.' is not correct, it should be:";
 			mes "^FF0000'DEX - Increase accuracy and weapon damage.'^000000.";
@@ -907,12 +911,14 @@ new_1-2,119,120,3	script	Statue of Baphomet Jr.	BAPHOMET_,{
 
 // -- Fake Kafra --
 new_1-2,158,158,0	script	Kafra	4_F_KAFRA1,{
+	mes "[Kafra]";
 	mes "'Please leave me alone.'";
 	close;
 }
 
 // -- Fake Guide --
 new_1-2,161,158,0	script	Guide#nov3	8W_SOLDIER,{
+	mes "[Guide]";
 	mes "'Please leave me alone.'";
 	close;
 }

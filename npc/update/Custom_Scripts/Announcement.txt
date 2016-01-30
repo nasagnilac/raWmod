@@ -1,0 +1,24 @@
+
+-	script	News	-1,{
+
+OnInit:
+set .Time,30;		// Announce every x Minute.
+set .Delay,300;
+
+setarray .News$[0],	// Random Message to be Announced
+			"[Announcement] Enjoy your weekends with X100 EXP and X20 DROP RATE every Saturday and Sunday.",
+			"[Announcement] Is it hard to find the best spot for leveling or farming? Don't worry we have now the 'World Map' to help you. Just visit www.wedevgames.ph/ragnarok/worldmap",
+			"[Reminder] To all players who are going to donate via Paypal. Verify your Paypal account before having a transaction to avoid account dispute report. All accounts who are having a dispute issue will be blocked/On Hold.";
+
+	 		
+
+while( 1 ){
+	for( set .@i, 0; .@i < getarraysize(.News$); set .@i, .@i + 1 ){
+	announce .News$[.@i],0;
+	sleep ( .Delay * 1000 );
+	}
+	sleep ( .Time * 60000 );
+	}
+end;
+
+}

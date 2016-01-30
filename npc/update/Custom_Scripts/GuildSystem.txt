@@ -1,0 +1,111 @@
+prontera,92,62,4	script	Guild Registration	1_M_YOUNGKNIGHT,{
+	query_sql ("SELECT `guild_id`,`expiration_time` FROM `guild_registration` WHERE `guild_id` = '"+getcharid(2)+"'",.@guildreg,.@guildtimer);
+	if(.@guildreg){
+			
+		if(.@guildtimer > gettimetick(2)) {
+				set .@k,.@guildtimer - (gettimetick(2)-(60*60*24*30));
+							set .@d,.@k % 2592000 / 3600 / 24;
+							set .@h,.@k % 86400 / 3600;
+							set .@m,.@k % 3600 / 60;
+							set .@s,.@k % 60;
+				set .@d$, .@d+" day"+((.@d <= 1)?"":"s");
+				set .@h$, .@h+" hour"+((.@h <= 1)?"":"s");
+				set .@m$, .@m+" minute"+((.@m <= 1)?"":"s"); 
+				set .@s$, .@s+" second"+((.@s <= 1)?"":"s");
+				set .@time$,""+.@d$+" "+.@h$+" "+.@m$+" "+.@s$+"";
+				mes .npc$;
+				mes "Your guild benefits will expired after "+.@time$+"";
+				close; 
+		}
+	}else{
+		mes .npc$;
+		mes "Good Day, ^ff0000"+strcharinfo(0)+"^000000.";
+		mes "Would you like to apply on our ^ff0000Guild Package System^000000?";
+		next;
+			switch(select("Yes!","No!")) {
+				case 1:
+					mes .npc$;
+					mes "Let me check if you have ^0000ff"+getitemname(.ItemReq)+"^000000.";
+					next;
+					if(countitem(.ItemReq) < 1) {
+						mes .npc$;
+						mes "You do not have ^0000ff"+getitemname(.ItemReq)+"^000000.";
+						close;
+					}
+					query_sql ("SELECT `guild_id` FROM `guild_registration` WHERE `guild_id` = '"+getcharid(2)+"'",.@guildreg);
+						if(.@guildreg){
+							mes .npc$;
+							mes "Sorry but your guild is already registered.";
+							close;
+						}
+					delitem .ItemReq,1;
+					query_sql "INSERT INTO `guild_registration` (`guild_id`, `expiration_time`) VALUES ('"+getcharid(2)+"',"+.ExpirationDate+")";
+					mes .npc$;
+					mes "Congratulations! your guild is now registered.";
+				
+				close;
+
+				case 2:
+					mes .npc$;
+				close;
+
+				
+			}
+		
+	}
+
+
+
+
+
+OnInit:
+	set .npc$,"[Guild Registration]";
+	set .ExpRate,50;
+	set .ItemReq,32000;
+	set .ExpirationDate,gettimetick(2)+(60*60*24*30);
+
+	
+	// Expiration Checker
+	while(1){
+	sleep2 1000;
+	query_sql ("SELECT `guild_id`,`expiration_time` FROM `guild_registration`",.@guildid,.@guildtime);
+		for(set .@i,0; .@i < .@guildid; set .@i,.@i+1){
+			if(.@guildtime[.@i] < gettimetick(2)) {
+				query_sql("DELETE FROM `guild_registration` WHERE `guild_id` = '"+.@guildid[.@i]+"'");
+			}
+
+		}
+	}
+	
+	
+
+end;
+
+OnNPCKillEvent:
+	query_sql ("SELECT `guild_id` FROM `guild_registration` ",.@guild);
+	for(set .@i,0; .@i < .@guild; set .@i,.@i+1){
+	if(getcharid(2) != .@guild[.@i]) {end;}
+			if(getcharid(2) == .@guild[.@i]){
+				getexp ( getmonsterinfo( killedrid,3 ) * .ExpRate / 100 ),( getmonsterinfo( killedrid,4 ) * .ExpRate / 100 );
+				dispbottom "You gained additional "+.ExpRate+"% BASE/JOB EXP.";	
+			}
+
+	}
+
+
+
+end;
+
+}
+
+
+/*
+CREATE TABLE IF NOT EXISTS `guild_registration` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `guild_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `expiration_time` INT(50) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `id` (`guild_id`)
+) ENGINE=MyISAM;
+*/
+

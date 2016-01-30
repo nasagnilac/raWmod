@@ -1,0 +1,45 @@
+
+
+
+-	script	changejob	HIDDEN_NPC,{
+	OnInit:
+		set .menu$,"Swordsman:Magician:Archer:Acolyte:Merchant:Thief";
+	end;
+	
+OnPCLoginEvent:
+	if(#freechangejob){end;}
+	if(BaseClass == 0 && strcharinfo(3) == "new_1-1"){
+		mes "[Valhalla Server]";
+		mes "Choose your job.";
+		next;
+	switch(select(.menu$)) {
+		case 1: callsub C_Job,1,Job_Swordman,70,50,1108,259200,10,4043,4043,4043,4043; break;
+		case 2: callsub C_Job,2,Job_Mage,70,50,1602,259200,10,4004,4004,4004,4004; break;
+		case 3: callsub C_Job,3,Job_Archer,70,50,1705,259200,10,4043,4043,4043,4043; break;
+		case 4: callsub C_Job,4,Job_Acolyte,70,50,1505,259200,10,4043,4043,4043,4043; break;
+		case 5: callsub C_Job,5,Job_Merchant,70,50,1302,259200,10,4043,4043,4043,4043; break;
+		case 6: callsub C_Job,6,Job_Thief,70,50,1208,259200,10,4043,4043,4043,4043; break;
+
+	}
+	
+	C_Job:
+		callfunc "Job_Change",getarg(1);
+		callfunc "F_ClearJobVar";
+		// BaseLevel etc
+		set BaseLevel,getarg(2);
+		set JobLevel,getarg(3);
+		set SkillPoint,58;
+		set Zeny,Zeny +10000;
+		// Free Item
+		rentitem2 getarg(4),getarg(5),1,getarg(6),0,getarg(7),getarg(8),getarg(9),getarg(10);
+		if(getarg(0)==3){ getitem 12004,2; }
+		set #freechangejob,1;
+		mes "[Valhalla Server]";
+		mes "Congratulations! You are now "+jobname(getarg(0))+"..";
+		close2;
+		warp "prontera",116,73;
+	}
+end;
+	
+}
+

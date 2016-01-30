@@ -20,14 +20,14 @@
 1159,Phreeoni,1000000
 1190,Orc Lord,1000000
 1251,Stormy Knight,1000000
-1252,Hatii,1000000
+1252,Garm,1000000
 1272,Dark Lord,1000000
 1312,Turtle General,1000000
-1373,Lord of the Dead,1000000
-1388,Arc Angeling,1000000
+1373,Lord of Death,1000000
+1388,Archangeling,1000000
 1389,Dracula,1000000
 1418,Evil Snake Lord,1000000
-1492,Samurai Specter,1000000
+1492,Incantation Samurai,1000000
 1511,Amon Ra,1000000
 1582,Deviling,1000000
 1583,Tao Gunka,1000000

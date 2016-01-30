@@ -1,0 +1,219 @@
+prontera,103,76,5	script	Donate Manager	4_M_SALVATION,{
+mes .npcname$;
+mes "What can I do for you?";
+next;
+switch(select("Convert Credits to Rok Points"+((.tierpromo == 1)?":[^ff0000Promo^000000] Tiered Spender":"")+""+((getgmlevel() == 100)?":[^ff0000Reset^000000] Tier Points":"")+"")) {
+
+
+case 1:
+	query_sql("SELECT `balance` FROM `cp_credits` WHERE `account_id` = '"+getcharid(3)+"'",.@balance);
+	mes .npcname$;
+	mes "^ff0000Account Information^000000";
+	mes "Total Credits: ^FF0000"+.@balance+"^000000";
+	mes "Total Rok Points: ^FF0000"+#CASHPOINTS+"^000000";
+	mes "       ";
+	mes "^00FF00Do you really want to covert your credits to Rok Points?^000000";
+next;
+	switch(select("Yes:No.")){
+
+	case 1:
+		mes .npcname$;
+		mes "^ff0000Account Information^000000";
+		mes "Total Credits: ^FF0000"+.@balance+"^000000";
+		mes "Total Rok Points: ^FF0000"+#CASHPOINTS+"^000000";
+		mes "       ";
+		mes "^0000FFChoose the amount you wanted to convert.^000000";
+		next;
+		switch(select("10,000 CP:20,000 CP:40,000 CP:Others")){
+
+
+		
+		case 1:
+		set .@credits,10000;
+		goto process;
+		end;
+		
+		case 2:
+		set .@credits,20000;
+		goto process;
+		end;
+		
+		case 3:
+		set .@credits,40000;
+		goto process;
+		end;
+		
+		case 4:
+		mes .npcname$;
+		mes "^ff0000Account Information^000000";
+		mes "Total Credits: ^FF0000"+.@balance+"^000000";
+		mes "Total Rok Points: ^FF0000"+#CASHPOINTS+"^000000";
+		mes "       ";
+		mes "^0000FFInput the amount you wanted to convert.^000000";
+		next;
+		input .@credits;
+		goto process;
+		end;
+		}
+		process:
+		if(.@credits < 1){goto Invalid;}
+		if(.@credits > .@balance){goto C_enough;}
+		atcommand "@cash "+(.@credits + .@bonus)+"";
+		query_sql "update `cp_credits` set `balance` = `balance` - "+ .@credits +" where `account_id` = '"+getcharid(3)+"'";
+		mes .npcname$;
+		mes "Thank you for using this service.";
+		set #tieramount, #tieramount + .@credits;
+		close;
+	
+	case 2:
+		goto Thanks;
+		end;
+	}
+	
+case 2:
+	mes .npcname$;
+	mes "Donate and covert your credits now. Get a free item depending on your credits amount that you converted this month. The more credits you convert the coolest items you will get.";
+	mes "       ";
+	next;
+	switch(select("Open a tier:Tiers Reward List")){
+		
+		
+	case 1:
+	mes .npcname$;
+	mes "Converted Credits: "+#tieramount+"";
+	next;
+	menu
+	"[T1] 10,000 or above",t1, 		// 500PHP
+	"[T2] 25,000 or above",t2, 		// 1,250PHP
+	"[T3] 50,000 or above",t3, 		// 2,500PHP
+	"[T4] 75,000 or above",t4, 		// 3,750PHP
+	"[T5] 100,000 or above",t5, 	// 5,000PHP
+	"[T6] 125,000 or above",t6, 	// 6,250PHP
+	"[T7] 150,000 or above",t7, 	// 7,500PHP
+	"[T8] 175,000 or above",t8, 	// 8,750PHP
+	"[T9] 200,000 or above",t9, 	// 10,000PHP
+	"[T10] 250,000 or above",t10;	// 12,500PHP
+	
+	t1: set .@tier,1; set .@tierpoints,10000; goto Ontier;end;
+	t2: set .@tier,2; set .@tierpoints,25000; goto Ontier;end;
+	t3: set .@tier,3; set .@tierpoints,50000; goto Ontier;end;
+	t4: set .@tier,4; set .@tierpoints,75000; goto Ontier;end;
+	t5: set .@tier,5; set .@tierpoints,100000; goto Ontier;end;
+	t6: set .@tier,6; set .@tierpoints,120000; goto Ontier;end;
+	t7: set .@tier,7; set .@tierpoints,150000; goto Ontier;end;
+	t8: set .@tier,8; set .@tierpoints,170000; goto Ontier;end;
+	t9: set .@tier,9; set .@tierpoints,200000; goto Ontier;end;
+	t10: set .@tier,10; set .@tierpoints,250000; goto Ontier;end;
+	
+	Ontier:
+	
+		if ( getd( "#tier"+.@tier ) == 1){ 
+			mes .npcname$; 
+			mes "You already claimed this Tier Rewards.";
+			close;
+		}else if ( .@tier > 1 && getd( "#tier"+(.@tier-1) ) == 0){ 
+			mes .npcname$; 
+			mes "Please claimed the Tier "+(.@tier-1)+" Rewards.";
+			close;
+		}else if(#tieramount >= .@tierpoints){
+								
+
+			
+
+			mes .npcname$; 
+			mes "We sent your tier bonus trough our Reward NPC."; 
+			.@tier_size = getarraysize( getd( ".tier"+.@tier ) );
+			for( .@i = 1; .@i < .@tier_size; .@i += 4 ) {
+				.@value_0 = getd( ".tier"+.@tier+"["+( .@i )+"]" );
+				.@value_1 = getd( ".tier"+.@tier+"["+( .@i+1 )+"]" );
+				.@value_2 = getd( ".tier"+.@tier+"["+( .@i+2 )+"]" );
+				.@value_3 = getd( ".tier"+.@tier+"["+( .@i+3 )+"]" );
+				if ( .@value_3 < 1 ) {
+					getitem2 .@value_0,.@value_1,1,.@value_2,0,0,0,0,0;
+				}
+				else if ( .@value_3 >= 1 ) {
+					getitembound2 .@value_0,.@value_1,1,.@value_2,0,0,0,0,0,.@value_3;			
+				}
+			}
+			set getd( "#tier"+.@tier ),1;
+			if (#tier10 >= 1){
+				set #tieramount, #tieramount - .@tierpoints; set #tier1,0;set #tier2,0;set #tier3,0;set #tier4,0;set #tier5,0;set #tier6,0;set #tier7,0;set #tier8,0;set #tier9,0;set #tier10,0;
+			}
+
+		}else{ 
+			mes .npcname$; 
+			mes "Converted Rok Points is not enough.";
+		}
+			close;
+	
+		
+	case 2:
+	for ( .@tier = 1; .@tier <= 10; .@tier++ ) {
+		mes "[^0000ff TIER "+.@tier+" ^000000]";
+
+		.@tier_size = getarraysize( getd( ".tier"+.@tier ) );
+		for( .@i = 1; .@i < .@tier_size; .@i += 4 ) {
+			.@value_0 = getd( ".tier"+.@tier+"["+( .@i )+"]" );
+			.@value_1 = getd( ".tier"+.@tier+"["+( .@i+1 )+"]" );
+			.@value_2 = getd( ".tier"+.@tier+"["+( .@i+2 )+"]" );
+			.@value_3 = getd( ".tier"+.@tier+"["+( .@i+3 )+"]" );
+			if ( .@value_3 < 1 ) {
+				mes (( .@value_2 >= 1)?"+"+.@value_2+" ":"")+""+getitemname( .@value_0 )+" ["+getitemslots(.@value_0)+"] x "+.@value_1;
+			}
+			else if ( .@value_3 > 1 ) {
+				mes (( .@value_2 >= 1)?"+"+.@value_2+" ":"")+"Bounded "+getitemname( .@value_0 )+" ["+getitemslots(.@value_0)+"] x "+.@value_1;
+			}
+		}
+		mes "   ";
+	}
+		close;
+	
+	}
+case 3:
+		mes .npcname$;
+		mes "Tier Points has been reset.";
+		query_sql "DELETE FROM `acc_reg_num_db` WHERE `key`='#tieramount' OR `key`='#tier1' OR `key`='#tier2' OR `key`='#tier3' OR `key`='#tier4' OR `key`='#tier5' OR `key`='#tier6' OR `key`='#tier7' OR `key`='#tier8' OR `key`='#tier9' OR `key`='#tier10'";		
+		close;
+}
+		
+Thanks:
+		mes .npcname$;
+		mes "I respect your decision. Please try my service again";
+		close;
+		
+C_enough:
+	mes .npcname$;
+	mes "Sorry but you don't have enough credits.";
+	close;
+
+	
+Invalid:
+	mes .npcname$;
+	mes "Invalid Input.";
+	close;
+	
+OnInit:
+
+// == <itemid><amount><refine><bound 0 = default>
+setarray .tier1[1],13889,15,0,0,13890,15,0,0;					// 500PHP
+setarray .tier2[1],13698,25,0,0,13697,25,0,0;					// 1,250PHP
+setarray .tier3[1],14003,50,0,0;								// 2,500PHP
+setarray .tier4[1],14004,10,0,0;								// 3,750PHP
+setarray .tier5[1],13989,100,0,0;								// 5,000PHP
+setarray .tier6[1],31013,1,0,0,31325,1,0,0;						// 6,250PHP
+setarray .tier7[1],5545,1,7,0,5546,1,7,0;						// 7,500PHP
+setarray .tier8[1],4133,1,0,0,4058,1,0,0,4141,1,0,0,4097,1,0,0;	// 8,750PHP
+setarray .tier9[1],2504,1,8,0,2310,1,8,0,2404,1,8,0,2102,1,8,0;	// 10,000PHP
+setarray .tier10[1],5374,1,0,0,5314,1,0,0;						// 12,500PHP
+	
+
+	
+set .npcname$,"[Donate Manager]"; 
+set .tierpromo,1;
+end;
+
+
+}
+
+
+

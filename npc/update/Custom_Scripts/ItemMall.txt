@@ -1,0 +1,130 @@
+prontera,103,80,5	script	Item Mall	4_F_VALKYRIE,{
+mes "[|Item Mall]";
+mes "All items here can avail through donation and patience.";
+next;
+menu 
+"Usables",Usables,
+//"Rental",Rental,
+//"Scrolls",Scrolls,
+"Costumes",Costumes,
+"Headgears",Headgears,
+"Equipments",Equipments;
+
+
+
+
+		
+Usables:
+		close2;
+		callshop "Usables",1;
+		end;
+		
+Rental:
+		close2;
+		callshop "Rental",1;
+		end;
+		
+Scrolls:
+		close2; 
+		callshop "Scrolls",1;
+		end;
+Costumes:
+		close2; 
+		callshop "Costumes",1; 
+		end;	
+Headgears:
+		close2;
+		callshop "Headgears",1;
+		end;
+		
+Equipments:
+		close2;
+		callshop "Equipments",1; 
+		end;
+
+}
+ 
+
+
+
+
+prontera,1,1,1	cashshop	Usables	HIDDEN_NPC,14003:100,13989:100,14004:200,12411:150,12412:150,12919:1000,6320:1500,12922:3000,12911:6000
+
+
+
+prontera,1,1,1	cashshop	Costumes	HIDDEN_NPC,31150:2000,31151:2000,31252:2000,31253:2000,31254:2000,31255:2000,31361:2000,31365:2000
+
+prontera,1,1,1	cashshop	Headgears	HIDDEN_NPC,5258:2000,5766:4000,5389:4000,5132:6000,5486:4000,5401:2000,5427:2000,5531:2000,5491:3000,5147:2000,5382:7000
+
+prontera,1,1,1	cashshop	Equipments	HIDDEN_NPC,2315:1000,2310:1000,2311:1250,2326:1000,2322:1000,2331:1000,2104:1000,2102:1000,2506:1000,2504:1000,2406:1000,2404:1000
+
+
+
+
+prontera,99,78,4	trader	Promo Shop	2_F_SIGN1,{
+OnClock0000:
+	goto OnReset;
+end;
+
+OnReset:
+	set .discount,rand(5,15);
+	announce "Citizens of Midgard, We have a new set of item in our Promo Shop with "+.discount+"% discount.",bc_all;
+	setarray .costumeitems[0],31099,31210,31013;
+	setarray .costumeprices[0],4000,7000,6000;
+
+
+	setarray .armoritems[0],2320,2607,2625,2621,2622,2624,2623;
+	setarray .armorprices[0],1000,3000,6000,6000,6000,10000,10000;
+
+
+	setarray .headitems[0],5335,5546,5545,5361,5377,5463,5421,5470,5398,5582,5581,5324,5460,5137,5373,5313,5252,5135,5471,5461,5437,5276,5380,5528,5570,5569,5336,5465,5325,5315,5286,5515,5514,5181,5467,5610,5658,5143,5426,5497,5537,5588,5589,5006,5138,5420,5800,5288,5397,5490,5312,5344,5776,5378,5283,5478,5662,5663;
+	setarray .headprices[0],2000,5000,5000,3000,4000,5000,6000,4000,3000,5000,5000,8000,12000,15000,6000,6000,4000,2000,4000,5000,3000,4000,2000,3000,5000,5000,4000,3000,4000,4000,6000,5000,5000,4000,6000,2000,5000,4000,3000,4000,6000,5000,5000,2000,6000,10000,3000,3000,2000,4000,10000,10000,6000,4000,4000,3000,5000,5000;
+
+	set .randc1,rand(getarraysize(.costumeitems));
+	set .randc2,rand(getarraysize(.costumeitems));
+	set .randc3,rand(getarraysize(.costumeitems));
+	set .randc4,rand(getarraysize(.costumeitems));
+	set .randc5,rand(getarraysize(.costumeitems));
+
+	set .randa1,rand(getarraysize(.armoritems));
+	set .randa2,rand(getarraysize(.armoritems));
+	set .randa3,rand(getarraysize(.armoritems));
+	set .randa4,rand(getarraysize(.armoritems));
+	set .randa5,rand(getarraysize(.armoritems));
+
+	set .randh1,rand(getarraysize(.headitems));
+	set .randh2,rand(getarraysize(.headitems));
+	set .randh3,rand(getarraysize(.headitems));
+	set .randh4,rand(getarraysize(.headitems));
+	set .randh5,rand(getarraysize(.headitems));
+
+		tradertype(NST_CASH);
+		// Xmas Promo
+		//sellitem 5381,3000;			// Santa Poring Hat
+
+		sellitem .costumeitems[.randc1],.costumeprices[.randc1] - (.costumeprices[.randc1]/100*.discount);
+		sellitem .costumeitems[.randc2],.costumeprices[.randc2] - (.costumeprices[.randc2]/100*.discount);
+		sellitem .costumeitems[.randc3],.costumeprices[.randc3] - (.costumeprices[.randc3]/100*.discount);
+		sellitem .costumeitems[.randc4],.costumeprices[.randc4] - (.costumeprices[.randc4]/100*.discount);
+		sellitem .costumeitems[.randc5],.costumeprices[.randc5] - (.costumeprices[.randc5]/100*.discount);
+
+		sellitem .armoritems[.randa1],.armorprices[.randa1] - (.armorprices[.randa1]/100*.discount);
+		sellitem .armoritems[.randa2],.armorprices[.randa2] - (.armorprices[.randa2]/100*.discount);
+		sellitem .armoritems[.randa3],.armorprices[.randa3] - (.armorprices[.randa3]/100*.discount);
+		sellitem .armoritems[.randa4],.armorprices[.randa4] - (.armorprices[.randa4]/100*.discount);
+		sellitem .armoritems[.randa5],.armorprices[.randa5] - (.armorprices[.randa5]/100*.discount);
+
+		sellitem .headitems[.randh1],.headprices[.randh1] - (.headprices[.randh1]/100*.discount);
+		sellitem .headitems[.randh2],.headprices[.randh2] - (.headprices[.randh2]/100*.discount);
+		sellitem .headitems[.randh3],.headprices[.randh3] - (.headprices[.randh3]/100*.discount);
+		sellitem .headitems[.randh4],.headprices[.randh4] - (.headprices[.randh4]/100*.discount);
+		sellitem .headitems[.randh5],.headprices[.randh5] - (.headprices[.randh5]/100*.discount);
+
+end;
+	
+OnInit:
+	goto OnReset;
+end;
+
+
+}
