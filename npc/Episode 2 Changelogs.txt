@@ -19,6 +19,7 @@
 * New MvP Monsters: 
 - Garm = Lutie Field(xmas_fild01)
 - Stormy Knight = Toy Monitoring Room(xmas_dun02) 
+- Dark Lord = Glast Heim Churchyard(gl_chyard) 
 
 * Adding Baphomet[MvP] in:
 - Glast Heim F2(gl_cas02)

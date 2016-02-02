@@ -1,0 +1,36 @@
+-	script	party_search	FAKE_NPC,{
+
+OnInit:
+	//-------------------------------------------------------------------------------------------------	
+		set .svn,1;			// 0 - rAthena/eAthena, 1 - Hercules
+		set .n$, "^FF0000[ Party Search ]^000000";
+		bindatcmd "searchparty","party_search::OnDoSearch",0,100;		// Admin reset command
+end;
+
+OnDoSearch:
+	mes .n$;
+		if(#announcetimer > gettimetick(2)) {
+				set .@k,#announcetimer - (gettimetick(2)-(300));
+				set .@m,.@k % 3600 / 60;
+				set .@s,.@k % 60;
+				set .@m$, .@m+" minute"+((.@m <= 1)?"":"s");
+				set .@s$, .@s+" second"+((.@s <= 1)?"":"s");
+				set .@time$,""+.@m$+" "+.@s$+"";
+				mes "I'm sorry but you have to wait";
+				mes ""+.@time$+" before you can request again.";
+				close;	
+		}
+	mes "What are you looking for?";
+	next;
+	switch(select("Looking for a Party.")) {	
+	
+	case 1:
+		close2;
+		announce "Player [ "+strcharinfo(0)+" ] is a [ lv:"+BaseLevel+" "+jobname(BaseJob)+" ] looking for a party!",0,0x00FF00;
+		set #announcetimer,gettimetick(2)+(300);
+		end;
+	}
+	
+end;
+
+}

@@ -30,16 +30,13 @@ end;
 
 OnPCLoginEvent:
 
+
 	set .@user, getcharid(3);
 	query_sql("SELECT `Beta_Account` FROM `login` WHERE account_id = '"+.@user+"'",.@beta);
 
-	/* Changing the looks of players on the Grand Opening. */
-	if(gettime(6) == .gomonth && gettime(5) == .goday){
-		changelook 4,900;
-	}
 
 	/* Disabling BETA Account to login on the Grand Opening */
-	if(gettime(6) == .gomonth && gettime(5) == .goday && getcharid(0) >= 150001 && getcharid(0) <= 150171 && getcharid(0) != 150152){
+	if(gettime(6) == .gomonth && gettime(5) == .goday && getcharid(0) >= 150001 && getcharid(0) <= 150171 && getcharid(0) != 150152 && getcharid(0) !=150161){
 		atcommand "@option 2 2 6";
 		mes "[ System ]";
 		mes "You are not allowed to use this character for 1 day.";
@@ -118,7 +115,7 @@ OnPCLogoutEvent:
 	set #BetaTick,#BetaTick + .@checktick;
 
 		set .@h,#BetaTick % 86400 / 3600;
-		set .@m,#BetaTick % 3600 / 60;
+		set .@m,#BetaTick % 3600 / 60; 
 		set .@s,#BetaTick % 60;
 	set .@h$, .@h+" hour"+((.@h <= 1)?"":"s");
 	set .@m$, .@m+" minute"+((.@m <= 1)?"":"s");
@@ -132,3 +129,18 @@ OnPCLogoutEvent:
 end;
 
 }
+-	script	changelook	FAKE_NPC,{
+
+OnInit:
+set .gomonth,2;
+set .goday,1;
+end;
+
+OnPCLoginEvent:
+	/* Changing the looks of players on the Grand Opening. */
+	if(gettime(6) == .gomonth && gettime(5) == .goday){
+		changelook 4,900;
+	}
+end;
+}
+
