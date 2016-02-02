@@ -6,6 +6,7 @@ prontera,159,187,4	script	Free Rewards	4_F_KAFRA5,{
 		mes "There is no reward(s) today.";
 		close;
 	}
+
 	mes "Good day..";
 	mes "Are you here to claim your reward(s)?";
 	next;
@@ -14,7 +15,7 @@ prontera,159,187,4	script	Free Rewards	4_F_KAFRA5,{
 
 On_Reward:
 	mes .n$;
-	if(#accountreward){
+	if(#accountreward == 1){
 		mes "You already claimed your rewards.";
 		mes "Please check the Delivery Man.";
 		close;
@@ -27,7 +28,9 @@ On_Reward:
 			}
 				
 		mes "Please claim it to the Delivery Man at Albertan, Prontera, Geffen or Payon.";
-		set #accountreward,1;		
+		set #accountreward,1;	
+		sc_start SC_CASH_PLUSEXP,3600000,200;
+		sc_start SC_CASH_RECEIVEITEM,1800000,200;		
 		close;	
 
 
@@ -41,10 +44,10 @@ OnInit:
 		bindatcmd "freebies","Free Rewards::OnDoFreebies",80,100;		// Admin reset command
 		waitingroom "   Free Rewards",0;
 	//-------------------------------------------------------------------------------------------------	
-		setarray .RItems[0],					504,504,504,504,505;			
-		setarray .RAmount[0],			                 20, 20, 20, 20, 20;			
-		setarray .RRefine[0],		                          0,  0,  0,  0,  0;				
-		setarray .RRentTime[0],	                                  0,  0,  0,  0,  0;
+		setarray .RItems[0],					504,504,504,505;			
+		setarray .RAmount[0],			                  20,   20, 20, 20;			
+		setarray .RRefine[0],		                          0,   0,  0, 0;				
+		setarray .RRentTime[0],	                                  0,   0,  0, 0;
 	
 
 
@@ -56,23 +59,53 @@ end;
 
 
 OnDoEvent:
-	mes .n$;
+
 	if ( compare( .@atcmd_parameters$, "reset" ) ) {
 
 				if(.svn){
-					query_sql "DELETE FROM `acc_reg_num_db` WHERE `key`='#accountreward'";
+					query_sql("UPDATE `acc_reg_num_db` SET `value` = '2' WHERE `key` = '#accountreward'");
+
 				}else{
-					query_sql "DELETE FROM `global_reg_value` WHERE `str`='#accountreward'";
+					query_sql("UPDATE `global_reg_value` SET `value` = '2' WHERE `str` = '#accountreward'");
+
 				}
+		mes .n$;
 		mes"Free Rewards has been reset.";
+		close;
 	}else if ( compare( .@atcmd_parameters$, "on" ) ) {
 		set .available,1;
+		mes .n$;
 		mes "Free Rewards is now enabled."; 
-	}else if ( compare( .@atcmd_parameters$, "off" ) ) {
-		set .available,0;
-		mes "Free Rewards is now disabled."; 
+		close2;
+		announce "[ Free Rewards ] You have only 10 minutes to claim your rewards at the middle of Prontera(159,187).",0;
+		startnpctimer;
 	} 
-close;
+end;
+
+
+OnTimer180000:
+	announce "[ Free Rewards ] You have 7 minutes left to claim your rewards at the middle of Prontera(159,187).",0;
+	end;
+
+OnTimer300000:
+	announce "[ Free Rewards ] You have 5 minutes left to claim your rewards at the middle of Prontera(159,187).",0;
+	end;
+
+OnTimer480000:
+	announce "[ Free Rewards ] You have 2 minutes left to claim your rewards at the middle of Prontera(159,187).",0;
+	end;
+
+OnTimer540000:
+	announce "[ Free Rewards ] You have 1 minute left to claim your rewards at the middle of Prontera(159,187).",0;
+	end;
+
+OnTimer600000:
+	announce "[ Free Rewards ] Distribution of rewards is now closed.",0;
+	stopnpctimer;
+	set .available,0;
+	end;
+
+
 
 OnDoFreebies:
 	mes .n$;
@@ -83,7 +116,7 @@ OnDoFreebies:
 				}else{
 					query_sql "DELETE FROM `global_reg_value` WHERE `str`='#freebies'";
 				}
-			mes"Freebies has been reset.";
+			mes "Freebies has been reset.";
 	}
 close;
 

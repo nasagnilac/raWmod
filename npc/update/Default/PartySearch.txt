@@ -10,13 +10,13 @@ end;
 OnDoSearch:
 	mes .n$;
 		if(#announcetimer > gettimetick(2)) {
-				set .@k,#announcetimer - (gettimetick(2)-(300));
+				set .@k,#announcetimer - (gettimetick(2)-600);
 				set .@m,.@k % 3600 / 60;
 				set .@s,.@k % 60;
 				set .@m$, .@m+" minute"+((.@m <= 1)?"":"s");
 				set .@s$, .@s+" second"+((.@s <= 1)?"":"s");
 				set .@time$,""+.@m$+" "+.@s$+"";
-				mes "I'm sorry but you have to wait";
+				mes "I'm sorry but you have to wait"; 
 				mes ""+.@time$+" before you can request again.";
 				close;	
 		}
@@ -27,7 +27,7 @@ OnDoSearch:
 	case 1:
 		close2;
 		announce "Player [ "+strcharinfo(0)+" ] is a [ lv:"+BaseLevel+" "+jobname(BaseJob)+" ] looking for a party!",0,0x00FF00;
-		set #announcetimer,gettimetick(2)+(300);
+		set #announcetimer,gettimetick(2);
 		end;
 	}
 	
