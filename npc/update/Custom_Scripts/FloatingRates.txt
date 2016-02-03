@@ -56,14 +56,6 @@
 ////////////                  /////////////////////////
 ///////////////////////////        /////////////////
 
-	OnDay1216:
-		goto started;
-		end;
-
-	OnDay1225:
-		goto ended;
-		end;
-
 started:
 OnStart:
 	//Base exp

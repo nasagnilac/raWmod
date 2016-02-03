@@ -38,7 +38,6 @@ On_Reward:
 OnInit:
 	//-------------------------------------------------------------------------------------------------	
 		set .svn,1;			// 0 - rAthena/eAthena, 1 - Hercules
-		set .available,0;
 		set .n$, "^FF0000[Free Rewards]^000000";
 		bindatcmd "freerewards","Free Rewards::OnDoEvent",80,100;		// Admin reset command
 		bindatcmd "freebies","Free Rewards::OnDoFreebies",80,100;		// Admin reset command
@@ -70,14 +69,14 @@ OnDoEvent:
 
 				}
 		mes .n$;
-		mes"Free Rewards has been reset.";
+		mes"Free Rewards has been reset."; 
 		close;
-	}else if ( compare( .@atcmd_parameters$, "on" ) ) {
-		set .available,1;
+	}else if ( compare( .@atcmd_parameters$, "on" ) ) { 
+		set .available,1; 
 		mes .n$;
 		mes "Free Rewards is now enabled."; 
 		close2;
-		announce "[ Free Rewards ] You have only 10 minutes to claim your rewards at the middle of Prontera(159,187).",0;
+		announce "[ Free Rewards ] Re-login now and talk to me.You have only 10 minutes to claim your rewards at the middle of Prontera(159,187).",0;
 		startnpctimer;
 	} 
 end;

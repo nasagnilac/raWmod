@@ -831,7 +831,7 @@ alberta_in,31,65,4	script	Repairman#alb	4_M_04,{
 	callfunc "repairmain","Repairman";
 	end;
 }
-payon,143,165,4	script	Repairman#pay	4_M_ORIENT01,{
+payon,149,182,4	script	Repairman#pay	4_M_ORIENT01,{
 	callfunc "repairmain","Repairman";
 	end;
 }
