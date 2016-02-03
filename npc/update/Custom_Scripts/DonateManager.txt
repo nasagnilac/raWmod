@@ -82,28 +82,13 @@ case 2:
 	mes .npcname$;
 	mes "Converted Credits: "+#tieramount+"";
 	next;
-	menu
-	"[T1] 10,000 or above",t1, 		// 500PHP
-	"[T2] 25,000 or above",t2, 		// 1,250PHP
-	"[T3] 50,000 or above",t3, 		// 2,500PHP
-	"[T4] 75,000 or above",t4, 		// 3,750PHP
-	"[T5] 100,000 or above",t5, 	// 5,000PHP
-	"[T6] 125,000 or above",t6, 	// 6,250PHP
-	"[T7] 150,000 or above",t7, 	// 7,500PHP
-	"[T8] 175,000 or above",t8, 	// 8,750PHP
-	"[T9] 200,000 or above",t9, 	// 10,000PHP
-	"[T10] 250,000 or above",t10;	// 12,500PHP
 	
-	t1: set .@tier,1; set .@tierpoints,10000; goto Ontier;end;
-	t2: set .@tier,2; set .@tierpoints,25000; goto Ontier;end;
-	t3: set .@tier,3; set .@tierpoints,50000; goto Ontier;end;
-	t4: set .@tier,4; set .@tierpoints,75000; goto Ontier;end;
-	t5: set .@tier,5; set .@tierpoints,100000; goto Ontier;end;
-	t6: set .@tier,6; set .@tierpoints,120000; goto Ontier;end;
-	t7: set .@tier,7; set .@tierpoints,150000; goto Ontier;end;
-	t8: set .@tier,8; set .@tierpoints,170000; goto Ontier;end;
-	t9: set .@tier,9; set .@tierpoints,200000; goto Ontier;end;
-	t10: set .@tier,10; set .@tierpoints,250000; goto Ontier;end;
+
+			for( .@i = 1; .@i <  getarraysize( .tierpoints$ ); .@i++ )
+				set .@menu$,.@menu$ +"[T"+.@i+"] "+.tierpoints$[.@i]+" or above:";
+		.@i = select( .@menu$);
+		set .@tier,.@i;  goto Ontier;
+		end;
 	
 	Ontier:
 	
@@ -195,16 +180,14 @@ Invalid:
 OnInit:
 
 // == <itemid><amount><refine><bound 0 = default>
+setarray .tierpoints$[1],"10,000","25,000","50,000","75,000","100,000";
+setarray .tierpoints[1],10000,25000,50000,75000,100000;
 setarray .tier1[1],13889,15,0,0,13890,15,0,0;					// 500PHP
 setarray .tier2[1],13698,25,0,0,13697,25,0,0;					// 1,250PHP
 setarray .tier3[1],14003,50,0,0;								// 2,500PHP
 setarray .tier4[1],14004,10,0,0;								// 3,750PHP
 setarray .tier5[1],13989,100,0,0;								// 5,000PHP
-setarray .tier6[1],31013,1,0,0,31325,1,0,0;						// 6,250PHP
-setarray .tier7[1],5545,1,7,0,5546,1,7,0;						// 7,500PHP
-setarray .tier8[1],4133,1,0,0,4058,1,0,0,4141,1,0,0,4097,1,0,0;	// 8,750PHP
-setarray .tier9[1],2504,1,8,0,2310,1,8,0,2404,1,8,0,2102,1,8,0;	// 10,000PHP
-setarray .tier10[1],5374,1,0,0,5314,1,0,0;						// 12,500PHP
+
 	
 
 	
