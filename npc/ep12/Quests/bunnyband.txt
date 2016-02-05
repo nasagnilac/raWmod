@@ -9,7 +9,7 @@
 //=
 //============================================================
 // Old
-prontera,146,87,6	script	Kafra Employee#bunny::KCRep	4_M_01,{
+prontera,146,92,6	script	Kafra Employee#bunny::KCRep	4_M_01,{
 	if (BUNYBND == 1) {
 		mes "[Kafra Employee]";
 		mes "Hello there~!";

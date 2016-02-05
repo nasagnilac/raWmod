@@ -68,11 +68,11 @@
 
 // Episodes Update
 #ifndef EPISODE
-	#define EPISODE 12
+	#define EPISODE 2
 #endif
 // Episodes Files Path
 #ifndef DBPATH
-	#define DBPATH "ep12/"
+	#define DBPATH "ep2/"
 #endif
 
 //Uncomment the following line if your client is ragexeRE instead of ragexe (required because of conflicting packets in ragexe vs ragexeRE).
