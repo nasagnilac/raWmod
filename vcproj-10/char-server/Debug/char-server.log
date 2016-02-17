@@ -1,9 +1,9 @@
-﻿Build started 2/1/2016 2:22:30 PM.
-     1>Project "D:\Prestige Reborn Files\Server Files\raWmod\vcproj-10\char-server.vcxproj" on node 5 (rebuild target(s)).
+﻿Build started 2/1/2016 1:00:19 AM.
+     1>Project "D:\Prestige Reborn Files\Server Files\raWmod\vcproj-10\char-server.vcxproj" on node 4 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "char-server\Debug\char-server.lastbuildstate".
        InitializeBuildStatus:
-         Creating "char-server\Debug\char-server.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "char-server\Debug\char-server.unsuccessfulbuild".
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\src /I..\3rdparty /I..\3rdparty\mysql\include /I..\3rdparty\msinttypes\include /ZI /nologo /W3 /WX- /MP /Od /Oy- /D WIN32 /D _WIN32 /D __WIN32 /D _DEBUG /D PCRE_SUPPORT /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D FD_SETSIZE=4096 /D LIBCONFIG_STATIC /D YY_USE_CONST /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm- /RTC1 /MTd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"char-server\Debug\\" /Fd"char-server\Debug\vc100.pdb" /Gd /TC /wd4800 /analyze- /errorReport:prompt ..\3rdparty\libconfig\grammar.c ..\3rdparty\libconfig\libconfig.c ..\3rdparty\libconfig\scanctx.c ..\3rdparty\libconfig\scanner.c ..\3rdparty\libconfig\strbuf.c ..\3rdparty\mt19937ar\mt19937ar.c ..\src\common\conf.c ..\src\common\core.c ..\src\common\console.c ..\src\common\db.c ..\src\common\des.c ..\src\common\ers.c ..\src\common\HPM.c ..\src\common\memmgr.c ..\src\common\mapindex.c ..\src\common\mutex.c ..\src\common\nullpo.c ..\src\common\random.c ..\src\common\showmsg.c ..\src\common\socket.c ..\src\common\sql.c ..\src\common\strlib.c ..\src\common\sysinfo.c ..\src\common\thread.c ..\src\common\timer.c ..\src\common\utils.c ..\src\char\HPMchar.c ..\src\char\char.c ..\src\char\geoip.c ..\src\char\int_auction.c ..\src\char\int_elemental.c ..\src\char\int_guild.c ..\src\char\int_homun.c ..\src\char\int_mail.c ..\src\char\int_mercenary.c ..\src\char\int_party.c ..\src\char\int_pet.c ..\src\char\int_quest.c ..\src\char\int_storage.c ..\src\char\inter.c ..\src\char\loginif.c ..\src\char\mapif.c ..\src\char\pincode.c
          grammar.c
@@ -155,4 +155,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:06.97
+Time Elapsed 00:00:05.68

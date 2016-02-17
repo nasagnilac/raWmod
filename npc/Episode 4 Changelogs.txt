@@ -10,10 +10,8 @@
 //============================================================
 
 
-
-
-
-* Adding 2-1 Job Quest.
-- Knight
-- Hunter
-- Assassin
+* Job Quest for Knight, Assassin, and Hunter has been added.
+* Monster skills is now enabled.
+* War of Emperium around now.(Still no official date)
+* Bathory spawn in Geffen Dungeon 2 has been removed.
+* Turtle Island is now available.

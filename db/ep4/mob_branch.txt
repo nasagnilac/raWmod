@@ -185,7 +185,6 @@
 1371,False Angel,71428
 1374,Incubus,71428
 1390,Violy,71428
-
 // ~ Episode 2
 
 //== Lutie =================//
@@ -224,7 +223,7 @@
 // ~ Episode 3
 
 //== Prontera Culvert  ===========//
-1054,Thief Bug Male,357142
+1054,Male Thief Bug,357142
 
 //== Comodo  ===========//
 1073,Crab,214285
@@ -242,3 +241,5 @@
 1313,Mobster,71428
 1317,Seal,71428
 1323,Sea Otter,71428
+
+// ~ Episode 4

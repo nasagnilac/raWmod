@@ -1,4 +1,4 @@
-comodo.gat,135,227,5	script	Sherri	93,{
+comodo,135,227,5	script	Sherri	4_F_04,{
 mes "[Sherri]";
 mes " ";
 mes "*sighs*";

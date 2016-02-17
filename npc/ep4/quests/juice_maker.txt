@@ -191,8 +191,6 @@ prt_in,47,173,3	script	Morrison#juice	4W_M_01,{
 
 // Old Payon
 payon_in01,174,113,2	script	Marx Hansen#juice	4_M_04,{
-// New Payon
-//payon_in03,188,146,5	script	Marx Hansen#juice	4_M_04,{
 	if (checkweight(Knife,1) == 0) {
 		mes "- Wait a moment! -";
 		mes "- Currently you're carrying -";
@@ -335,7 +333,7 @@ payon_in01,174,113,2	script	Marx Hansen#juice	4_M_04,{
 			close;
 		}
 	}
-	else {
+	else { 
 		mes "[Merchant Marx Hansen]";
 		mes "Welcome.";
 		mes "How may I help you?";

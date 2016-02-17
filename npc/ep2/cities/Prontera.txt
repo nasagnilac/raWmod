@@ -244,35 +244,7 @@ prt_in,175,50,2	script	Library Girl#pront	1_F_LIBRARYGIRL,{
 	close;
 }
 
-prt_in,47,141,0	script	An Old Man#pront	1_M_KNIGHTMASTER,{
-	mes "[Old Man]";
-	mes "The Prontera Culvert sewers have been left unattended for a long time. Now that place is infested with ^000077Thief Bugs^000000!";
-	next;
-	mes "[Old Man]";
-	mes "These Thief Bugs seem to quickly grab items dropped on the ground, and then run away with them... They're even more annoying than cockroaches!!";
-	close;
-}
 
-prt_in,26,30,1	script	An Old Man#2pront	1_M_JOBGUIDER,{
-	mes "[Old Man]";
-	mes "I dunno if you'll believe me, but I saw the weirdest thing down in the ^000077Culvert Sewers^000000...";
-	next;
-	mes "[Old Man]";
-	mes "I've been training in the 3rd level for so long that there isn't anything that I don't know about in that area. But when I finally went to the 4th level...";
-	next;
-	mes "[Old Man]";
-	mes "There, I saw a shimmering light. I was completely captivated and went to approach it. It must have been some sort of beautiful fairy...";
-	next;
-	mes "[Old Man]";
-	mes "But when I got";
-	mes "close enough,";
-	mes "I saw it was";
-	mes "a ^000077Thief Bug^000000!";
-	next;
-	mes "[Old Man]";
-	mes "I've never seen a Thief Bug shining with light before! Man, just when you think you've seen it all...";
-	close;
-}
 
 prt_in,181,21,2	script	Bartender#pront	1_M_PUBMASTER,{
 	mes "[Bartender]";

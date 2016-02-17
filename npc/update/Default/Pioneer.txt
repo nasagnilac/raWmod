@@ -1,0 +1,93 @@
+
+payon,84,116,4	script	Old Man	1_M_PUBMASTER,{ 
+if(#PioneerComplete){
+	mes "[Old Man]";
+	mes "Congratulation Pioneer ^ff0000"+strcharinfo(0)+"^000000.";
+	close;
+}
+
+mes "[Old Man]";
+mes "Hello..";
+mes "What can I help you?";
+next;
+switch(select("Explain me the mechanics:Be a Pioneer!")){ 
+
+case 1:
+	mes "[Old Man]";
+	mes "You should make a "+.class$+" until "+.date$+".";
+	mes "  ";	
+	mes "If you have a "+.class$+" character, Please register to me ASAP.";
+	mes "  ";	
+	mes "Rewards:";
+	mes "* 4,000 Credits";
+	mes "* Equipments(Base on Job)";
+	mes "  ";	
+	close;
+
+
+case 2:
+	mes "[Old Man]";  
+	mes "Do you want to proceed to the registration?";
+	next;
+	switch(select("Yes:No")){
+
+	case 1: 
+
+	if(Class == 7||Class == 8||Class == 9||Class == 10||Class == 11||Class == 12){
+		mes "[Old Man]";
+		if(BaseLevel != .base){
+			mes "Your Base Level is not enough to register.";
+			close;	
+		}else if( JobLevel != .job ){
+			mes "Your Job Level is not enough to register.";
+			close;	
+		}else if(BaseLevel != .base && JobLevel != .job ){
+			mes "Your Base and Job Level is not enough to register.";
+			close;	
+		}
+		mes "You are now registered as pioneer";
+			set Pioneer,1;
+
+			announce "Congratulation to "+strcharinfo(0)+" for being a part of server pioneers!",0;
+			query_sql("SELECT `balance` FROM `cp_credits` WHERE `account_id` = '"+getcharid(3)+"'",.@balance);
+			if(!.@balance){query_sql "INSERT INTO `cp_credits` (`balance`,`account_id`) VALUES ('"+.credits+"','"+getcharid(3)+"')";
+			}else{query_sql "update `cp_credits` set `balance` = `balance`+ "+ .@credits +" where `account_id` = '"+getcharid(3)+"'";}
+			
+			if(Class ==  7){ getitem2 2607,1,1,0,0,4079,0,0,0; getitem 5062,1;}
+			if(Class ==  8){ getitem2 2607,1,1,0,0,4022,0,0,0; getitem 5062,1;}
+			if(Class ==  9){ getitem2 2607,1,1,0,0,4064,0,0,0; getitem 5062,1;}
+			if(Class == 10){ getitem2 2607,1,1,0,0,4079,0,0,0; getitem 5062,1;}
+			if(Class == 11){ getitem2 2607,1,1,0,0,4064,0,0,0; getitem 5062,1;}
+			if(Class == 12){ getitem2 2607,1,1,0,0,4079,0,0,0; getitem 5062,1;}	
+			set Zeny, Zeny + .Zeny;
+			set #PioneerComplete,1;
+		
+		close;
+	} else {
+		mes "[Old Man]";
+		mes "Sorry, but you are not a "+.class$+".";
+		close;
+	}
+
+	case 2:
+	mes "[Old Man]";
+	mes "You should hurry now.";
+	close;
+
+	}
+	
+
+
+	}
+
+OnInit:
+	set .pioneer,1;
+	set .base,99;
+	set .job,50;
+	set .Zeny,2000000;
+	set .credits,4000;
+	set .class$,"99/50 2-1 Class";
+	set .date$,"February 29,2016 11:59PM GMT+8";
+end;
+
+}

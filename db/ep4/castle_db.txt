@@ -54,11 +54,3 @@
 21,nguild_gef,Air,Agit_N02,2
 22,nguild_pay,Water,Agit_N03,2
 23,nguild_prt,Fire,Agit_N04,2
-
-//================
-// Yuno
-//================
-
-//================
-// Rachel
-//================

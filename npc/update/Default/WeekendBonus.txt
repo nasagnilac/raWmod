@@ -51,16 +51,50 @@
 	announce "Citizens of Midgard, Weekends X"+.emode+" EXP and X"+.dmode+" DROP has ended.",bc_all;
 	}
 	end;
+OnStart:
+	//Base exp
+	setbattleflag("base_exp_rate",100*.emode);
+	//Job exp
+	setbattleflag("job_exp_rate",100*.emode);
+	//Drops
+	setbattleflag("item_rate_common",100*.dmode);
+	setbattleflag("item_rate_heal",100*.dmode);
+	setbattleflag("item_rate_use",100*.dmode);
+	setbattleflag("item_rate_equip",100*.dmode);
+	//we don't change card drops rate, because these values won't change them anyway
+	atcommand "@reloadmobdb";
+	
+	announce "Citizens of Midgard, Weekends X"+.emode+" EXP and X"+.dmode+" DROP has started.",bc_all;
+	
+end;
 
+OnEnd:
+	//Base exp
+	setbattleflag("base_exp_rate",100*.edefault);
+	//Job exp
+	setbattleflag("job_exp_rate",100*.edefault);
+	//Drops
+	setbattleflag("item_rate_common",100*.ddefault);
+	setbattleflag("item_rate_heal",100*.ddefault);
+	setbattleflag("item_rate_use",100*.ddefault);
+	setbattleflag("item_rate_equip",100*.ddefault);
+	//we don't change card drops rate, because these values won't change them anyway
+	atcommand "@reloadmobdb";
+	
+	announce "Citizens of Midgard, Weekends X"+.emode+" EXP and X"+.dmode+" DROP has ended.",bc_all;
+
+end;
 
 
 OnInit:
 	// Default Settings
-	.edefault = 50;
-	.ddefault = 10;
+	.edefault = 7;
+	.ddefault = 3;
 	// Mode to be changed
-	.emode = 100;
-	.dmode = 20;
+	.emode = 14;
+	.dmode = 5;
+	bindatcmd "expstart", strnpcinfo(0)+"::OnStart", 99,100;
+	bindatcmd "expend", strnpcinfo(0)+"::OnEnd", 99,100;
 end;
 
 	

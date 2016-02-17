@@ -53,6 +53,11 @@
 //= 3.7 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
 //============================================================
 
+
+// Please add this warp to your warp/s script/s if it is not already there, or you can enable it here
+in_hunter,100,13,0	warp	hnt_to_payfild10	1,2,pay_fild10,145,250
+
+
 // Notices in the old Hunter Guild.
 //============================================================
 pay_fild10,148,252,3	script	Hunter Guildsman	4W_M_02,{
@@ -63,7 +68,7 @@ pay_fild10,148,252,3	script	Hunter Guildsman	4W_M_02,{
 
 // Actual Job quest start
 //============================================================
-in_hunter,99,99,4	script	Hunter Guildsman#hnt	4_F_JOB_HUNTER,{
+in_hunter,99,99,4	script	Hunter Sherin#hnt	4_F_JOB_HUNTER,{
 	if (Upper == 1) {
 		mes "[Hunter Sherin]";
 		mes "Oh, how have you been? It's been a long time, hasn't it?";
@@ -74,13 +79,13 @@ in_hunter,99,99,4	script	Hunter Guildsman#hnt	4_F_JOB_HUNTER,{
 		close;
 	}
 	if (BaseJob == Job_Archer && JobLevel < 40) {
-		mes "[Hunter Guildsman]";
+		mes "[Hunter Sherin]";
 		mes "Eh? You haven't had enough training as an Archer yet. To become a Hunter, you must gain a certain level of experience as an Archer first.";
 		next;
-		mes "[Hunter Guildsman]";
+		mes "[Hunter Sherin]";
 		mes "Go out and train yourself a bit more. You'll need to be at least Job Level 40 before you'll be ready to become a Hunter. Of course, you can train more than that if you want.";
 		next;
-		mes "[Hunter Guildsman]";
+		mes "[Hunter Sherin]";
 		mes "See you next time~";
 		close;
 	}
@@ -90,40 +95,40 @@ in_hunter,99,99,4	script	Hunter Guildsman#hnt	4_F_JOB_HUNTER,{
 		close;
 	}
 	if (BaseClass == Job_Novice) {
-		mes "[Hunter Guildsman]";
+		mes "[Hunter Sherin]";
 		mes "You must be...";
 		mes "a Novice? Wow, you've got a long way ahead of you. I don't think there's much you can do here.";
 		close;
 	}
 	else if (BaseClass == Job_Swordman) {
-		mes "[Hunter Guildsman]";
+		mes "[Hunter Sherin]";
 		mes "You have chosen the path of the sword. I can respect the strength of your blade. Of course, from far away, you can't really afford to throw your sword at enemies, can you?";
 		close;
 	}
 	else if (BaseClass == Job_Mage) {
-		mes "[Hunter Guildsman]";
+		mes "[Hunter Sherin]";
 		mes "You deal with magic? It must feel great to be able to wield mystic power.";
 		close;
 	}
 	else if (BaseClass == Job_Acolyte) {
-		mes "[Hunter Guildsman]";
+		mes "[Hunter Sherin]";
 		mes "Oh, a person who serves God! Nice to meet you. There aren't many people like you that visit this place~ Hehe.";
 		close;
 	}
 	else if (BaseClass == Job_Merchant) {
-		mes "[Hunter Guildsman]";
+		mes "[Hunter Sherin]";
 		mes "Oh...";
 		mes "How's your business coming along?";
 		close;
 	}
 	else if (BaseClass == Job_Thief) {
-		mes "[Hunter Guildsman]";
+		mes "[Hunter Sherin]";
 		mes "Agh?!";
 		mes "This place doesn't have anything worth stealing or anyone worth killing!!";
 		close;
 	}
 	else if (BaseJob == Job_Dancer || BaseJob == Job_Bard) {
-		mes "[Hunter Guildsman]";
+		mes "[Hunter Sherin]";
 		mes "Phew...sometimes it is really hard for being a hunter, you know...";
 		mes "So how do you like your bohemian life? Yeah, I am envious of you for having so much freedom...";
 		close;
@@ -185,23 +190,23 @@ in_hunter,99,99,4	script	Hunter Guildsman#hnt	4_F_JOB_HUNTER,{
 		}
 		else if ((JobLevel > 39) && ((HNTR_Q == 0) || (HNTR_Q == 1))) {
 			if (HNTR_Q == 0) {
-				mes "[Hunter Guildsman]";
+				mes "[Hunter Sherin]";
 				mes "Oh, you're an Archer! It seems as if you've trained enough as an Archer... You came here to become a Hunter, right?";
 				next;
 				switch(select("Yes. That's what I'm here for.:What are the requirements to change jobs?:....I don't want to change yet.")) {
 				case 1:
-					mes "[Hunter Guildsman]";
+					mes "[Hunter Sherin]";
 					mes "Hehe~";
 					mes "I was right! Let me put you on the candidate list. Let's see~*";
 					next;
-					mes "[Hunter Guildsman]";
+					mes "[Hunter Sherin]";
 					mes "Hmm... Let's start with the interview. Wait and relax a moment. No need to worry, I'll prepare everything~";
 					next;
 					mes "^3355FF*Gathers and flips through papers*^000000";
 					next;
 					mes "^3355FF*Rummage rummage*^000000";
 					next;
-					mes "[Hunter Guildsman]";
+					mes "[Hunter Sherin]";
 					mes "Ah!";
 					mes "Here they are: the interview questions~ First of all, my name is 'Sherin.' Nice to meet you!";
 					next;
@@ -392,27 +397,27 @@ in_hunter,99,99,4	script	Hunter Guildsman#hnt	4_F_JOB_HUNTER,{
 				mes "Then, you'll be more in tune with nature and with other people. It's this kind of harmony that makes the best Hunters.";
 				close;
 			case 2:
-				mes "[Hunter Guildsman]";
+				mes "[Hunter Sherin]";
 				mes "Job change";
 				mes "requirements?";
 				mes "First...";
 				mes "You must be an Archer.";
 				next;
-				mes "[Hunter Guildsman]";
+				mes "[Hunter Sherin]";
 				mes "Second...";
 				mes "You must be";
 				mes "at least Job Level 40.";
 				next;
-				mes "[Hunter Guildsman]";
+				mes "[Hunter Sherin]";
 				mes "Third...";
 				mes "You must bring all of the items that will be requested by the guild. You can worry about that later.";
 				next;
-				mes "[Hunter Guildsman]";
+				mes "[Hunter Sherin]";
 				mes "Fourth...";
 				mes "You've gotta pass the test administered by the guild. If you have had enough training as an Archer, you should be able to pass the test~";
 				break;
 			case 3:
-				mes "[Hunter Guildsman]";
+				mes "[Hunter Sherin]";
 				mes "Okay then,";
 				mes "see you next time~";
 				close;
@@ -447,18 +452,18 @@ in_hunter,99,99,4	script	Hunter Guildsman#hnt	4_F_JOB_HUNTER,{
 		mes "I heard he's at the Payon Central Palace... Or in the Archer Village, one of those two places. Try visiting those places and find him, okay?";
 		close;
 	}
-	mes "[Hunter Guildsman]";
+	mes "[Hunter Sherin]";
 	mes "Eh? You haven't trained enough as an Archer. To become a Hunter, you need to gain more experience as an Archer first.";
 	next;
-	mes "[Hunter Guildsman]";
+	mes "[Hunter Sherin]";
 	mes "Well then, go train some more. You must be at least Job Level 40 to be exact. Of course, you can always go higher. See you next time~";
 	close;
 }
 
-in_hunter,55,99,7	script	Guild Receptionist#hnt	4_M_JOB_HUNTER,{
+in_hunter,55,99,7	script	Demon Hunter#hnt	4_M_JOB_HUNTER,{
 	if (HNTR_Q == 2) {
-		mes "[Guild Receptionist]";
-		mes "Greetings. They call me... ^660000The Demon Hunter^000000. I am the one in charge of processing applications. Your name is ... " + strcharinfo(0) + ", correct?";
+		mes "[Demon Hunter]";
+		mes "Greetings. I am the one in charge of processing applications. Your name is ... " + strcharinfo(0) + ", correct?";
 		next;
 		.@selection = select("Yes, that is correct.:Nope~~(heeheehee)");
 		if (.@selection == 2) {
@@ -591,13 +596,13 @@ in_hunter,55,99,7	script	Guild Receptionist#hnt	4_M_JOB_HUNTER,{
 		close;
 	}
 	else {
-		mes "[Guild Receptionist]";
+		mes "[Demon Hunter]";
 		mes "If you wish to change your job to a Hunter, you must register first.";
 		close;
 	}
 } 
 
-payon_in03,131,7,3	script	Hunter#htnGM	1_M_ORIENT01,{
+payon_in01,22,35,3	script	Hunter Guildmaster#1	1_M_ORIENT01,{
 	if (HNTR_Q == 10) {
 		mes "[Hunter Guildmaster]";
 		mes "Hmpf. You must be here for the Hunter job test. Let me tell you about the testing process. What would you like to know?";
@@ -750,7 +755,7 @@ payon_in03,131,7,3	script	Hunter#htnGM	1_M_ORIENT01,{
 	}
 }
 
-payon_in02,21,31,1	script	Hunter#htnGM2	1_M_ORIENT01,{
+payon_in02,21,31,1	script	Hunter Guildmaster#2	1_M_ORIENT01,{
 	cutin "job_huntermaster",2;
 	if (HNTR_Q == 11) {
 		mes "[Hunter Guildmaster]";

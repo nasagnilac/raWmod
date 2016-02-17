@@ -1,27 +1,55 @@
 //-------------------------------------------------------------------------------------------------	
 -	script	Free Rewards	FAKE_NPC,{
 
+OnClock0000:
+			if(.svn){
+				query_sql "DELETE FROM `acc_reg_num_db` WHERE `key`='#potion'";
+			}else{
+				query_sql "DELETE FROM `global_reg_value` WHERE `str`='#potion'";
+			}
+				
+		set .potion,1;
+		set .rewards$,"Potions";
+		announce "[ Free "+.rewards$+" ] Re-login now! You have only 5 minutes to claim your Free "+.rewards$+" in the Delivery Man.",0;
+		startnpctimer;
+end;
 
+
+OnTimer60000:
+	announce "[ Free "+.rewards$+" ] You have 4 minutes left to relogin.",0;
+	end;
+
+OnTimer120000:
+	announce "[ Free "+.rewards$+" ] You have 3 minutes left to relogin.",0;
+	end;
+
+OnTimer180000:
+	announce "[ Free "+.rewards$+" ] You have 2 minutes left to relogin.",0;
+	end;
+
+OnTimer240000:
+	announce "[ Free "+.rewards$+" ] You have 1 minute left to relogin.",0;
+	end;
+
+OnTimer300000: 
+	announce "[ Free "+.rewards$+" ] Time's Up... Good Luck!",0;
+	set .potion,0;
+	set .available,0; 
+	stopnpctimer;
+	end;
+	
 
 OnInit:
 	//-------------------------------------------------------------------------------------------------	
 		set .svn,1;			// 0 - rAthena/eAthena, 1 - Hercules
 		set .available,0;
+		set .potion,0;
 		set .n$, "^FF0000[Free Rewards]^000000";
 		bindatcmd "freerewards","Free Rewards::OnDoEvent",80,100;		// Admin reset command
 		bindatcmd "freebies","Free Rewards::OnDoFreebies",80,100;		// Admin reset command
 	//-------------------------------------------------------------------------------------------------	
-		setarray .RItems[0],					504,504,504,505,5007;			
-		setarray .RAmount[0],			                 10, 10, 10, 10,1;			
-		setarray .RRefine[0],		                          0,  0,  0,  0,7;				
-		setarray .RRentTime[0],	                                  0,  0,  0,  0,86400;
 	
-		setarray .FItems[0],					504,504,504,504,505;			
-		setarray .FAmount[0],			                 20, 20, 20, 20, 20;		
-		setarray .FRefine[0],		                          0,  0,  0,  0,  0;				
-		setarray .FRentTime[0],	                                  0,  0,  0,  0,  0;
-
-		// 1 - Account Bound, 2 - Guild Bound, 3 - Party Bound, 4 - Character Bound (Note 3)
+	// 1 - Account Bound, 2 - Guild Bound, 3 - Party Bound, 4 - Character Bound (Note 3)
 		set .boundtype, 1; 
 	
 	//-------------------------------------------------------------------------------------------------		
@@ -44,33 +72,13 @@ OnDoEvent:
 		mes "Free Rewards is now enabled."; 
 		close2;
 		set .available,1; 
-		announce "[ Free Rewards ] Re-login now and talk to me.You have only 5 minutes to claim your rewards in the Delivery Man.",0;
+		set .rewards$,"Rewards";
+		announce "[ Free "+.rewards$+" ] Re-login now! You have only 5 minutes to claim your Free "+.rewards$+" in the Delivery Man.",0;
 		startnpctimer;
-	} 
+	}
 end;
 
 
-OnTimer60000:
-	announce "[ Free Rewards ] You have 4 minutes left to claim your rewards in the Delivery Man.",0;
-	end;
-
-OnTimer120000:
-	announce "[ Free Rewards ] You have 3 minutes left to claim your rewards in the Delivery Man.",0;
-	end;
-
-OnTimer180000:
-	announce "[ Free Rewards ] You have 2 minutes left to claim your rewards in the Delivery Man.",0;
-	end;
-
-OnTimer240000:
-	announce "[ Free Rewards ] You have 1 minute left to claim your rewards in the Delivery Man.",0;
-	end;
-
-OnTimer300000:
-	announce "[ Free Rewards ] Distribution of rewards is now closed.",0;
-	stopnpctimer;
-	set .available,0;
-	end;
 
 
 
@@ -89,33 +97,61 @@ close;
 
 
 OnPCLoginEvent:
-	if(!#freebies){
 		set .@accid, getcharid(3);		
 		query_sql ("SELECT `userid` FROM `login` WHERE `account_id` = '"+.@accid+"'",.@userid1$);
-			
-			for( set .@i, 0; .@i < getarraysize(.FItems); set .@i, .@i + 1 ){
-				query_sql "INSERT INTO `reward_db` (`account_user`, `reward_id`, `reward_amount`, `refine`, `bounded`, `rental`) VALUES ('"+.@userid1$+"',"+.FItems[.@i]+","+.FAmount[.@i]+","+.FRefine[.@i]+","+.boundtype+","+.FRentTime[.@i]+")";
+		
+	if(!#freebies){
+	
+		setarray .@Items[0],		504,505;			
+		setarray .@Amount[0],		100, 25;		
+		setarray .@Refine[0],		0,  0;				
+		setarray .@RentTime[0],		0,  0;
+		
+			for( set .@i, 0; .@i < getarraysize(.@Items); set .@i, .@i + 1 ){
+				query_sql "INSERT INTO `reward_db` (`account_user`, `reward_id`, `reward_amount`, `refine`, `bounded`, `rental`) VALUES ('"+.@userid1$+"',"+.@Items[.@i]+","+.@Amount[.@i]+","+.@Refine[.@i]+","+.boundtype+","+.@RentTime[.@i]+")";
 			}
 				
-		dispbottom "Please claim your freebies in the Delivery Man at Albertan, Prontera, Geffen or Payon.";
+		dispbottom "Please claim your [ Freebies ] in the Delivery Man at Albertan, Prontera, Geffen or Payon.";
 		set #freebies,1;		
 		end;
 	}
+
 	if(.available){
-	if(#accountreward){end;}
-		set .@accid, getcharid(3);		
-		query_sql ("SELECT `userid` FROM `login` WHERE `account_id` = '"+.@accid+"'",.@userid1$);
-			
-			for( set .@i, 0; .@i < getarraysize(.RItems); set .@i, .@i + 1 ){
-				query_sql "INSERT INTO `reward_db` (`account_user`, `reward_id`, `reward_amount`, `refine`, `bounded`, `rental`) VALUES ('"+.@userid1$+"',"+.RItems[.@i]+","+.RAmount[.@i]+","+.RRefine[.@i]+","+.boundtype+","+.RRentTime[.@i]+")";
+	      if(#accountreward == 1){end;}
+		setarray .@Items[0],	      969;			
+		setarray .@Amount[0],		1;		
+		setarray .@Refine[0],		0;				
+		setarray .@RentTime[0],		0;
+		set .@boundtype, 0; 
+		
+			for( set .@i, 0; .@i < getarraysize(.@Items); set .@i, .@i + 1 ){
+				query_sql "INSERT INTO `reward_db` (`account_user`, `reward_id`, `reward_amount`, `refine`, `bounded`, `rental`) VALUES ('"+.@userid1$+"',"+.@Items[.@i]+","+.@Amount[.@i]+","+.@Refine[.@i]+","+.@boundtype[.@i]+","+.@RentTime[.@i]+")";
 			}
 				
-		dispbottom "Please claim it to the Delivery Man at Albertan, Prontera, Geffen or Payon.";
+		dispbottom "Please claim your [ Free "+.rewards$+" ] to the Delivery Man at Albertan, Prontera, Geffen or Payon.";
 		set #accountreward,1;	
 		sc_start SC_CASH_PLUSEXP,1800000,200;
 		sc_start SC_CASH_RECEIVEITEM,1800000,200;
 		end;
-	}	
+	}
+	
+	if(.potion){
+	      if(#potion == 1){end;}
+	
+		setarray .@Items[0],		504,505;			
+		setarray .@Amount[0],		30, 10;		
+		setarray .@Refine[0],		0,  0;				
+		setarray .@RentTime[0],		0,  0;
+		
+			for( set .@i, 0; .@i < getarraysize(.@Items); set .@i, .@i + 1 ){
+				query_sql "INSERT INTO `reward_db` (`account_user`, `reward_id`, `reward_amount`, `refine`, `bounded`, `rental`) VALUES ('"+.@userid1$+"',"+.@Items[.@i]+","+.@Amount[.@i]+","+.@Refine[.@i]+","+.boundtype+","+.@RentTime[.@i]+")";
+			}
+				
+		dispbottom "Please claim your [ Free "+.rewards$+" ] to the Delivery Man at Albertan, Prontera, Geffen or Payon.";
+		set #potion,1;	
+		end;
+	}
+	
 end;
 
 }

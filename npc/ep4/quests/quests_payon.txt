@@ -1,46 +1,17 @@
-//================= Hercules Script =======================================
-//=       _   _                     _
-//=      | | | |                   | |
-//=      | |_| | ___ _ __ ___ _   _| | ___  ___
-//=      |  _  |/ _ \ '__/ __| | | | |/ _ \/ __|
-//=      | | | |  __/ | | (__| |_| | |  __/\__ \
-//=      \_| |_/\___|_|  \___|\__,_|_|\___||___/
-//================= License ===============================================
-//= This file is part of Hercules.
-//= http://herc.ws - http://github.com/HerculesWS/Hercules
-//=
-//= Copyright (C) 2012-2015  Hercules Dev Team
-//= Copyright (C)  L0ne_W0lf
-//= Copyright (C)  Samuray22
-//= Copyright (C)  Silent
-//= Copyright (C)  Lupus
-//= Copyright (C)  kobra_k88
-//=
-//= Hercules is free software: you can redistribute it and/or modify
-//= it under the terms of the GNU General Public License as published by
-//= the Free Software Foundation, either version 3 of the License, or
-//= (at your option) any later version.
-//=
-//= This program is distributed in the hope that it will be useful,
-//= but WITHOUT ANY WARRANTY; without even the implied warranty of
-//= MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//= GNU General Public License for more details.
-//=
-//= You should have received a copy of the GNU General Public License
-//= along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//=========================================================================
-//= Quest NPCs related to Payon
-//================= Description ===========================================
-//= Pretend Murder, Ear Muffs, Oxygen, Derivuchi Cap, Helm of Angel Quests.
-//================= Current Version =======================================
-//= 1.7
-//=========================================================================
+//===== Special Modification =================================
+//===== By: ==================================================
+//= Ragnarok World
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena, rAthena, Hercules
+//===== Additional Comments: =================================
+//= 
+//============================================================
 
 //== 'Pretend Murdered' Quest ==============================
 // Old Payon
 payon,154,170,4	script	Granny	8_F_GRANDMOTHER,{
-// New Payon
-//payon_in01,99,72,4	script	Granny	8_F_GRANDMOTHER,{
 	if (checkweight(Spawn,1) == 0) {
 		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
 		close;
@@ -93,8 +64,6 @@ payon,154,170,4	script	Granny	8_F_GRANDMOTHER,{
 //== 'Ear Muffs' Quest =====================================
 // Old Payon
 payon_in01,103,78,4	script	Mystic Lady	1_F_ORIENT_02,{
-// New Payon
-//payon_in01,18,10,4	script	Mystic Lady	1_F_ORIENT_02,{
 	mes "[Mystic Lady]";
 	mes "My family has produced and sold the special Winter product ^3355FFEar Muffs^000000 for many years. We just moved here, but the weather is always warm so we can hardly make a living.";
 	next;
@@ -143,8 +112,6 @@ payon_in01,103,78,4	script	Mystic Lady	1_F_ORIENT_02,{
 //== 'Oxygen Mask' Quest ===================================
 // Old Payon
 payon_in02,25,71,4	script	Boy	4_M_04,{
-// New Payon
-//payon_in02,25,71,4	script	Boy	4_M_04,{
 	if (countitem(Ora_Ora) > 4) {
 		mes "[Young Man]";
 		mes "ArrrGggghh!";
@@ -240,8 +207,6 @@ payon_in02,25,71,4	script	Boy	4_M_04,{
 //== 'Helm of Angel' and 'Deviruchi Cap' Quest =============
 // Old Payon
 payon_in01,123,41,2	script	Young man#12	4_M_ORIENT02,{
-// New Payon
-//payon_in01,56,12,7	script	Young man#12	4_M_ORIENT02,{
 	mes "[Young man]";
 	mes "...What is it?";
 	next;

@@ -1,14 +1,3 @@
-//===== Special Modification =================================
-//===== By: ==================================================
-//= Ragnarok World
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= eAthena, rAthena, Hercules
-//===== Description ==========================================
-//=
-//============================================================
-
 gef_fild07.gat,183,239,5	script	Old Smith	2_M_PHARMACIST,{
 mes "[Old Smith]";
 mes "Ah, isn't it peaceful up here - I used to be one of the legendary Blacksmiths of midgard...sadly my skills have faded.";

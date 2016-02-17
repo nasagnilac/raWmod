@@ -861,25 +861,7 @@ OnInit:
 }
 
 comodo,244,296,7	trader	Item Collector#como1	1_F_MERCHANT_02,{
+
 OnInit:
 	sellitem Jellopy;
 }
-
-//== Turtle Island ================================================= 
-tur_dun01,158,54,6	trader	Tool Dealer	4W_M_03,{
-OnInit:
-	sellitem Arrow;
-	sellitem Red_Potion;
-	sellitem Orange_Potion;
-	sellitem Yellow_Potion;
-	sellitem White_Potion;
-	sellitem Green_Potion;
-	sellitem Panacea;
-	sellitem Wing_Of_Fly;
-	sellitem Wing_Of_Butterfly;
-	sellitem Center_Potion;
-	sellitem Awakening_Potion;
-	sellitem Berserk_Potion;
-}
-
-

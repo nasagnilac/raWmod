@@ -1,4 +1,4 @@
-geffen_in.gat,110,169,4	script	Guildsman#BLS	4_M_JOB_BLACKSMITH,{
+geffen_in,110,169,4	script	Guildsman#BLS	4_M_JOB_BLACKSMITH,{
 	if (Upper == 1) {
 		mes "[Altiregen]";
 		mes "Hey hey. I don't have time for chit-chat, I'm a pretty busy guy. There's all these Merchants working hard to become Blacksmiths.";
@@ -234,7 +234,7 @@ geffen_in.gat,110,169,4	script	Guildsman#BLS	4_M_JOB_BLACKSMITH,{
 	}
 }
 
-alberta_in.gat,174,22,4	script	Guildsman#alberta	1_M_SMITH,{
+alberta_in,174,22,4	script	Guildsman#alberta	1_M_SMITH,{
 	mes "[Geschupenschte]";
 	mes "Hello there!";
 	mes "I'm ^8E6B23Geschupenschte^000000,";
@@ -889,7 +889,7 @@ alberta_in.gat,174,22,4	script	Guildsman#alberta	1_M_SMITH,{
 	}
 }
 
-geffen.gat,46,164,4	script	Baisulist#BLS	1_F_04,{
+geffen,46,164,4	script	Baisulist#BLS	1_F_04,{
 	if (BSMITH_Q == 9 && countitem(1610) > 0) {
 		mes "[Baisulist]";
 		mes "Oh, hello!";
@@ -964,7 +964,7 @@ geffen.gat,46,164,4	script	Baisulist#BLS	1_F_04,{
 	}
 }
 
-morocc.gat,27,112,4	script	Wickebine#BLS	4_F_JOB_ASSASSIN,{
+morocc,27,112,4	script	Wickebine#BLS	4_F_JOB_ASSASSIN,{
 	if (BSMITH_Q == 10 && countitem(1219) > 0) {
 		cutin "Job_Black_hucke01",2;
 		mes "[Wickebine]";
@@ -1065,7 +1065,7 @@ morocc.gat,27,112,4	script	Wickebine#BLS	4_F_JOB_ASSASSIN,{
 	}
 }
 
-izlude.gat,69,181,4	script	Krongast#BLS	4_M_JOB_KNIGHT2,{
+izlude,69,181,4	script	Krongast#BLS	4_M_JOB_KNIGHT2,{
 	if (BSMITH_Q == 11 && countitem(1119) > 0) {
 		mes "[Krongast]";
 		mes "Ohhhhhh~";
@@ -1217,7 +1217,7 @@ payon,151,39,4	script	Talpiz#BLS	1_M_ORIENT01,{
 	}
 }
 
-comodo.gat,158,342,4	script	Bismarc#BLS	2_M_THIEFMASTER,{
+comodo,158,342,4	script	Bismarc#BLS	2_M_THIEFMASTER,{
 	if (BSMITH_Q == 13 && countitem(1122) > 0) {
 		mes "[Bismarc]";
 		mes "Sweet God...";
@@ -1314,7 +1314,7 @@ comodo.gat,158,342,4	script	Bismarc#BLS	2_M_THIEFMASTER,{
 	}
 }
 
-morocc.gat,95,133,4	script	Blacksmith Guildsman#moc	4_F_JOB_BLACKSMITH,{
+morocc,95,133,4	script	Blacksmith Guildsman#moc	4_F_JOB_BLACKSMITH,{
 	if (BSMITH_Q == 16) {
 		emotion e_hmm;
 		mes "[Mitehmaeeuh]";

@@ -5,8 +5,8 @@
 //= 1.0
 //===== Compatible With: =====================================
 //= eAthena, rAthena, Hercules
-//===== Description ==========================================
-//=
+//===== Additional Comments: =================================
+//= 
 //============================================================
 
 //== Blacksmith: 'Welding Mask' Quest ======================
@@ -74,9 +74,9 @@ geffen_in,144,166,4	script	Blacksmith	1_M_SMITH,{
 	}
 }
 
-//== Eric: 'Headset' Quest =================================
-geffen_in,30,71,4	script	Eric	4_M_01,{
-	mes "[Eric]";
+//== Joshua: 'Headset' Quest =================================
+geffen_in,30,71,4	script	Joshua	4_M_01,{
+	mes "[Joshua]";
 	mes "Please listen";
 	mes "to my story";
 	mes "of my blessed";
@@ -84,37 +84,37 @@ geffen_in,30,71,4	script	Eric	4_M_01,{
 	next;
 	switch(select("Talk:Ask about Items needed:Manufacture:Quit")) {
 	case 1:
-		mes "[Eric]";
+		mes "[Joshua]";
 		mes "My Grandfather, who passed away a few years ago, was special to me. He always stayed with me, and took care of me. He was much better than my old man, who was always busy working.";
 		next;
-		mes "[Eric]";
+		mes "[Joshua]";
 		mes "To me, Grandfather's library was always like a fantasy land where I could escape. I spent most of my time there.";
 		next;
-		mes "[Eric]";
+		mes "[Joshua]";
 		mes "I learned a lot of things from his books in the Library. Grandfather was interested in Alchemy and Music, and his Library was filled with many mysterious old books.";
 		next;
-		mes "[Eric]";
+		mes "[Joshua]";
 		mes "One day...";
 		mes "As usual, I went to the Library and discovered an interesting schematic.";
 		next;
-		mes "[Eric]";
+		mes "[Joshua]";
 		mes "It showed some instrument which looked like Ear Muffs that, when worn on the head, could transmit music or whispers to the ears through a thin wire.";
 		next;
-		mes "[Eric]";
+		mes "[Joshua]";
 		mes "I guess...";
 		mes "It is my grand father's unfinished work. I met a few Alchemists and asked them to produce it, but they rejected my offer...";
 		next;
-		mes "[Eric]";
+		mes "[Joshua]";
 		mes "In the end, I thought 'I've gotta make it myself.' So I researched for a few years, and now I fully understand how to make that thing. But, I could never gather the materials to make it!";
 		next;
-		mes "[Eric]";
+		mes "[Joshua]";
 		mes "If I can get those articles, I would build it right away. If you are interested in my idea, would you bring them for me?";
 		next;
-		mes "[Eric]";
+		mes "[Joshua]";
 		mes "All I wanna do is build this thing in honor of my grandfather and finish the work he started. If you ask me to keep it, I wouldn't mind.";
 		close;
 	case 2:
-		mes "[Eric]";
+		mes "[Joshua]";
 		mes "40 ^3355FFSteel^000000";
 		mes "1 ^3355FFOridecon^000000";
 		mes "1 ^3355FFAlcohol^000000";
@@ -130,21 +130,21 @@ geffen_in,30,71,4	script	Eric	4_M_01,{
 			getitem Headset,1;
 			mes "*Tap! Tap! Tap!*";
 			next;
-			mes "[Eric]";
+			mes "[Joshua]";
 			mes "Thank you.";
 			mes "Because of you, I could accomplish my grandfather's wish. He would be happy if he looked down on me from Heaven.";
 			next;
-			mes "[Eric]";
+			mes "[Joshua]";
 			mes "As I said, please take this. I am just proud that I can make this by myself.";
 			close;
 		}
 		else {
-			mes "[Eric]";
+			mes "[Joshua]";
 			mes "Thank you for trying to help me, but you didn't bring all the items I need. I think you will find them all soon though.";
 			close;
 		}
 	case 4:
-		mes "[Eric]";
+		mes "[Joshua]";
 		mes "N-no?";
 		mes "Well...";
 		mes "You have your own";

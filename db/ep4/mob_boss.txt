@@ -33,3 +33,9 @@
 
 //== Comodo  ===========//
 1086,Golden Thief Bug,1000000
+
+// ~ Episode 4
+
+//== Turtle Island  ===========//
+1312,Turtle General,1000000
+

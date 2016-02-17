@@ -6,6 +6,8 @@ set .Time,30;		// Announce every x Minute.
 set .Delay,300;
 
 setarray .News$[0],	// Random Message to be Announced
+			"[Event] Be a Payon-Neer!! Old Man npc at Payon is looking for you! Be a Pioneer now! 4,000 Credits, 2,000,000 zeny and more are waiting for you.",
+			"[Notice] We are now accepting Paypal Donations for the server advertisements. How to donate? Visit our website www.prestige.ragnarok.world and click donate. Thank you for choosing PrestigeRO. Good Luck!",
 			"[Announcement] Enjoy your weekends with X"+getvariableofnpc(.emode,"WeekendBonus")+" EXP and X"+getvariableofnpc(.dmode,"WeekendBonus")+" DROP RATE every Saturday and Sunday.";
 			
 	 		

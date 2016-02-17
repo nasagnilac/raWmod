@@ -40,3 +40,12 @@
 //== Thief Bug City Spawns =================================
 payon_in02,23,68,5,5	monster	Thief Bug	1051,7,1200000,600000,0
 
+//== Wild Rose City Spawns =================================
+prontera,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+morocc,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+alberta,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+aldebaran,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+geffen,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+payon,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+izlude,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+

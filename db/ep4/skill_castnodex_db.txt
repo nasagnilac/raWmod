@@ -15,6 +15,6 @@
 // Example: 46,1,1 = Double Strafe's cast time and delay is not affected by dex.
 
 
-
+136,0,2	//AS_SONICBLOW
 
 

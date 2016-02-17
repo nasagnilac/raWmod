@@ -5,8 +5,8 @@
 //= 1.0
 //===== Compatible With: =====================================
 //= eAthena, rAthena, Hercules
-//===== Description ==========================================
-//=
+//===== Additional Comments: =================================
+//= 
 //============================================================
 
 //== 'Doctor Band', 'Feather Bonnet', 'Opera Masque', 'Sakkat Hat' Quest =

@@ -865,7 +865,3 @@ comodo,244,296,7	trader	Item Collector#como1	1_F_MERCHANT_02,{
 OnInit:
 	sellitem Jellopy;
 }
-
-
-
-
